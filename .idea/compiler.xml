@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="reporting-api" />
+        <module name="core" />
+        <module name="attendance-lib" />
+        <module name="fee-lib" />
+        <module name="fee" />
+        <module name="core-api" />
+        <module name="reporting-contract" />
+        <module name="attendance" />
+      </profile>
+      <profile name="Annotation profile for university-system" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="common" />
+        <module name="reporting" />
+      </profile>
+      <profile name="Annotation profile for common-data" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="common-data" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="attendance" options="-parameters" />
+      <module name="attendance-lib" options="-parameters" />
+      <module name="common" options="-parameters" />
+      <module name="common-data" options="-parameters" />
+      <module name="core" options="-parameters" />
+      <module name="core-api" options="-parameters" />
+      <module name="fee" options="-parameters" />
+      <module name="fee-lib" options="-parameters" />
+      <module name="reporting" options="-parameters" />
+      <module name="reporting-api" options="-parameters" />
+      <module name="reporting-contract" options="-parameters" />
+    </option>
+  </component>
+</project>
