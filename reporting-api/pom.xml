@@ -8,7 +8,7 @@
 
 	<parent>
 		<groupId>com.university</groupId>
-		<artifactId>university-system</artifactId>
+		<artifactId>university-system-angular</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
