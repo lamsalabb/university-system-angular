@@ -4,7 +4,6 @@ import com.university.common.entity.User;
 import com.university.common.repository.UserRepository;
 import com.university.core.exception.EmailAlreadyExistsException;
 import com.university.core.exception.EmailNotFoundException;
-import com.university.core.exception.UserAlreadyExistsException;
 import com.university.core.exception.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -104,6 +103,23 @@ public class UserService {
             throw new UserNotFoundException("Cannot delete. User not found with id: " + id);
         }
         userRepository.deleteById(id);
+    }
+
+    public User authenticate(String email, String password){
+        User user = userRepository.findByEmail(email).orElseThrow(
+                ()-> new EmailNotFoundException("Invalid email or password")
+        );
+
+        if(!passwordEncoder.matches(password,user.getPasswordHash())){
+            System.out.println("RAW PASSWORD = [" + password + "]");
+            System.out.println("HASH IN DB  = [" + user.getPasswordHash() + "]");
+            System.out.println("MATCHES?    = " +
+                    passwordEncoder.matches(password, user.getPasswordHash()));
+
+            throw new EmailNotFoundException("Invalid email or password");
+        }
+
+        return user;
     }
 
 

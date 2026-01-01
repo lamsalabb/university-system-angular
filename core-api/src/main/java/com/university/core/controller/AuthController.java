@@ -1,6 +1,7 @@
 package com.university.core.controller;
 
 import com.university.common.entity.User;
+import com.university.core.security.util.JwtUtil;
 import com.university.core.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +14,15 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-public class RegistrationController {
+public class AuthController {
 
     private final UserService userService;
+    private final JwtUtil jwtUtil;
 
 
-    public RegistrationController(UserService userService) {
+    public AuthController(UserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/register")//checking for unique entries
@@ -31,4 +34,28 @@ public class RegistrationController {
                         HttpStatus.CREATED);
 
         }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody Map<String,String> loginRequest){
+        String email = loginRequest.get("email");
+        String password = loginRequest.get("password");
+
+        User user = userService.authenticate(email,password);
+
+        String token = jwtUtil.generateToken(user.getId(), String.valueOf(user.getRole()));
+
+
+        return ResponseEntity.ok(
+                Map.of(
+                        "token", token,
+                        "id", user.getId(),
+                        "email", user.getEmail(),
+                        "role", user.getRole().toString(),
+                        "message", "Login successful"
+                )
+        );
+    }
+
+
+
 }

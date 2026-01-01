@@ -2,7 +2,6 @@ package com.university.core.controller;
 
 import com.university.common.entity.Attendance;
 import com.university.core.service.AttendanceService;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/attendances")
-public class AttendanceController {
+public class    AttendanceController {
 
     private final AttendanceService attendanceService;
 
