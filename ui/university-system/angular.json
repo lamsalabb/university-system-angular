@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "university-ui": {
+    "university-system": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -56,10 +56,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "university-ui:build:production"
+              "buildTarget": "university-system:build:production"
             },
             "development": {
-              "buildTarget": "university-ui:build:development"
+              "buildTarget": "university-system:build:development"
             }
           },
           "defaultConfiguration": "development"
