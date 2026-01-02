@@ -1,8 +1,11 @@
 package com.university.core.controller;
 
-import com.university.common.entity.User;
+import com.university.core.dto.request.LoginRequest;
+import com.university.core.dto.request.RegisterUserRequest;
+import com.university.core.dto.response.UserResponse;
 import com.university.core.security.util.JwtUtil;
 import com.university.core.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,8 +28,8 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("/register")//checking for unique entries
-    public ResponseEntity<?> registerUser(@RequestBody User registrationUser) {
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterUserRequest registrationUser) {
 
                 userService.registerNewUser(registrationUser);
                 return new ResponseEntity<>(
@@ -36,25 +39,23 @@ public class AuthController {
         }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody Map<String,String> loginRequest){
-        String email = loginRequest.get("email");
-        String password = loginRequest.get("password");
+    public ResponseEntity<?> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
+        UserResponse user = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
 
-        User user = userService.authenticate(email,password);
-
-        String token = jwtUtil.generateToken(user.getId(), String.valueOf(user.getRole()));
-
+        String token = jwtUtil.generateToken(user.getId(), user.getRole().name());
 
         return ResponseEntity.ok(
                 Map.of(
                         "token", token,
                         "id", user.getId(),
+                        "firstName",user.getFirstName(),
                         "email", user.getEmail(),
-                        "role", user.getRole().toString(),
+                        "role", user.getRole().name(),
                         "message", "Login successful"
                 )
         );
     }
+
 
 
 

@@ -1,7 +1,10 @@
 package com.university.core.controller;
 
-import com.university.common.entity.User;
+import com.university.core.dto.request.RegisterUserRequest;
+import com.university.core.dto.request.UpdateUserRequest;
+import com.university.core.dto.response.UserResponse;
 import com.university.core.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,27 +23,27 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers(){
+    public List<UserResponse> getAllUsers(){
         return userService.findAllUsers();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable int id){
-            User user = userService.findUserById(id);
+            UserResponse user = userService.findUserById(id);
             return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 
     @PostMapping//Admin creation
-    public ResponseEntity<?> createUser(@RequestBody User newUser){
-            User user = userService.registerNewUser(newUser);
+    public ResponseEntity<?> createUser(@Valid @RequestBody RegisterUserRequest newUser){
+            UserResponse user = userService.registerNewUser(newUser);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable int id, @RequestBody User userDetails){
-            User updatedUser = userService.updateUser(id, userDetails);
+    public ResponseEntity<?> updateUser(@Valid @PathVariable int id, @RequestBody UpdateUserRequest userDetails){
+            UserResponse updatedUser = userService.updateUser(id, userDetails);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 
     }

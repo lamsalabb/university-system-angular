@@ -10,5 +10,11 @@ import {Footer} from '../footer/footer';
   styleUrl: './public-layout.css',
 })
 export class PublicLayout {
+  ngOnInit(): void {
+    document.body.classList.add('overflow-hidden');
+  }
 
+  ngOnDestroy(): void {
+    document.body.classList.remove('overflow-hidden');
+  }
 }

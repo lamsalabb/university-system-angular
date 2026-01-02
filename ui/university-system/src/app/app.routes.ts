@@ -5,6 +5,10 @@ import {Layout} from './layout/layout/layout';
 import {AdminDashboard} from './admin/dashboard/dashboard';
 import {InstructorDashboard} from './instructor/dashboard/dashboard';
 import {StudentDashboard} from './student/dashboard/dashboard';
+import {RegisterUser} from './admin/register-user/register-user';
+import {roleGuard} from './guards/role.guard';
+import {Unauthorized} from './shared/unauthorized/unauthorized';
+import {NotFound} from './shared/not-found/not-found';
 
 
 
@@ -15,7 +19,7 @@ export const routes: Routes = [
     children: [
 
       { path: 'login', component: LoginComponent },
-      { path: '', redirectTo: 'login', pathMatch: 'full' }
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
 
     ]
   },
@@ -24,11 +28,19 @@ export const routes: Routes = [
     path: '',
     component: Layout,
     children: [
-      { path: 'admin/dashboard', component: AdminDashboard },
-      { path: 'student/dashboard', component: StudentDashboard },
-      { path: 'instructor/dashboard', component: InstructorDashboard }
+      { path: 'admin/dashboard', component: AdminDashboard, canActivate: [roleGuard(['ADMIN'])]},
+      { path: 'student/dashboard', component: StudentDashboard, canActivate: [roleGuard(['STUDENT'])] },
+      { path: 'instructor/dashboard', component: InstructorDashboard, canActivate: [roleGuard(['INSTRUCTOR'])]},
+
+      { path: 'admin/register-user', component: RegisterUser, canActivate: [roleGuard(['ADMIN'])] },
+      {
+        path: 'unauthorized',
+        component: Unauthorized
+      }
     ]
   },
 
-  { path: '**', redirectTo: 'login' }
+  { path: '**', component: NotFound }
+
+
 ];

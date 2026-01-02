@@ -1,0 +1,25 @@
+.login-page {
+  @apply min-h-screen flex items-center justify-center;
+}
+
+.login-card {
+  @apply w-full max-w-sm p-6 border rounded-lg shadow-sm -mt-12;
+}
+
+.login-card h4 {
+  @apply text-center mb-6 text-lg font-medium;
+}
+
+.login-card input {
+  @apply w-full px-3 py-2 border rounded mb-4
+  focus:outline-none focus:ring focus:ring-blue-500;
+}
+
+.login-card button {
+  @apply w-full py-2 bg-blue-600 text-white rounded
+  disabled:opacity-50;
+}
+
+.error {
+  @apply text-center text-red-600 text-sm mt-3;
+}

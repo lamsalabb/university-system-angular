@@ -1,29 +1,40 @@
-<div class="login-container">
-  <h2>Login</h2>
+<div class="container min-vh-100 d-flex align-items-start justify-content-center pt-5">
+  <div class="card p-4 shadow-sm" style="max-width: 380px; width: 100%;">
+    <h4 class="text-center mb-4">Login</h4>
 
-  <form [formGroup]="loginForm" (ngSubmit)="login()">
-    <input
-      type="email"
-      placeholder="email"
-      formControlName="email"
-    />
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <div class="mb-3">
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Email"
+          formControlName="email"
+        />
+      </div>
 
-    <input
-      type="password"
-      placeholder="password"
-      formControlName="password"
-    />
+      <div class="mb-3">
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Password"
+          formControlName="password"
+        />
+      </div>
 
-    <button type="submit" [disabled]="loading"><!--to prevent double click -->
-      {{ loading ? 'Logging in...' : 'Login' }}
-    </button>
+      <button
+        type="submit"
+        class="btn btn-primary w-100"
+        [disabled]="loading() || loginForm.invalid"
+      >
+        {{ loading() ? 'Logging in...' : 'Login' }}
+      </button>
 
-    <p class="error" *ngIf="errorMessage">
-      {{errorMessage}}
-    </p>
-
-
-  </form>
-
-
+      <div
+        class="text-danger text-center mt-3"
+        *ngIf="errorMessage()"
+      >
+        {{ errorMessage() }}
+      </div>
+    </form>
+  </div>
 </div>
