@@ -1,17 +1,21 @@
 package com.university.core.controller;
 
 import com.university.common.entity.Attendance;
+import com.university.core.dto.mapper.AttendanceMapper;
+import com.university.core.dto.request.MarkAttendanceRequest;
+import com.university.core.dto.response.AttendanceResponse;
+import com.university.core.dto.response.AttendanceSummaryResponse;
 import com.university.core.service.AttendanceService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/attendances")
-public class    AttendanceController {
+public class AttendanceController {
 
     private final AttendanceService attendanceService;
 
@@ -21,38 +25,42 @@ public class    AttendanceController {
     }
 
     @PostMapping("/mark")
-    public ResponseEntity<?> markAttendance(@RequestBody Attendance attendanceRequest){
-        Attendance attendance = attendanceService.markAttendance(attendanceRequest.getEnrollment().getId(), attendanceRequest.getSessionDate(),attendanceRequest.getStatus(),attendanceRequest.getRemarks());
+    public ResponseEntity<AttendanceResponse> markAttendance(@Valid @RequestBody MarkAttendanceRequest attendanceRequest){
+        Attendance attendance = attendanceService.markAttendance(attendanceRequest.getEnrollmentId(), attendanceRequest.getSessionDate(),attendanceRequest.getStatus(),attendanceRequest.getRemarks());
 
-        return new ResponseEntity<>(attendance, HttpStatus.CREATED);
+        return new ResponseEntity<>(AttendanceMapper.toResponse(attendance), HttpStatus.CREATED);
     }
 
     @GetMapping("/student/{studentId}")
-    public List<Attendance> getByStudent(@PathVariable int studentId){
-        return attendanceService.getAttendanceByStudent(studentId);
+    public List<AttendanceResponse> getByStudent(@PathVariable int studentId){
+        return attendanceService.getAttendanceByStudent(studentId)
+                .stream()
+                .map(AttendanceMapper::toResponse)
+                .toList();
     }
 
     @GetMapping("/student/{studentId}/course/{courseId}")
-    public List<Attendance> getByStudentAndCourse(@PathVariable int studentId, @PathVariable int courseId){
-        return attendanceService.getAttendanceByStudentAndCourse(studentId,courseId);
+    public List<AttendanceResponse> getByStudentAndCourse(@PathVariable int studentId, @PathVariable int courseId){
+        return attendanceService.getAttendanceByStudentAndCourse(studentId,courseId)
+                .stream()
+                .map(AttendanceMapper::toResponse)
+                .toList();
     }
 
     @GetMapping("/student/{studentId}/course/{courseId}/summary")
-    public ResponseEntity<?> getSummary(@PathVariable int studentId, @PathVariable int courseId){
+    public AttendanceSummaryResponse getSummary(@PathVariable int studentId, @PathVariable int courseId){
 
         AttendanceService.AttendanceSummary summary = attendanceService.getSummaryForStudentInCourse(studentId, courseId);
 
-        return new ResponseEntity<>(
-                Map.of(
-                        "studentId",studentId,
-                        "courseId",courseId,
-                        "totalSessions",summary.totalSessions(),
-                        "presentCount",summary.presentCount(),
-                        "absentCount", summary.absentCount(),
-                        "excusedCount", summary.excusedCount(),
-                        "presentPercent", summary.presentPercent()
-                ),
-                HttpStatus.OK
+        return new AttendanceSummaryResponse(
+                studentId,
+                courseId,
+                summary.totalSessions(),
+                summary.presentCount(),
+                summary.absentCount(),
+                summary.excusedCount(),
+                summary.presentPercent()
+
         );
 
     }

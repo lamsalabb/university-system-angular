@@ -1,7 +1,6 @@
 package com.university.attendance.repository;
 
 import com.university.common.entity.Attendance;
-import com.university.common.entity.Enrollment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;

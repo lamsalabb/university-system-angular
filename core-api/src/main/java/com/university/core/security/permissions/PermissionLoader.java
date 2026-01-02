@@ -51,8 +51,24 @@ public class PermissionLoader {
     }
 
     public boolean isAllowed(String role, String method, String path) {
-        return permissionMap
-                .getOrDefault(role, Set.of())
-                .contains(method + ":" + path);
+
+        Set<String> permissions = permissionMap.getOrDefault(role, Set.of());
+
+        for (String perm : permissions) {
+            String[] parts = perm.split(":", 2);
+            String permMethod = parts[0];
+            String permPath = parts[1];
+
+            if (!permMethod.equalsIgnoreCase(method)) {
+                continue;
+            }
+
+            if (path.equals(permPath) || path.startsWith(permPath + "/")) {
+                return true;
+            }
+        }
+
+        return false;
     }
+
 }

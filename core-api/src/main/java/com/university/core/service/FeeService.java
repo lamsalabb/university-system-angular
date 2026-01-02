@@ -3,12 +3,11 @@ package com.university.core.service;
 import com.university.common.entity.Fee;
 import com.university.common.entity.User;
 import com.university.common.repository.UserRepository;
+import com.university.core.exception.UserNotFoundException;
 import com.university.fee.exception.FeeNotFoundException;
 import com.university.fee.repository.FeeRepository;
-import com.university.core.exception.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
 
 import java.time.LocalDate;
 import java.util.List;

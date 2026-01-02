@@ -1,5 +1,6 @@
 package com.university.core.controller;
 
+import com.university.core.dto.mapper.UserMapper;
 import com.university.core.dto.request.RegisterUserRequest;
 import com.university.core.dto.request.UpdateUserRequest;
 import com.university.core.dto.response.UserResponse;
@@ -24,26 +25,29 @@ public class UserController {
 
     @GetMapping
     public List<UserResponse> getAllUsers(){
-        return userService.findAllUsers();
+        return userService.findAllUsers()
+                .stream()
+                .map(UserMapper::toResponse)
+                .toList();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable int id){
-            UserResponse user = userService.findUserById(id);
+            UserResponse user = UserMapper.toResponse(userService.findUserById(id));
             return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 
     @PostMapping//Admin creation
     public ResponseEntity<?> createUser(@Valid @RequestBody RegisterUserRequest newUser){
-            UserResponse user = userService.registerNewUser(newUser);
+            UserResponse user = UserMapper.toResponse(userService.registerNewUser(newUser));
             return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@Valid @PathVariable int id, @RequestBody UpdateUserRequest userDetails){
-            UserResponse updatedUser = userService.updateUser(id, userDetails);
+    public ResponseEntity<?> updateUser(@PathVariable int id, @Valid @RequestBody UpdateUserRequest userDetails){
+            UserResponse updatedUser = UserMapper.toResponse(userService.updateUser(id, userDetails));
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 
     }

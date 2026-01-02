@@ -2,10 +2,8 @@ package com.university.core.service;
 
 import com.university.common.entity.User;
 import com.university.common.repository.UserRepository;
-import com.university.core.dto.mapper.UserMapper;
 import com.university.core.dto.request.RegisterUserRequest;
 import com.university.core.dto.request.UpdateUserRequest;
-import com.university.core.dto.response.UserResponse;
 import com.university.core.exception.EmailAlreadyExistsException;
 import com.university.core.exception.EmailNotFoundException;
 import com.university.core.exception.UserNotFoundException;
@@ -30,7 +28,7 @@ public class UserService {
 
 
     @Transactional//CREATE
-    public UserResponse registerNewUser(RegisterUserRequest registrationUser){
+    public User registerNewUser(RegisterUserRequest registrationUser){
 
         if (userRepository.findByEmail(registrationUser.getEmail()).isPresent()) {//checking unique entries
             throw new EmailAlreadyExistsException("Registration failed: Email address already in use.");
@@ -47,48 +45,40 @@ public class UserService {
                 .isActive(true)
                 .build();
 
-        User saved = userRepository.save(user);
-        return UserMapper.toResponse(saved);
+        return userRepository.save(user);
+
     }
 
 
     //READ
-    public List<UserResponse> findAllUsers(){
+    public List<User> findAllUsers(){
 
-        return userRepository.findAll()
-                .stream()
-                .map(UserMapper::toResponse)
-                .toList();
+        return userRepository.findAll();
     }
 
-    public UserResponse findUserById(int id) {
-        User user = userRepository.findById(id).orElseThrow(
+    public User findUserById(int id) {
+        return userRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("User not found with id: " + id)
         );
-        return UserMapper.toResponse(user);
     }
 
 
-    public UserResponse findUserByEmail(String email){
-        User user = userRepository.findByEmail(email).orElseThrow(
+    public User findUserByEmail(String email){
+        return userRepository.findByEmail(email).orElseThrow(
                 () -> new EmailNotFoundException("Email doesn't exist.")
         );
-        return UserMapper.toResponse(user);
+
     }
 
 
-    public List<UserResponse> findAllByRole(User.Role role){
-
-        return userRepository.findByRole(role)
-                .stream()
-                .map(UserMapper::toResponse)
-                .toList();
+    public List<User> findAllByRole(User.Role role){
+        return userRepository.findByRole(role);
     }
 
 
 
     @Transactional//UPDATE
-    public UserResponse updateUser(int id, UpdateUserRequest updatedUserDetails) {
+    public User updateUser(int id, UpdateUserRequest updatedUserDetails) {
 
         User existingUser = userRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("User not found with id: " + id)
@@ -116,8 +106,7 @@ public class UserService {
             existingUser.setPasswordHash(passwordEncoder.encode(updatedUserDetails.getPassword()));
         }
 
-        User saved = userRepository.save(existingUser);
-        return UserMapper.toResponse(saved);
+        return userRepository.save(existingUser);
     }
 
 
@@ -131,7 +120,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public UserResponse authenticate(String email, String password) {
+    public User authenticate(String email, String password) {
         User user = userRepository.findByEmail(email).orElseThrow(
                 () -> new EmailNotFoundException("Invalid email or password")
         );
@@ -140,7 +129,7 @@ public class UserService {
             throw new EmailNotFoundException("Invalid email or password");
         }
 
-        return UserMapper.toResponse(user);
+        return user;
     }
 
 

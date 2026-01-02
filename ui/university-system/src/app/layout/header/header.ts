@@ -1,8 +1,7 @@
 import {Component, signal} from '@angular/core';
-import {RouterLink, RouterOutlet} from '@angular/router';
+import {RouterLink} from '@angular/router';
 import {NgOptimizedImage} from '@angular/common';
-import {FormGroup} from '@angular/forms';
-import {AuthService} from '../../modules/auth/services/auth.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',

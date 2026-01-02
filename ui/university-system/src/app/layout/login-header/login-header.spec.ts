@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LoginHeader } from './login-header';
+import {LoginHeader} from './login-header';
 
 describe('LoginHeader', () => {
   let component: LoginHeader;

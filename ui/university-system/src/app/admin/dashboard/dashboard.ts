@@ -14,7 +14,7 @@ export class AdminDashboard {
     {
       title: 'User Management',
       description: 'Register users, manage roles, update profiles, and control access.',
-      route: '/admin/register-user',
+      route: '/admin/view-users',
       button: 'Manage Users'
     },
     {

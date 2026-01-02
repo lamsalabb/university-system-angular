@@ -12,5 +12,5 @@ public class UserResponse {
     private User.Role role;
     private String firstName;
     private String lastName;
-    private boolean isActive;
+    private boolean active;
 }

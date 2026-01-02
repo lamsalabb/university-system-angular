@@ -7,7 +7,6 @@ import com.university.core.exception.CourseNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.security.PublicKey;
 import java.util.List;
 
 @Service

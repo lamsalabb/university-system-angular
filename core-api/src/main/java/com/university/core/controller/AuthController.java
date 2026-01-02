@@ -1,5 +1,6 @@
 package com.university.core.controller;
 
+import com.university.core.dto.mapper.UserMapper;
 import com.university.core.dto.request.LoginRequest;
 import com.university.core.dto.request.RegisterUserRequest;
 import com.university.core.dto.response.UserResponse;
@@ -40,7 +41,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
-        UserResponse user = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
+        UserResponse user = UserMapper.toResponse(userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword()));
 
         String token = jwtUtil.generateToken(user.getId(), user.getRole().name());
 

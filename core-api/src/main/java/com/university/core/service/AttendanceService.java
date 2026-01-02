@@ -1,5 +1,6 @@
 package com.university.core.service;
 
+import com.university.attendance.exception.AttendanceNotFoundException;
 import com.university.attendance.repository.AttendanceRepository;
 import com.university.common.entity.Attendance;
 import com.university.common.entity.Enrollment;
@@ -7,7 +8,6 @@ import com.university.common.repository.EnrollmentRepository;
 import com.university.core.exception.EnrollmentNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import com.university.attendance.exception.AttendanceNotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
