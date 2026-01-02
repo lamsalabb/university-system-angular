@@ -1,5 +1,6 @@
 package com.university.core.security;
 
+import com.university.core.security.permissions.PermissionLoader;
 import com.university.core.security.util.JwtUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +24,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, JwtUtil jwtUtil) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtUtil jwtUtil, PermissionLoader permissionLoader) throws Exception {
 
         http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -33,10 +34,11 @@ public class SecurityConfig {
 
                                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                                 .requestMatchers("/api/auth/**").permitAll()
+
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(
-                        new JwtAuthFilter(jwtUtil),
+                        new JwtAuthFilter(jwtUtil,permissionLoader),
                         UsernamePasswordAuthenticationFilter.class
                 );
 

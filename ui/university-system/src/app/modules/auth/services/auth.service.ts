@@ -25,13 +25,13 @@ export class AuthService {
     localStorage.setItem('role',response.role);
 
     if(response.role == 'ADMIN'){
-      this.router.navigate(['/admin']);
+      this.router.navigate(['/admin/dashboard']);
     }
     else if(response.role == 'INSTRUCTOR'){
-      this.router.navigate(['/instructor'])
+      this.router.navigate(['/instructor/dashboard'])
     }
     else {
-      this.router.navigate(['/student'])
+      this.router.navigate(['/student/dashboard'])
     }
   }
 
