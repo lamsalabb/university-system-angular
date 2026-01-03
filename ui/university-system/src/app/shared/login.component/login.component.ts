@@ -6,7 +6,7 @@ import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-login.component',
-  standalone:true,
+  standalone: true,
   imports: [
     ReactiveFormsModule,
     NgIf
@@ -16,21 +16,22 @@ import {NgIf} from '@angular/common';
 })
 export class LoginComponent {
 
-  loginForm:FormGroup;
+  loginForm: FormGroup;
 
   loading = signal(false);
   errorMessage = signal('');
 
 
   constructor(
-    private fb:FormBuilder,
-    private authService:AuthService,
-    private router:Router,
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
     private cdr: ChangeDetectorRef,
-  ) {this.loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required]
-  });
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
 
   }
 
@@ -51,7 +52,6 @@ export class LoginComponent {
       }
     });
   }
-
 
 
 }

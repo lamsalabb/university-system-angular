@@ -27,11 +27,10 @@ public class CourseService {
     }
 
 
-
     @Transactional//CREATE
-    public Course createCourse(CreateCourseRequest courseRequest){
-        if(courseRepository.findByCode(courseRequest.getCode()).isPresent()){
-            throw new CourseAlreadyExistsException("Course with code "+courseRequest.getCode()+" already exists.");
+    public Course createCourse(CreateCourseRequest courseRequest) {
+        if (courseRepository.findByCode(courseRequest.getCode()).isPresent()) {
+            throw new CourseAlreadyExistsException("Course with code " + courseRequest.getCode() + " already exists.");
         }
         User instructor = userRepository.findById(courseRequest.getInstructorId())
                 .orElseThrow(() ->
@@ -51,14 +50,13 @@ public class CourseService {
     }
 
 
-
     //READ
-    public List<Course> getAllCourses(){
+    public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
 
-    public Course findCourseById(int id){
-        return courseRepository.findById(id).orElseThrow(() ->new CourseNotFoundException("Course not found with id: "+id));
+    public Course findCourseById(int id) {
+        return courseRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("Course not found with id: " + id));
     }
 
 
@@ -95,18 +93,13 @@ public class CourseService {
     }
 
 
-
-
     @Transactional//DELETE
-    public void deleteCourse(int id){
-        if (!courseRepository.existsById(id)){
+    public void deleteCourse(int id) {
+        if (!courseRepository.existsById(id)) {
             throw new CourseNotFoundException("Cannot delete. Course not found with id: " + id);
         }
         courseRepository.deleteById(id);
     }
-
-
-
 
 
 }

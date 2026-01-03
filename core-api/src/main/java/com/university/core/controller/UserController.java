@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -24,43 +23,52 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserResponse> getAllUsers(){
-        return userService.findAllUsers()
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
+
+        List<UserResponse> users = userService.findAllUsers()
                 .stream()
                 .map(UserMapper::toResponse)
                 .toList();
+
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable int id){
-            UserResponse user = UserMapper.toResponse(userService.findUserById(id));
-            return new ResponseEntity<>(user, HttpStatus.OK);
+    public ResponseEntity<UserResponse> getUserById(@PathVariable int id) {
+
+        UserResponse user =
+                UserMapper.toResponse(userService.findUserById(id));
+
+        return ResponseEntity.ok(user);
     }
 
+    @PostMapping // Admin creation
+    public ResponseEntity<UserResponse> createUser(
+            @Valid @RequestBody RegisterUserRequest newUser) {
 
-    @PostMapping//Admin creation
-    public ResponseEntity<?> createUser(@Valid @RequestBody RegisterUserRequest newUser){
-            UserResponse user = UserMapper.toResponse(userService.registerNewUser(newUser));
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        UserResponse user =
+                UserMapper.toResponse(userService.registerNewUser(newUser));
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(user);
     }
-
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable int id, @Valid @RequestBody UpdateUserRequest userDetails){
-            UserResponse updatedUser = UserMapper.toResponse(userService.updateUser(id, userDetails));
-            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    public ResponseEntity<UserResponse> updateUser(
+            @PathVariable int id,
+            @Valid @RequestBody UpdateUserRequest userDetails) {
 
+        UserResponse updatedUser =
+                UserMapper.toResponse(userService.updateUser(id, userDetails));
+
+        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable int id){
-            userService.deleteUser(id);
-            return new ResponseEntity<>(
-                    Map.of("message","User deleted Successfully."),
-                    HttpStatus.OK
-            );
+    public ResponseEntity<Void> deleteUser(@PathVariable int id) {
+
+        userService.deleteUser(id);
+
+        return ResponseEntity.noContent().build();
     }
-
-
-
 }

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ViewUsers } from './view-users';
+import {ViewUsers} from './view-users';
 
 describe('ViewUsers', () => {
   let component: ViewUsers;
@@ -10,7 +10,7 @@ describe('ViewUsers', () => {
     await TestBed.configureTestingModule({
       imports: [ViewUsers]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ViewUsers);
     component = fixture.componentInstance;

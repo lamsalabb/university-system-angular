@@ -28,17 +28,18 @@ public class SecurityConfig {
 
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> {})
+                .cors(cors -> {
+                })
                 .authorizeHttpRequests(
                         configurer -> configurer
 
-                                .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                 .requestMatchers("/api/auth/**").permitAll()
 
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(
-                        new JwtAuthFilter(jwtUtil,permissionLoader),
+                        new JwtAuthFilter(jwtUtil, permissionLoader),
                         UsernamePasswordAuthenticationFilter.class
                 );
 

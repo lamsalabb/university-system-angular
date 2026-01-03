@@ -5,7 +5,8 @@ import com.university.core.dto.response.CourseResponse;
 
 public final class CourseMapper {
 
-    private CourseMapper() {}
+    private CourseMapper() {
+    }
 
     public static CourseResponse toResponse(Course course) {
         return CourseResponse.builder()

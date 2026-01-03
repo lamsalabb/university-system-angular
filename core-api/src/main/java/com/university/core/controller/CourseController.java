@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/courses")
@@ -25,39 +24,48 @@ public class CourseController {
 
 
     @GetMapping
-    public List<CourseResponse> getAllCourses(){
-        return courseService.getAllCourses().stream().map(CourseMapper::toResponse).toList();
+    public ResponseEntity<List<CourseResponse>> getAllCourses() {
+        return ResponseEntity.ok(
+                courseService.getAllCourses()
+                        .stream()
+                        .map(CourseMapper::toResponse)
+                        .toList()
+        );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCourseById(@PathVariable int id){
-        CourseResponse course = CourseMapper.toResponse(courseService.findCourseById(id));
-        return new ResponseEntity<>(course, HttpStatus.OK);
+    public ResponseEntity<CourseResponse> getCourseById(@PathVariable int id) {
+        return ResponseEntity.ok(
+                CourseMapper.toResponse(courseService.findCourseById(id))
+        );
     }
-
 
 
     @PostMapping
-    public ResponseEntity<?> createCourse(@Valid @RequestBody CreateCourseRequest courseRequest){
-        CourseResponse createdCourse = CourseMapper.toResponse(courseService.createCourse(courseRequest));
-        return new ResponseEntity<>(createdCourse, HttpStatus.CREATED);
+    public ResponseEntity<CourseResponse> createCourse(@Valid @RequestBody CreateCourseRequest courseRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                        CourseMapper.toResponse(
+                                courseService.createCourse(courseRequest)
+                        )
+                );
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCourse(@PathVariable int id,@Valid @RequestBody UpdateCourseRequest courseDetails){
-        CourseResponse updatedCourse = CourseMapper.toResponse(courseService.updateCourse(id, courseDetails));
-        return new ResponseEntity<>(updatedCourse, HttpStatus.OK);
+    public ResponseEntity<CourseResponse> updateCourse(
+            @PathVariable int id,
+            @Valid @RequestBody UpdateCourseRequest courseDetails) {
 
+        return ResponseEntity.ok(
+                CourseMapper.toResponse(
+                        courseService.updateCourse(id, courseDetails)
+                )
+        );
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCourse(@PathVariable int id){
-            courseService.deleteCourse(id);
-            return new ResponseEntity<>(
-                    Map.of("message","Course Deleted Successfully."),
-                    HttpStatus.OK
-            );
+    public ResponseEntity<Void> deleteCourse(@PathVariable int id) {
+        courseService.deleteCourse(id);
+        return ResponseEntity.noContent().build();
     }
-
-
 }

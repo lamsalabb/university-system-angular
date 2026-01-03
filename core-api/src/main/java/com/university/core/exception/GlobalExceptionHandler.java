@@ -15,79 +15,76 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<?> handleUserNotFound(UserNotFoundException e){
+    public ResponseEntity<?> handleUserNotFound(UserNotFoundException e) {
         return buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
     }
 
     @ExceptionHandler(EmailNotFoundException.class)
-    public ResponseEntity<?> handleEmailNotFound(EmailNotFoundException e){
+    public ResponseEntity<?> handleEmailNotFound(EmailNotFoundException e) {
         return buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
     }
 
     @ExceptionHandler(CourseNotFoundException.class)
-    public ResponseEntity<?> handleCourseNotFound(CourseNotFoundException e){
+    public ResponseEntity<?> handleCourseNotFound(CourseNotFoundException e) {
         return buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
     }
 
     @ExceptionHandler(EnrollmentNotFoundException.class)
-    public ResponseEntity<?> handleEnrollmentNotFound(EnrollmentNotFoundException e){
+    public ResponseEntity<?> handleEnrollmentNotFound(EnrollmentNotFoundException e) {
         return buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
     }
 
     @ExceptionHandler(AttendanceNotFoundException.class)
-    public ResponseEntity<?> handleAttendanceNotFoundException(AttendanceNotFoundException e){
+    public ResponseEntity<?> handleAttendanceNotFoundException(AttendanceNotFoundException e) {
         return buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
     }
 
     @ExceptionHandler(FeeNotFoundException.class)
-    public ResponseEntity<?> handleFeeNotFoundException(FeeNotFoundException e){
+    public ResponseEntity<?> handleFeeNotFoundException(FeeNotFoundException e) {
         return buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
     }
 
 
     @ExceptionHandler(EmailAlreadyExistsException.class)
-    public ResponseEntity<?> handleEmailAlreadyExists(EmailAlreadyExistsException e){
+    public ResponseEntity<?> handleEmailAlreadyExists(EmailAlreadyExistsException e) {
         return buildErrorResponse(HttpStatus.CONFLICT, e.getMessage());
     }
 
     @ExceptionHandler(CourseAlreadyExistsException.class)
-    public ResponseEntity<?> handleCourseAlreadyExists(CourseAlreadyExistsException e){
+    public ResponseEntity<?> handleCourseAlreadyExists(CourseAlreadyExistsException e) {
         return buildErrorResponse(HttpStatus.CONFLICT, e.getMessage());
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<?> handleUserAlreadyExists(UserAlreadyExistsException e){
+    public ResponseEntity<?> handleUserAlreadyExists(UserAlreadyExistsException e) {
         return buildErrorResponse(HttpStatus.CONFLICT, e.getMessage());
     }
 
     @ExceptionHandler(EnrollmentAlreadyExistsException.class)
-    public ResponseEntity<?> handleEnrollmentAlreadyExists(EnrollmentAlreadyExistsException e){
+    public ResponseEntity<?> handleEnrollmentAlreadyExists(EnrollmentAlreadyExistsException e) {
         return buildErrorResponse(HttpStatus.CONFLICT, e.getMessage());
     }
 
     @ExceptionHandler(NonStudentEnrollmentException.class)
-    public ResponseEntity<?> handleNonStudentEnrollment(NonStudentEnrollmentException e){
+    public ResponseEntity<?> handleNonStudentEnrollment(NonStudentEnrollmentException e) {
         return buildErrorResponse(HttpStatus.UNPROCESSABLE_CONTENT, e.getMessage());
     }
 
     @ExceptionHandler(InvalidInstructorException.class)
-    public ResponseEntity<?> handleInvalidInstructor(InvalidInstructorException e){
+    public ResponseEntity<?> handleInvalidInstructor(InvalidInstructorException e) {
         return buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
     @ExceptionHandler(OutstandingFeesException.class)
-    public ResponseEntity<?> handleOutstandingFees(OutstandingFeesException e){
+    public ResponseEntity<?> handleOutstandingFees(OutstandingFeesException e) {
         return buildErrorResponse(HttpStatus.UNPROCESSABLE_CONTENT, e.getMessage());
     }
 
 
     @ExceptionHandler(Exception.class)//fallback for any generic exceptions
-    public ResponseEntity<?> handleGenericException(Exception e){
+    public ResponseEntity<?> handleGenericException(Exception e) {
         return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error occurred.");
     }
-
-
-
 
 
     //helper class to build a response
@@ -96,10 +93,10 @@ public class GlobalExceptionHandler {
                 "timestamp", Instant.now().toString(),
                 "status", status.value(),
                 "error", status.getReasonPhrase(),
-                "message",message
+                "message", message
         );
 
-        return new ResponseEntity<>(errorBody,status);
+        return new ResponseEntity<>(errorBody, status);
     }
 
 

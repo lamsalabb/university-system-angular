@@ -92,20 +92,19 @@ public class EnrollmentService {
     }
 
 
-    public List<Enrollment> getEnrollmentByStudent(int studentId){
+    public List<Enrollment> getEnrollmentByStudent(int studentId) {
         return enrollmentRepository.findByStudentId(studentId);
     }
 
-    public List<Enrollment> getEnrollmentByCourse(int courseId){
+    public List<Enrollment> getEnrollmentByCourse(int courseId) {
         return enrollmentRepository.findByCourseId(courseId);
     }
 
-    public Enrollment getEnrollmentById(int id){
+    public Enrollment getEnrollmentById(int id) {
         return enrollmentRepository.findById(id).orElseThrow(
                 () -> new EnrollmentNotFoundException("Enrollment not found with id: " + id)
         );
     }
-
 
 
 }

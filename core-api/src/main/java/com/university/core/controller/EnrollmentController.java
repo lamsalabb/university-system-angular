@@ -24,15 +24,13 @@ public class EnrollmentController {
     public ResponseEntity<?> enroll(@Valid @RequestBody CreateEnrollmentRequest request) {
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(
-                        EnrollmentMapper.toResponse(
-                                enrollmentService.enroll(request)
-                        )
+                .body(EnrollmentMapper.toResponse(enrollmentService.enroll(request))
                 );
     }
 
     @PostMapping("/{id}/drop")
-    public ResponseEntity<?> drop(@PathVariable int id) {enrollmentService.dropEnrollment(id);
+    public ResponseEntity<?> drop(@PathVariable int id) {
+        enrollmentService.dropEnrollment(id);
         return ResponseEntity.noContent().build();
     }
 

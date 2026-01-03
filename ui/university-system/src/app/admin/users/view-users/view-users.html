@@ -1,100 +1,150 @@
-<main class="container py-5">
-
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h3 class="fw-bold mb-0">User Management</h3>
+<main class="page-container">
+  <div class="list-header">
+    <h3 class="list-title">User Management</h3>
     <a
       routerLink="/admin/register-user"
-      class="btn btn-primary btn-sm"
+      class="primary-button small-button"
     >
       Register User
     </a>
   </div>
 
   @if (loading()) {
-    <p class="text-muted">Loading users…</p>
+    <p class="muted-text">Loading users…</p>
   }
 
   @if (error()) {
-    <p class="text-danger">{{ error() }}</p>
+    <p class="error-text">{{ error() }}</p>
   }
 
   @if (!loading() && !error()) {
+    <div class="list-card">
+      <table class="data-table">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th class="align-right">Actions</th>
+        </tr>
+        </thead>
 
-    <div class="card border-0 shadow-sm">
-      <div class="card-body p-0">
+        <tbody>
+          @for (u of users(); track u.id) {
+            <tr>
+              <td>{{ u.firstName }} {{ u.lastName }}</td>
+              <td>{{ u.email }}</td>
 
-        <table class="table table-hover align-middle mb-0">
+              <td>
+                <span class="status-badge neutral">
+                  {{ u.role }}
+                </span>
+              </td>
 
-          <thead class="table-light">
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Status</th>
-            <th class="text-end">Actions</th>
-          </tr>
-          </thead>
+              <td>
+                <span
+                  class="status-badge"
+                  [class.success]="u.active"
+                  [class.danger]="!u.active"
+                >
+                  {{ u.active ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
 
-          <tbody>
-
-            @for (u of users(); track u.id) {
-              <tr>
-
-                <td>{{ u.firstName }} {{ u.lastName }}</td>
-                <td>{{ u.email }}</td>
-
-                <td>
-                  <span class="badge bg-secondary">
-                    {{ u.role }}
-                  </span>
-                </td>
-
-                <td>
-                  <span
-                    class="badge"
-                    [class.bg-success]="u.active"
-                    [class.bg-danger]="!u.active"
+              <td class="align-right">
+                @if (u.role !== 'ADMIN') {
+                  <button
+                    class="link-button"
+                    (click)="openEdit(u)"
                   >
-                    {{ u.active ? 'Active' : 'Inactive' }}
-                  </span>
-                </td>
+                    Edit
+                  </button>
 
-                <td class="text-end">
+                  <button
+                    class="link-button danger"
+                    (click)="deleteUser(u.id)"
+                  >
+                    Delete
+                  </button>
+                }
 
-                  @if (u.role !== 'ADMIN') {
-                    <button
-                      class="btn btn-sm btn-outline-primary me-2"
-                    >
-                      Edit
-                    </button>
-
-
-
-                    <button
-                      class="btn btn-sm btn-outline-danger"
-                      (click)="deleteUser(u.id)">
-                      Delete
-                    </button>
-                  }
-
-                  @if (u.role === 'ADMIN') {
-                    <span class="text-muted small fst-italic">
-                      Admin
-                    </span>
-                  }
-
-                </td>
-
-              </tr>
-            }
-
-          </tbody>
-
-        </table>
-
-      </div>
+                @if (u.role === 'ADMIN') {
+                  <span class="muted-text small-italic">Admin</span>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
     </div>
   }
 
-</main>
+  @if (editingUser()) {
+    <div class="modal-backdrop" (click)="closeEdit()">
+      <div class="modal-box" (click)="$event.stopPropagation()">
 
+        <h5 class="modal-title">Edit User</h5>
+
+        <div class="form-field">
+          <input
+            class="form-input"
+            [(ngModel)]="editForm.firstName"
+            placeholder="First name"
+          >
+        </div>
+
+        <div class="form-field">
+          <input
+            class="form-input"
+            [(ngModel)]="editForm.lastName"
+            placeholder="Last name"
+          >
+        </div>
+
+        <div class="form-field">
+          <input
+            class="form-input"
+            [(ngModel)]="editForm.email"
+            placeholder="Email"
+          >
+        </div>
+
+        <div class="form-field">
+          <input
+            type="password"
+            class="form-input"
+            [(ngModel)]="editForm.password"
+            placeholder="New password (optional)"
+          >
+        </div>
+
+        @if (editingUser()?.role !== 'ADMIN') {
+          <label class="checkbox-field">
+            <input
+              type="checkbox"
+              [(ngModel)]="editForm.isActive"
+            >
+            Active
+          </label>
+        }
+
+        <div class="form-actions">
+          <button
+            class="secondary-button small-button"
+            (click)="closeEdit()"
+          >
+            Cancel
+          </button>
+
+          <button
+            class="primary-button small-button"
+            (click)="saveEdit()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</main>

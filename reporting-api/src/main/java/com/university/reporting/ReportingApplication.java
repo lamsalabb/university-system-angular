@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = "com.university.reporting.repository")
 public class ReportingApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ReportingApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ReportingApplication.class, args);
+    }
 
 }

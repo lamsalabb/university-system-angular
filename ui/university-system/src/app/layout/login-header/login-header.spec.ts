@@ -10,7 +10,7 @@ describe('LoginHeader', () => {
     await TestBed.configureTestingModule({
       imports: [LoginHeader]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LoginHeader);
     component = fixture.componentInstance;

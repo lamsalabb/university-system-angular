@@ -19,22 +19,26 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
 
+    @Transactional
+    public User registerNewUser(RegisterUserRequest registrationUser) {
 
-    @Transactional//CREATE
-    public User registerNewUser(RegisterUserRequest registrationUser){
-
-        if (userRepository.findByEmail(registrationUser.getEmail()).isPresent()) {//checking unique entries
-            throw new EmailAlreadyExistsException("Registration failed: Email address already in use.");
+        if (userRepository.findByEmail(registrationUser.getEmail()).isPresent()) {
+            throw new EmailAlreadyExistsException(
+                    "Registration failed: Email address already in use."
+            );
         }
 
-        String hashedPassword = passwordEncoder.encode(registrationUser.getPassword());
+        String rawPassword = registrationUser.getPassword();
+        String hashedPassword = passwordEncoder.encode(rawPassword);
 
         User user = User.builder()
                 .email(registrationUser.getEmail())
@@ -45,13 +49,18 @@ public class UserService {
                 .isActive(true)
                 .build();
 
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
+        emailService.sendUserCredentials(savedUser.getEmail(), rawPassword
+        );
+
+        return savedUser;
     }
 
 
+
     //READ
-    public List<User> findAllUsers(){
+    public List<User> findAllUsers() {
 
         return userRepository.findAll();
     }
@@ -63,7 +72,7 @@ public class UserService {
     }
 
 
-    public User findUserByEmail(String email){
+    public User findUserByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(
                 () -> new EmailNotFoundException("Email doesn't exist.")
         );
@@ -71,10 +80,9 @@ public class UserService {
     }
 
 
-    public List<User> findAllByRole(User.Role role){
+    public List<User> findAllByRole(User.Role role) {
         return userRepository.findByRole(role);
     }
-
 
 
     @Transactional//UPDATE
@@ -106,15 +114,18 @@ public class UserService {
             existingUser.setPasswordHash(passwordEncoder.encode(updatedUserDetails.getPassword()));
         }
 
+        //only for admins
+        if (updatedUserDetails.getIsActive() != null) {
+            existingUser.setIsActive(updatedUserDetails.getIsActive());
+        }
+
         return userRepository.save(existingUser);
     }
 
 
-
-
     @Transactional//DELETE
-    public void deleteUser(int id){
-        if(!userRepository.existsById(id)){
+    public void deleteUser(int id) {
+        if (!userRepository.existsById(id)) {
             throw new UserNotFoundException("Cannot delete. User not found with id: " + id);
         }
         userRepository.deleteById(id);
@@ -131,7 +142,6 @@ public class UserService {
 
         return user;
     }
-
 
 
 }

@@ -8,4 +8,5 @@ public record AttendanceSummaryResponse(
         long absentCount,
         long excusedCount,
         double presentPercent
-) {}
+) {
+}

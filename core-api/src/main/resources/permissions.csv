@@ -2,5 +2,6 @@ ROLE,HTTP_METHOD,PATH
 ADMIN,GET,/api/users
 ADMIN,POST,/api/users
 ADMIN,DELETE,/api/users
+ADMIN,PUT,/api/users
 STUDENT,GET,/api/courses
 INSTRUCTOR,POST,/api/attendance

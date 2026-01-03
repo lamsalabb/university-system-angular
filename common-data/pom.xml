@@ -6,7 +6,8 @@
         <groupId>com.university</groupId>
         <artifactId>university-system-angular</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath> </parent>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
     <artifactId>common-data</artifactId>
 

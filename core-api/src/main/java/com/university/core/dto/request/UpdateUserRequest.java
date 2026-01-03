@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UpdateUserRequest {
+
     @Email
     private String email;
 
@@ -20,4 +21,6 @@ public class UpdateUserRequest {
 
     @Size(min = 6)
     private String password;
+
+    private Boolean isActive;
 }

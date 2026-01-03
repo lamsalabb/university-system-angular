@@ -26,7 +26,7 @@ public class Course {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "credits",nullable = false)
+    @Column(name = "credits", nullable = false)
     private Integer credits;
 
     @ManyToOne(fetch = FetchType.LAZY)//many courses can have one instructor

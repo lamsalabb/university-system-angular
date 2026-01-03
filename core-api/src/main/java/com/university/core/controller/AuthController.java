@@ -32,12 +32,12 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterUserRequest registrationUser) {
 
-                userService.registerNewUser(registrationUser);
-                return new ResponseEntity<>(
-                        Map.of("message", "User registered successfully!"),
-                        HttpStatus.CREATED);
+        userService.registerNewUser(registrationUser);
+        return new ResponseEntity<>(
+                Map.of("message", "User registered successfully!"),
+                HttpStatus.CREATED);
 
-        }
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -49,15 +49,13 @@ public class AuthController {
                 Map.of(
                         "token", token,
                         "id", user.getId(),
-                        "firstName",user.getFirstName(),
+                        "firstName", user.getFirstName(),
                         "email", user.getEmail(),
                         "role", user.getRole().name(),
                         "message", "Login successful"
                 )
         );
     }
-
-
 
 
 }

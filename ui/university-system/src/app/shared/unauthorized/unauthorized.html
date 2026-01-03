@@ -1,8 +1,16 @@
-<div class="text-center mt-5">
-  <h2 class="text-danger">403 - Unauthorized</h2>
-  <p>You do not have permission to access this page.</p>
+<div class="page-container not-found-page">
+  <h2 class="error-text not-found-title">
+    403 – Unauthorized
+  </h2>
 
-  <button class="btn btn-primary mt-3" (click)="goToDashboard()">
+  <p class="not-found-message">
+    You do not have permission to access this page.
+  </p>
+
+  <button
+    class="primary-button"
+    (click)="goToDashboard()"
+  >
     Go back to dashboard
   </button>
 </div>

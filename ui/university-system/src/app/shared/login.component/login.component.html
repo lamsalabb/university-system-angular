@@ -1,21 +1,21 @@
-<div class="container min-vh-100 d-flex align-items-start justify-content-center pt-5">
-  <div class="card p-4 shadow-sm" style="max-width: 380px; width: 100%;">
-    <h4 class="text-center mb-4">Login</h4>
+<div class="auth-page">
+  <div class="auth-card">
+    <h4 class="auth-title">Login</h4>
 
     <form [formGroup]="loginForm" (ngSubmit)="login()">
-      <div class="mb-3">
+      <div class="form-field">
         <input
           type="email"
-          class="form-control"
+          class="form-input"
           placeholder="Email"
           formControlName="email"
         />
       </div>
 
-      <div class="mb-3">
+      <div class="form-field">
         <input
           type="password"
-          class="form-control"
+          class="form-input"
           placeholder="Password"
           formControlName="password"
         />
@@ -23,14 +23,14 @@
 
       <button
         type="submit"
-        class="btn btn-primary w-100"
+        class="primary-button full-width"
         [disabled]="loading() || loginForm.invalid"
       >
         {{ loading() ? 'Logging in...' : 'Login' }}
       </button>
 
       <div
-        class="text-danger text-center mt-3"
+        class="form-error"
         *ngIf="errorMessage()"
       >
         {{ errorMessage() }}

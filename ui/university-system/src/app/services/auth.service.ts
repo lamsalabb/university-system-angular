@@ -11,31 +11,29 @@ export class AuthService {
   private url = `${environment.url}`;
 
   constructor(
-    private http:HttpClient,
-    private router:Router
+    private http: HttpClient,
+    private router: Router
   ) {
   }
 
-  login(credentials:any){
+  login(credentials: any) {
     return this.http.post<any>(`${this.url}/api/auth/login`, credentials);
   }
 
-  handleLoginSuccess(response:any){
-    localStorage.setItem('token',response.token);
-    localStorage.setItem('role',response.role);
+  handleLoginSuccess(response: any) {
+    localStorage.setItem('token', response.token);
+    localStorage.setItem('role', response.role);
 
-    if(response.role == 'ADMIN'){
+    if (response.role == 'ADMIN') {
       this.router.navigate(['/admin/dashboard']);
-    }
-    else if(response.role == 'INSTRUCTOR'){
+    } else if (response.role == 'INSTRUCTOR') {
       this.router.navigate(['/instructor/dashboard'])
-    }
-    else {
+    } else {
       this.router.navigate(['/student/dashboard'])
     }
   }
 
-  logout(){
+  logout() {
     localStorage.clear();
     this.router.navigate(['/login']);
   }

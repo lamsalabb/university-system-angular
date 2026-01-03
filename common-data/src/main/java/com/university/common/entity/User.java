@@ -21,10 +21,10 @@ public class User {
     private Integer id;
 
     @Email
-    @Column(name="email", unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name="password_hash", nullable = false)
+    @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
     @Enumerated(EnumType.STRING)
@@ -41,7 +41,7 @@ public class User {
     @Builder.Default
     private Boolean isActive = true;
 
-    public enum Role{
+    public enum Role {
         ADMIN, INSTRUCTOR, STUDENT
     }
 

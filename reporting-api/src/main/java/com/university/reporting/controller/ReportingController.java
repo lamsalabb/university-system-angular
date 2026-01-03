@@ -29,6 +29,7 @@ public class ReportingController {
     public List<CourseEnrollmentDTO> enrollmentByCourse() {
         return service.courseEnrollment();
     }
+
     @GetMapping("/average-grades")
     public List<AverageGradeDTO> averageGrades() {
         return service.averageGrades();

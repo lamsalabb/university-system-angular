@@ -1,11 +1,13 @@
 import {Component, signal} from '@angular/core';
 import {User} from '../../../services/user';
 import {RouterLink} from '@angular/router';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-view-users',
   imports: [
     RouterLink,
+    FormsModule,
   ],
   templateUrl: './view-users.html',
   styleUrl: './view-users.css',
@@ -42,6 +44,47 @@ export class ViewUsers {
       this.users.update(u => u.filter(x => x.id !== id));
     });
   }
+
+  editingUser = signal<any | null>(null)
+
+  editForm = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    isActive: true
+  }
+
+  openEdit(u: any) {
+    this.editingUser.set(u)
+    this.editForm = {
+      firstName: u.firstName,
+      lastName: u.lastName,
+      email: u.email,
+      password: '',
+      isActive: u.active
+    }
+  }
+
+  closeEdit() {
+    this.editingUser.set(null)
+  }
+
+  saveEdit() {
+    const payload: any = { ...this.editForm }
+
+    if (!payload.password) delete payload.password
+
+    this.userService.updateUser(this.editingUser()!.id, payload)
+      .subscribe(updated => {
+        this.users.update(list =>
+          list.map(u => u.id === updated.id ? updated : u)
+        )
+        this.closeEdit()
+      })
+  }
+
+
 
 
 }

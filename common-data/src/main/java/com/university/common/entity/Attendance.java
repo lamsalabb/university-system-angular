@@ -34,7 +34,7 @@ public class Attendance {
     @Column(name = "remarks")
     private String remarks;
 
-    public enum Status{
+    public enum Status {
         PRESENT, ABSENT, EXCUSED
     }
 }

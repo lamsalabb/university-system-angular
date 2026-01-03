@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
@@ -8,9 +8,10 @@ import {environment} from '../../environments/environment';
 })
 export class User {
 
-  private readonly apiUrl = `${environment.url}`+'/api/users';
+  private readonly apiUrl = `${environment.url}` + '/api/users';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   // GET /api/users
   getAllUsers(): Observable<any[]> {

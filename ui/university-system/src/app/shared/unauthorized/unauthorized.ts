@@ -12,7 +12,9 @@ import {Router} from '@angular/router';
 export class Unauthorized {
 
   role = localStorage.getItem('role');
-  constructor(private router: Router) { }
+
+  constructor(private router: Router) {
+  }
 
   goToDashboard() {
     if (this.role === 'ADMIN') {

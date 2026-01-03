@@ -18,8 +18,8 @@ export const routes: Routes = [
     component: PublicLayout,
     children: [
 
-      { path: 'login', component: LoginComponent },
-      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      {path: 'login', component: LoginComponent},
+      {path: '', redirectTo: 'login', pathMatch: 'full'},
 
     ]
   },
@@ -28,12 +28,12 @@ export const routes: Routes = [
     path: '',
     component: Layout,
     children: [
-      { path: 'admin/dashboard', component: AdminDashboard, canActivate: [roleGuard(['ADMIN'])]},
-      { path: 'student/dashboard', component: StudentDashboard, canActivate: [roleGuard(['STUDENT'])] },
-      { path: 'instructor/dashboard', component: InstructorDashboard, canActivate: [roleGuard(['INSTRUCTOR'])]},
+      {path: 'admin/dashboard', component: AdminDashboard, canActivate: [roleGuard(['ADMIN'])]},
+      {path: 'student/dashboard', component: StudentDashboard, canActivate: [roleGuard(['STUDENT'])]},
+      {path: 'instructor/dashboard', component: InstructorDashboard, canActivate: [roleGuard(['INSTRUCTOR'])]},
 
-      { path: 'admin/view-users', component: ViewUsers, canActivate: [roleGuard(['ADMIN'])] },
-      { path: 'admin/register-user', component: RegisterUser, canActivate: [roleGuard(['ADMIN'])] },
+      {path: 'admin/view-users', component: ViewUsers, canActivate: [roleGuard(['ADMIN'])]},
+      {path: 'admin/register-user', component: RegisterUser, canActivate: [roleGuard(['ADMIN'])]},
       {
         path: 'unauthorized',
         component: Unauthorized
@@ -41,7 +41,7 @@ export const routes: Routes = [
     ]
   },
 
-  { path: '**', component: NotFound }
+  {path: '**', component: NotFound}
 
 
 ];

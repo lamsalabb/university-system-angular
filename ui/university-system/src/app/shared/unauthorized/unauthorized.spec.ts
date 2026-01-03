@@ -10,7 +10,7 @@ describe('Unauthorized', () => {
     await TestBed.configureTestingModule({
       imports: [Unauthorized]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(Unauthorized);
     component = fixture.componentInstance;

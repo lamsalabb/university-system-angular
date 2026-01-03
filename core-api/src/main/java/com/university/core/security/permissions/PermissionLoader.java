@@ -17,14 +17,14 @@ import java.util.Set;
 @Component
 public class PermissionLoader {
 
-    private final Map<String, Set<String>>  permissionMap = new HashMap<>();
+    private final Map<String, Set<String>> permissionMap = new HashMap<>();
 
     @PostConstruct
-    public void loadMap(){
+    public void loadMap() {
         ClassPathResource resource = new ClassPathResource("permissions.csv");
 
-        try(Reader reader = new InputStreamReader(resource.getInputStream())){
-            Iterable <CSVRecord> records = CSVFormat.DEFAULT
+        try (Reader reader = new InputStreamReader(resource.getInputStream())) {
+            Iterable<CSVRecord> records = CSVFormat.DEFAULT
                     .builder()
                     .setHeader()//uses first row as header
                     .setSkipHeaderRecord(true)
@@ -32,7 +32,7 @@ public class PermissionLoader {
                     .build()
                     .parse(reader);
 
-            for (CSVRecord r : records){
+            for (CSVRecord r : records) {
                 String role = r.get("ROLE");
                 String method = r.get("HTTP_METHOD");
                 String path = r.get("PATH");
@@ -46,7 +46,7 @@ public class PermissionLoader {
 
 
         } catch (IOException e) {
-            throw new IllegalStateException("permissions.csv not found or unreadable",e);
+            throw new IllegalStateException("permissions.csv not found or unreadable", e);
         }
     }
 

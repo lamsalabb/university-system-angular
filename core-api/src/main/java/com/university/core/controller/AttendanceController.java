@@ -19,49 +19,70 @@ public class AttendanceController {
 
     private final AttendanceService attendanceService;
 
-
     public AttendanceController(AttendanceService attendanceService) {
         this.attendanceService = attendanceService;
     }
 
     @PostMapping("/mark")
-    public ResponseEntity<AttendanceResponse> markAttendance(@Valid @RequestBody MarkAttendanceRequest attendanceRequest){
-        Attendance attendance = attendanceService.markAttendance(attendanceRequest.getEnrollmentId(), attendanceRequest.getSessionDate(),attendanceRequest.getStatus(),attendanceRequest.getRemarks());
+    public ResponseEntity<AttendanceResponse> markAttendance(
+            @Valid @RequestBody MarkAttendanceRequest attendanceRequest) {
 
-        return new ResponseEntity<>(AttendanceMapper.toResponse(attendance), HttpStatus.CREATED);
+        Attendance attendance = attendanceService.markAttendance(
+                attendanceRequest.getEnrollmentId(),
+                attendanceRequest.getSessionDate(),
+                attendanceRequest.getStatus(),
+                attendanceRequest.getRemarks()
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(AttendanceMapper.toResponse(attendance));
     }
 
     @GetMapping("/student/{studentId}")
-    public List<AttendanceResponse> getByStudent(@PathVariable int studentId){
-        return attendanceService.getAttendanceByStudent(studentId)
-                .stream()
-                .map(AttendanceMapper::toResponse)
-                .toList();
+    public ResponseEntity<List<AttendanceResponse>> getByStudent(
+            @PathVariable int studentId) {
+
+        List<AttendanceResponse> responses =
+                attendanceService.getAttendanceByStudent(studentId)
+                        .stream()
+                        .map(AttendanceMapper::toResponse)
+                        .toList();
+
+        return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/student/{studentId}/course/{courseId}")
-    public List<AttendanceResponse> getByStudentAndCourse(@PathVariable int studentId, @PathVariable int courseId){
-        return attendanceService.getAttendanceByStudentAndCourse(studentId,courseId)
-                .stream()
-                .map(AttendanceMapper::toResponse)
-                .toList();
+    public ResponseEntity<List<AttendanceResponse>> getByStudentAndCourse(
+            @PathVariable int studentId,
+            @PathVariable int courseId) {
+
+        List<AttendanceResponse> responses =
+                attendanceService.getAttendanceByStudentAndCourse(studentId, courseId)
+                        .stream()
+                        .map(AttendanceMapper::toResponse)
+                        .toList();
+
+        return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/student/{studentId}/course/{courseId}/summary")
-    public AttendanceSummaryResponse getSummary(@PathVariable int studentId, @PathVariable int courseId){
+    public ResponseEntity<AttendanceSummaryResponse> getSummary(
+            @PathVariable int studentId,
+            @PathVariable int courseId) {
 
-        AttendanceService.AttendanceSummary summary = attendanceService.getSummaryForStudentInCourse(studentId, courseId);
+        AttendanceService.AttendanceSummary summary =
+                attendanceService.getSummaryForStudentInCourse(studentId, courseId);
 
-        return new AttendanceSummaryResponse(
-                studentId,
-                courseId,
-                summary.totalSessions(),
-                summary.presentCount(),
-                summary.absentCount(),
-                summary.excusedCount(),
-                summary.presentPercent()
-
+        return ResponseEntity.ok(
+                new AttendanceSummaryResponse(
+                        studentId,
+                        courseId,
+                        summary.totalSessions(),
+                        summary.presentCount(),
+                        summary.absentCount(),
+                        summary.excusedCount(),
+                        summary.presentPercent()
+                )
         );
-
     }
 }

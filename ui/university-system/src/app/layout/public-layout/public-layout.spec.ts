@@ -10,7 +10,7 @@ describe('PublicLayout', () => {
     await TestBed.configureTestingModule({
       imports: [PublicLayout]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PublicLayout);
     component = fixture.componentInstance;

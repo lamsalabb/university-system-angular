@@ -11,13 +11,14 @@ import {AuthService} from '../../services/auth.service';
 })
 export class Header {
 
-  constructor(private authService: AuthService,) {}
+  constructor(private authService: AuthService,) {
+  }
 
   private role = localStorage.getItem('role')?.toLowerCase();
 
-  link = signal("/"+this.role+"/dashboard");
+  link = signal("/" + this.role + "/dashboard");
 
-  logout(){
+  logout() {
     this.authService.logout();
   }
 

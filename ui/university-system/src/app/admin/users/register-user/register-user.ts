@@ -15,36 +15,35 @@ export class RegisterUser {
 
   private apiUrl = `${environment.url}/api/users`;
 
-  userForm:FormGroup;
+  userForm: FormGroup;
 
 
-  constructor(private fb: FormBuilder, private http:HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient) {
     this.userForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       role: ['STUDENT', Validators.required],
-      firstName: ['',[Validators.required]],
-      lastName: ['',[Validators.required]],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
     });
   }
 
-  submit(){
-    if(this.userForm.invalid){
+  submit() {
+    if (this.userForm.invalid) {
       return;
     }
 
     this.http.post(this.apiUrl, this.userForm.value)
       .subscribe({
-        next: (res)=>{
+        next: (res) => {
           alert("User registered successfully!");
-          this.userForm.reset({role:'STUDENT'});
+          this.userForm.reset({role: 'STUDENT'});
         },
-        error: (err)=>{
+        error: (err) => {
           alert("Failed to register.");
         }
       });
   }
-
 
 
 }

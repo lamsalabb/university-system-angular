@@ -11,7 +11,8 @@ export class NotFound {
   title = signal('404');
   message = signal('The page you are looking for does not exist.');
 
-  constructor(private location: Location) {}
+  constructor(private location: Location) {
+  }
 
   goBack() {
     this.location.back();

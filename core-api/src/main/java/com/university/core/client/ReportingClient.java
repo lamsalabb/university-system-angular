@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @FeignClient(name = "reporting-api",
-             url = "${reporting.api.url}")
+        url = "${reporting.api.url}")
 public interface ReportingClient {
 
     @GetMapping("/api/reports/active-students")

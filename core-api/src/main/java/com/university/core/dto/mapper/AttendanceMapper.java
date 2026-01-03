@@ -5,7 +5,8 @@ import com.university.core.dto.response.AttendanceResponse;
 
 public final class AttendanceMapper {
 
-    private AttendanceMapper() {}
+    private AttendanceMapper() {
+    }
 
     public static AttendanceResponse toResponse(Attendance attendance) {
         return AttendanceResponse.builder()

@@ -1,13 +1,15 @@
-<div class="text-center mt-5">
-  <h2 class="text-danger">{{ title() }} - Not Found</h2>
+<div class="page-container not-found-page">
+  <h2 class="error-text not-found-title">
+    {{ title() }} – Not Found
+  </h2>
 
-  <p class="mt-3">
+  <p class="not-found-message">
     {{ message() }}
   </p>
 
   <button
     type="button"
-    class="btn btn-primary mt-3"
+    class="primary-button"
     (click)="goBack()"
   >
     ← Go Back

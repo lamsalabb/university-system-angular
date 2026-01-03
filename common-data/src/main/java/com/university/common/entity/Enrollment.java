@@ -27,13 +27,13 @@ public class Enrollment {
     private User student;
 
     @ManyToOne(fetch = FetchType.LAZY)//many enrollment for one course, instructor detail inside course itself
-    @JoinColumn(name = "course_id",nullable = false)
+    @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    @Column(name = "semester",nullable = false)
+    @Column(name = "semester", nullable = false)
     private String semester;
 
-    @Column(name="grade")
+    @Column(name = "grade")
     private String grade;
 
     @Enumerated(EnumType.STRING)
@@ -44,7 +44,7 @@ public class Enrollment {
     @Column(name = "enrollment_date")
     private LocalDate enrollmentDate;
 
-    public enum Status{
+    public enum Status {
         ENROLLED, DROPPED, COMPLETED
     }
 }

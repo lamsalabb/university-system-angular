@@ -26,7 +26,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
 
 
-
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
@@ -43,21 +42,21 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             try {
                 Claims claims = jwtUtil.validateToken(token);
-               String userId = claims.getSubject();
+                String userId = claims.getSubject();
                 String role = claims.get("role", String.class);
 
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                         userId,
                         null,
-                        List.of(new SimpleGrantedAuthority("ROLE_"+ role))
-                        );
+                        List.of(new SimpleGrantedAuthority("ROLE_" + role))
+                );
 
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
                 String method = request.getMethod();
                 String path = request.getRequestURI();
 
-                if(!permissionLoader.isAllowed(role,method,path)){
+                if (!permissionLoader.isAllowed(role, method, path)) {
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                     SecurityContextHolder.clearContext();
                     return;
@@ -69,6 +68,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
         }
 
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 }

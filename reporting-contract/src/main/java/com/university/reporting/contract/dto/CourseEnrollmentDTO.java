@@ -12,7 +12,15 @@ public class CourseEnrollmentDTO {
         this.enrollmentCount = enrollmentCount;
     }
 
-    public Integer getCourseId() { return courseId; }
-    public String getCourseCode() { return courseCode; }
-    public Long getEnrollmentCount() { return enrollmentCount; }
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public Long getEnrollmentCount() {
+        return enrollmentCount;
+    }
 }

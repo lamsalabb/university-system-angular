@@ -5,7 +5,8 @@ import com.university.core.dto.response.EnrollmentResponse;
 
 public final class EnrollmentMapper {
 
-    private EnrollmentMapper() {}
+    private EnrollmentMapper() {
+    }
 
     public static EnrollmentResponse toResponse(Enrollment enrollment) {
         return EnrollmentResponse.builder()
