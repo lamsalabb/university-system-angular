@@ -1,9 +1,15 @@
 package com.university.core.service;
 
 import com.university.common.entity.Course;
+import com.university.common.entity.User;
 import com.university.common.repository.CourseRepository;
+import com.university.common.repository.UserRepository;
+import com.university.core.dto.request.CreateCourseRequest;
+import com.university.core.dto.request.UpdateCourseRequest;
 import com.university.core.exception.CourseAlreadyExistsException;
 import com.university.core.exception.CourseNotFoundException;
+import com.university.core.exception.InvalidInstructorException;
+import com.university.core.exception.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -13,18 +19,34 @@ import java.util.List;
 public class CourseService {
 
     private final CourseRepository courseRepository;
+    private final UserRepository userRepository;
 
-    public CourseService(CourseRepository courseRepository) {
+    public CourseService(CourseRepository courseRepository, UserRepository userRepository) {
         this.courseRepository = courseRepository;
+        this.userRepository = userRepository;
     }
 
 
 
     @Transactional//CREATE
-    public Course createCourse(Course course){
-        if(courseRepository.findByCode(course.getCode()).isPresent()){
-            throw new CourseAlreadyExistsException("Course with code "+course.getCode()+" already exists.");
+    public Course createCourse(CreateCourseRequest courseRequest){
+        if(courseRepository.findByCode(courseRequest.getCode()).isPresent()){
+            throw new CourseAlreadyExistsException("Course with code "+courseRequest.getCode()+" already exists.");
         }
+        User instructor = userRepository.findById(courseRequest.getInstructorId())
+                .orElseThrow(() ->
+                        new UserNotFoundException(
+                                "Instructor not found with id: " + courseRequest.getInstructorId()
+                        )
+                );
+
+        if (instructor.getRole() != User.Role.INSTRUCTOR) {
+            throw new InvalidInstructorException("User is not an instructor");
+        }
+
+        Course course = Course.builder()
+                .title(courseRequest.getTitle())
+                .code(courseRequest.getCode()).credits(courseRequest.getCredits()).instructor(instructor).description(courseRequest.getDescription()).build();
         return courseRepository.save(course);
     }
 
@@ -40,18 +62,38 @@ public class CourseService {
     }
 
 
-    @Transactional//UPDATE
-    public Course updateCourse(int id, Course updatedCourseDetails){
+    @Transactional // UPDATE
+    public Course updateCourse(int id, UpdateCourseRequest request) {
+
         Course existingCourse = findCourseById(id);
 
-        existingCourse.setTitle(updatedCourseDetails.getTitle());
-        existingCourse.setCode(updatedCourseDetails.getCode());
-        existingCourse.setCredits(updatedCourseDetails.getCredits());
-        existingCourse.setDescription(updatedCourseDetails.getDescription());
-        existingCourse.setInstructor(updatedCourseDetails.getInstructor());
+        if (!existingCourse.getCode().equals(request.getCode())
+                && courseRepository.findByCode(request.getCode()).isPresent()) {
+            throw new CourseAlreadyExistsException(
+                    "Course with code " + request.getCode() + " already exists."
+            );
+        }
 
-        return courseRepository.save(existingCourse);
+        User instructor = userRepository.findById(request.getInstructorId())
+                .orElseThrow(() ->
+                        new UserNotFoundException(
+                                "Instructor not found with id: " + request.getInstructorId()
+                        )
+                );
+
+        if (instructor.getRole() != User.Role.INSTRUCTOR) {
+            throw new InvalidInstructorException("User is not an instructor");
+        }
+
+        existingCourse.setTitle(request.getTitle());
+        existingCourse.setCode(request.getCode());
+        existingCourse.setCredits(request.getCredits());
+        existingCourse.setDescription(request.getDescription());
+        existingCourse.setInstructor(instructor);
+
+        return existingCourse;
     }
+
 
 
 

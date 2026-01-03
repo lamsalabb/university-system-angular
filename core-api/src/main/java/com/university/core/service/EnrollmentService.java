@@ -6,6 +6,7 @@ import com.university.common.entity.User;
 import com.university.common.repository.CourseRepository;
 import com.university.common.repository.EnrollmentRepository;
 import com.university.common.repository.UserRepository;
+import com.university.core.dto.request.CreateEnrollmentRequest;
 import com.university.core.exception.*;
 import com.university.fee.exception.OutstandingFeesException;
 import jakarta.transaction.Transactional;
@@ -31,46 +32,65 @@ public class EnrollmentService {
 
     //save a new enrollment
     @Transactional
-    public Enrollment enroll(Enrollment enrollmentRequest){
+    public Enrollment enroll(CreateEnrollmentRequest request) {
 
-        User student = userRepository.findById(enrollmentRequest.getStudent().getId()).orElseThrow(
-                () -> new UserNotFoundException("Student not found with id: " + enrollmentRequest.getStudent().getId())
-        );
+        User student = userRepository.findById(request.getStudentId())
+                .orElseThrow(() ->
+                        new UserNotFoundException(
+                                "Student not found with id: " + request.getStudentId()
+                        )
+                );
 
-        if(!"STUDENT".equalsIgnoreCase(student.getRole().name())){
+        if (student.getRole() != User.Role.STUDENT) {
             throw new NonStudentEnrollmentException("Only students can be enrolled");
         }
 
         int threshold = 4000;
-        if(feeService.hasOutstandingFeesAboveThreshold(student.getId(), threshold)){
-            throw new OutstandingFeesException("Enrollment blocked: Please clear the outstanding fees. Exceeded: "+ threshold);
+        if (feeService.hasOutstandingFeesAboveThreshold(student.getId(), threshold)) {
+            throw new OutstandingFeesException(
+                    "Enrollment blocked: Please clear outstanding fees. Exceeded: " + threshold
+            );
         }
-        Course course = courseRepository.findById(enrollmentRequest.getCourse().getId()).orElseThrow(
-                () -> new CourseNotFoundException("Course not found with id: " + enrollmentRequest.getCourse().getId())
-        );
 
-        enrollmentRepository.findByStudentAndCourseAndSemester(enrollmentRequest.getStudent(),enrollmentRequest.getCourse(),enrollmentRequest.getSemester()).ifPresent(
-                (enrollNotUnique) -> {
-                    throw new EnrollmentAlreadyExistsException("Student is already enrolled in this course for the given semester.");
-                }
-        );
+        Course course = courseRepository.findById(request.getCourseId())
+                .orElseThrow(() ->
+                        new CourseNotFoundException(
+                                "Course not found with id: " + request.getCourseId()
+                        )
+                );
 
-        enrollmentRequest.setStatus(Enrollment.Status.ENROLLED);
-        enrollmentRequest.setEnrollmentDate(LocalDate.now());
+        enrollmentRepository
+                .findByStudentAndCourseAndSemester(student, course, request.getSemester())
+                .ifPresent(e -> {
+                    throw new EnrollmentAlreadyExistsException(
+                            "Student already enrolled for this course and semester"
+                    );
+                });
 
-        return enrollmentRepository.save(enrollmentRequest);
+        Enrollment enrollment = Enrollment.builder()
+                .student(student)
+                .course(course)
+                .semester(request.getSemester())
+                .status(Enrollment.Status.ENROLLED)
+                .enrollmentDate(LocalDate.now())
+                .build();
 
+        return enrollmentRepository.save(enrollment);
     }
+
 
     @Transactional//drop enrollment for students
-    public void dropEnrollment(int enrollmentId){
-        Enrollment enrollment = enrollmentRepository.findById(enrollmentId).orElseThrow(
-                () -> new EnrollmentNotFoundException("Enrollment not found with id: " + enrollmentId)
-        );
+    public void dropEnrollment(int enrollmentId) {
+        Enrollment enrollment = enrollmentRepository.findById(enrollmentId)
+                .orElseThrow(() ->
+                        new EnrollmentNotFoundException(
+                                "Enrollment not found with id: " + enrollmentId
+                        )
+                );
 
         enrollment.setStatus(Enrollment.Status.DROPPED);
-        enrollmentRepository.save(enrollment);
     }
+
 
     public List<Enrollment> getEnrollmentByStudent(int studentId){
         return enrollmentRepository.findByStudentId(studentId);

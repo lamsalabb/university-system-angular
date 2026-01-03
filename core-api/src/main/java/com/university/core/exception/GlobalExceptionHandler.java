@@ -70,6 +70,11 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.UNPROCESSABLE_CONTENT, e.getMessage());
     }
 
+    @ExceptionHandler(InvalidInstructorException.class)
+    public ResponseEntity<?> handleInvalidInstructor(InvalidInstructorException e){
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+
     @ExceptionHandler(OutstandingFeesException.class)
     public ResponseEntity<?> handleOutstandingFees(OutstandingFeesException e){
         return buildErrorResponse(HttpStatus.UNPROCESSABLE_CONTENT, e.getMessage());
