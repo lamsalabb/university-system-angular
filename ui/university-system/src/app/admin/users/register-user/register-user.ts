@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
-import {environment} from '../../../../environments/environment';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
+import {User} from '../../../services/user';
 
 @Component({
   selector: 'app-register-user',
@@ -13,12 +12,10 @@ import {HttpClient} from '@angular/common/http';
 })
 export class RegisterUser {
 
-  private apiUrl = `${environment.url}/api/users`;
-
   userForm: FormGroup;
 
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder,   private userService:User) {
     this.userForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -33,7 +30,7 @@ export class RegisterUser {
       return;
     }
 
-    this.http.post(this.apiUrl, this.userForm.value)
+    this.userService.createUser(this.userForm.value)
       .subscribe({
         next: (res) => {
           alert("User registered successfully!");
@@ -44,6 +41,4 @@ export class RegisterUser {
         }
       });
   }
-
-
 }

@@ -24,7 +24,7 @@ export class AuthService {
     localStorage.setItem('token', response.token);
     localStorage.setItem('role', response.role);
 
-    if (response.role == 'ADMIN') {
+    if (response.role == 'ADMIN') {//might need to navigate this logic somewhere else/ unsure
       this.router.navigate(['/admin/dashboard']);
     } else if (response.role == 'INSTRUCTOR') {
       this.router.navigate(['/instructor/dashboard'])

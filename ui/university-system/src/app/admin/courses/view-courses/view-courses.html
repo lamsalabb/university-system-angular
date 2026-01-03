@@ -1,0 +1,135 @@
+<main class="page-container">
+  <div class="list-header">
+    <h3 class="list-title">Course Management</h3>
+    <a
+      routerLink="/admin/register-course"
+      class="primary-button small-button"
+    >
+      Create Course
+    </a>
+  </div>
+
+  @if (loading()) {
+    <p class="muted-text">Loading courses…</p>
+  }
+
+  @if (error()) {
+    <p class="error-text">{{ error() }}</p>
+  }
+
+  @if (!loading() && !error()) {
+    <div class="list-card">
+      <table class="data-table">
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>Code</th>
+          <th>Credits</th>
+          <th>Instructor</th>
+          <th class="align-right">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+          @for (c of courses(); track c.id) {
+            <tr>
+              <td>{{ c.title }}</td>
+              <td>{{ c.code }}</td>
+              <td>{{ c.credits }}</td>
+              <td>{{ c.instructorId }}</td>
+
+              <td class="align-right">
+                <button
+                  class="link-button"
+                  (click)="openEdit(c)"
+                >
+                  Edit
+                </button>
+
+                <button
+                  class="link-button danger"
+                  (click)="deleteCourse(c.id)"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (editingCourse()) {
+    <div class="modal-backdrop" (click)="closeEdit()">
+      <div class="modal-box" (click)="$event.stopPropagation()">
+
+        <h5 class="modal-title">Edit Course</h5>
+
+        <div class="form-field">
+          <label class="form-label">Title</label>
+          <input
+            class="form-input"
+            [(ngModel)]="editForm.title"
+          >
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Code</label>
+          <input
+            class="form-input"
+            [(ngModel)]="editForm.code"
+          >
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Credits</label>
+          <input
+            type="number"
+            class="form-input"
+            [(ngModel)]="editForm.credits"
+          >
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Description</label>
+          <input
+            class="form-input"
+            [(ngModel)]="editForm.description"
+          >
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Instructor</label>
+          <select
+            class="form-input"
+            [(ngModel)]="editForm.instructorId">
+            @for (i of instructors; track i.id) {
+              <option [value]="i.id">
+                {{ i.firstName }} {{ i.lastName }}
+              </option>
+            }
+          </select>
+        </div>
+
+
+        <div class="form-actions">
+          <button
+            class="secondary-button small-button"
+            (click)="closeEdit()"
+          >
+            Cancel
+          </button>
+
+          <button
+            class="primary-button small-button"
+            [disabled]="!canSaveCourse()"
+            (click)="saveEdit()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</main>

@@ -2,6 +2,7 @@ package com.university.core.controller;
 
 import com.university.core.dto.mapper.EnrollmentMapper;
 import com.university.core.dto.request.CreateEnrollmentRequest;
+import com.university.core.dto.response.EnrollmentResponse;
 import com.university.core.service.EnrollmentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class EnrollmentController {
     }
 
     @PostMapping("/enroll")
-    public ResponseEntity<?> enroll(@Valid @RequestBody CreateEnrollmentRequest request) {
+    public ResponseEntity<EnrollmentResponse> enroll(@Valid @RequestBody CreateEnrollmentRequest request) {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(EnrollmentMapper.toResponse(enrollmentService.enroll(request))
@@ -35,7 +36,7 @@ public class EnrollmentController {
     }
 
     @GetMapping("/student/{studentId}")
-    public List<?> getEnrollmentByStudent(@PathVariable int studentId) {
+    public List<EnrollmentResponse> getEnrollmentByStudent(@PathVariable int studentId) {
         return enrollmentService.getEnrollmentByStudent(studentId)
                 .stream()
                 .map(EnrollmentMapper::toResponse)
@@ -43,7 +44,7 @@ public class EnrollmentController {
     }
 
     @GetMapping("/course/{courseId}")
-    public List<?> getEnrollmentByCourse(@PathVariable int courseId) {
+    public List<EnrollmentResponse> getEnrollmentByCourse(@PathVariable int courseId) {
         return enrollmentService.getEnrollmentByCourse(courseId)
                 .stream()
                 .map(EnrollmentMapper::toResponse)

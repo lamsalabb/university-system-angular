@@ -1,0 +1,78 @@
+<main class="page-container">
+  <div class="form-page">
+    <div class="form-card">
+      <h4 class="form-title">Register New Course</h4>
+
+      <form
+        class="form-layout"
+        [formGroup]="courseForm" (ngSubmit)="submit()">
+        <div class="form-field">
+          <label class="form-label">Title</label>
+          <input
+            type="text"
+            class="form-input"
+            formControlName="title"
+          >
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Description</label>
+          <input
+            type="text"
+            class="form-input"
+            formControlName="description"
+          >
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Instructor</label>
+
+          <select
+            class="form-input"
+            formControlName="instructorId"
+          >
+            <option [ngValue]="null">Select instructor</option>
+
+            @for (i of instructors(); track i.id) {
+              <option [ngValue]="i.id">
+                {{ i.firstName }} {{ i.lastName }}
+              </option>
+            }
+          </select>
+        </div>
+
+
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label">Course Code</label>
+            <input
+              class="form-input"
+              formControlName="code"
+              placeholder="CS50"
+            >
+          </div>
+
+          <div class="form-field">
+            <label class="form-label">Credits</label>
+            <input
+              class="form-input"
+              type="number"
+              formControlName="credits"
+              placeholder="3"
+            >
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="primary-button"
+            [disabled]="courseForm.invalid"
+          >
+            Create User
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

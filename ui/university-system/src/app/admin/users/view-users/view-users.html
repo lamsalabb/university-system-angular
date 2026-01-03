@@ -87,35 +87,37 @@
         <h5 class="modal-title">Edit User</h5>
 
         <div class="form-field">
+          <label class="form-label">First Name</label>
           <input
             class="form-input"
             [(ngModel)]="editForm.firstName"
-            placeholder="First name"
           >
         </div>
 
         <div class="form-field">
+          <label class="form-label">Last Name</label>
           <input
             class="form-input"
             [(ngModel)]="editForm.lastName"
-            placeholder="Last name"
           >
         </div>
 
         <div class="form-field">
+          <label class="form-label">Email</label>
           <input
+            type="email"
             class="form-input"
             [(ngModel)]="editForm.email"
-            placeholder="Email"
           >
         </div>
 
         <div class="form-field">
+          <label class="form-label">New Password</label>
           <input
             type="password"
             class="form-input"
+            placeholder="Optional"
             [(ngModel)]="editForm.password"
-            placeholder="New password (optional)"
           >
         </div>
 
@@ -129,6 +131,7 @@
           </label>
         }
 
+
         <div class="form-actions">
           <button
             class="secondary-button small-button"
@@ -139,6 +142,7 @@
 
           <button
             class="primary-button small-button"
+            [disabled]="!canSaveUser()"
             (click)="saveEdit()"
           >
             Save

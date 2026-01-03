@@ -84,6 +84,13 @@ export class ViewUsers {
       })
   }
 
+  canSaveUser(): boolean {
+    return !!(
+      this.editForm.firstName &&
+      this.editForm.lastName &&
+      this.editForm.email
+    );
+  }
 
 
 

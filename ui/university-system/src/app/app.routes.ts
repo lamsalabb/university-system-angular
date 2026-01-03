@@ -10,6 +10,8 @@ import {roleGuard} from './guards/role.guard';
 import {Unauthorized} from './shared/unauthorized/unauthorized';
 import {NotFound} from './shared/not-found/not-found';
 import {ViewUsers} from './admin/users/view-users/view-users';
+import {ViewCourses} from './admin/courses/view-courses/view-courses';
+import {RegisterCourse} from './admin/courses/register-course/register-course';
 
 
 export const routes: Routes = [
@@ -34,6 +36,9 @@ export const routes: Routes = [
 
       {path: 'admin/view-users', component: ViewUsers, canActivate: [roleGuard(['ADMIN'])]},
       {path: 'admin/register-user', component: RegisterUser, canActivate: [roleGuard(['ADMIN'])]},
+      {path: 'admin/view-courses', component: ViewCourses, canActivate: [roleGuard(['ADMIN'])]},
+      {path: 'admin/register-course', component: RegisterCourse, canActivate: [roleGuard(['ADMIN'])]},
+
       {
         path: 'unauthorized',
         component: Unauthorized

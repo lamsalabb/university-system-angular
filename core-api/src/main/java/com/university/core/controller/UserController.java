@@ -1,5 +1,6 @@
 package com.university.core.controller;
 
+import com.university.common.entity.User;
 import com.university.core.dto.mapper.UserMapper;
 import com.university.core.dto.request.RegisterUserRequest;
 import com.university.core.dto.request.UpdateUserRequest;
@@ -26,6 +27,17 @@ public class UserController {
     public ResponseEntity<List<UserResponse>> getAllUsers() {
 
         List<UserResponse> users = userService.findAllUsers()
+                .stream()
+                .map(UserMapper::toResponse)
+                .toList();
+
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/by-role")
+    public ResponseEntity<List<UserResponse>> getAllUsersByRole(@RequestParam User.Role role) {
+
+        List<UserResponse> users = userService.findAllByRole(role)
                 .stream()
                 .map(UserMapper::toResponse)
                 .toList();

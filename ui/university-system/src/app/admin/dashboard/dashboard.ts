@@ -20,7 +20,7 @@ export class AdminDashboard {
     {
       title: 'Course Management',
       description: 'Create, update, delete courses and assign instructors.',
-      route: '/admin/courses',
+      route: '/admin/view-courses',
       button: 'Manage Courses'
     },
     {
