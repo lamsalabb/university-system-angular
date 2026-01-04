@@ -10,6 +10,8 @@ import com.university.core.dto.request.CreateEnrollmentRequest;
 import com.university.core.exception.*;
 import com.university.fee.exception.OutstandingFeesException;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -99,6 +101,15 @@ public class EnrollmentService {
     public List<Enrollment> getEnrollmentByCourse(int courseId) {
         return enrollmentRepository.findByCourseId(courseId);
     }
+
+    public List<Enrollment> getAllEnrollments(){
+        return enrollmentRepository.findAll();
+    }
+
+    public Page<Enrollment> getAllEnrollments(Pageable pageable){
+        return enrollmentRepository.findAll(pageable);
+    }
+
 
     public Enrollment getEnrollmentById(int id) {
         return enrollmentRepository.findById(id).orElseThrow(

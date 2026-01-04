@@ -14,6 +14,7 @@ public final class EnrollmentMapper {
                 .studentId(enrollment.getStudent().getId())
                 .courseId(enrollment.getCourse().getId())
                 .semester(enrollment.getSemester())
+                .grade(enrollment.getGrade())
                 .status(enrollment.getStatus())
                 .enrollmentDate(enrollment.getEnrollmentDate())
                 .build();

@@ -5,6 +5,10 @@ import com.university.core.dto.request.CreateEnrollmentRequest;
 import com.university.core.dto.response.EnrollmentResponse;
 import com.university.core.service.EnrollmentService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +23,22 @@ public class EnrollmentController {
 
     public EnrollmentController(EnrollmentService enrollmentService) {
         this.enrollmentService = enrollmentService;
+    }
+
+//    @GetMapping
+//    public List<EnrollmentResponse> getAllEnrollments() {
+//        return enrollmentService.getAllEnrollments()
+//                .stream()
+//                .map(EnrollmentMapper::toResponse)
+//                .toList();
+//    }
+
+    @GetMapping
+    public Page<EnrollmentResponse> getAllEnrollments(
+            @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC)
+            Pageable pageable
+    ) {
+        return enrollmentService.getAllEnrollments(pageable).map(EnrollmentMapper::toResponse);
     }
 
     @PostMapping("/enroll")
@@ -50,4 +70,6 @@ public class EnrollmentController {
                 .map(EnrollmentMapper::toResponse)
                 .toList();
     }
+
+
 }

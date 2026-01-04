@@ -1,0 +1,125 @@
+<main class="page-container">
+
+  <div class="list-header">
+    <div>
+      <h3 class="list-title">Enrollment Management</h3>
+      <span class="muted-text">Enroll, view and manage students</span>
+    </div>
+  </div>
+  <div class="list-card">
+    <h4 class="list-title">Enroll Student</h4>
+
+    <form
+      class="form-layout form-grid"
+      [formGroup]="enrollmentForm"
+      (ngSubmit)="enroll()"
+    >
+      <div class="form-field">
+        <label class="form-label">Student</label>
+        <select class="form-input" formControlName="studentId">
+          <option value="">Select Student</option>
+          @for (s of students(); track s.id) {
+            <option [value]="s.id">
+              {{ s.firstName }} {{ s.lastName }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">Course</label>
+        <select class="form-input" formControlName="courseId">
+          <option value="">Select Course</option>
+          @for (c of courses(); track c.id) {
+            <option [value]="c.id">
+              {{ c.code }} - {{ c.title }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label class="form-label">Semester</label>
+        <input
+          class="form-input"
+          formControlName="semester"
+          placeholder="SPRING 2026"
+        >
+      </div>
+
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="primary-button"
+          [disabled]="enrollmentForm.invalid"
+        >
+          Enroll Student
+        </button>
+      </div>
+    </form>
+  </div>
+
+
+  <div class="list-card">
+    <h4 class="list-title">All Enrollments</h4>
+
+    <table class="data-table">
+      <thead>
+      <tr>
+        <th>Student</th>
+        <th>Course</th>
+        <th>Semester</th>
+        <th>Status</th>
+        <th>Grade</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+
+      <tbody>
+        @for (e of enrollments(); track e.id) {
+          <tr>
+            <td>{{ studentNameById()[e.studentId] || e.studentId }}</td>
+            <td>{{ courseLabelById()[e.courseId] || e.courseId }}</td>
+            <td>{{ e.semester }}</td>
+
+            <td>
+              <span
+                class="status-badge"
+                [class.success]="e.status === 'ENROLLED'"
+                [class.danger]="e.status === 'DROPPED'"
+                [class.neutral]="e.status === 'COMPLETED'"
+              >
+                {{ e.status }}
+              </span>
+            </td>
+
+            <td>{{ e.grade || '-' }}</td>
+
+            <td>
+              @if (e.status === 'ENROLLED') {
+                <button
+                  class="link-button danger"
+                  (click)="dropEnrollment(e.id)"
+                >
+                  Drop
+                </button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+  </div>
+  <app-pagination
+    [page]="currentPage()"
+    [size]="pageSize()"
+    [total]="totalElements()"
+    [loading]="loading()"
+    (pageChange)="currentPage.set($event)"
+    (sizeChange)="pageSize.set($event); currentPage.set(0)"
+  ></app-pagination>
+
+
+
+</main>

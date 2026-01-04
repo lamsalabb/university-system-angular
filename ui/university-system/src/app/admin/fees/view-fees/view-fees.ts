@@ -1,4 +1,4 @@
-import {Component, computed, signal} from '@angular/core';
+import {Component, computed, OnInit, signal} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {Fee} from '../../../services/fee';
@@ -14,7 +14,7 @@ import {ReactiveFormsModule} from '@angular/forms';
   templateUrl: './view-fees.html',
   styleUrl: './view-fees.css',
 })
-export class ViewFees {
+export class ViewFees implements OnInit {
   fees = signal<any[]>([]);
   students = signal<any[]>([]);
   loading = signal(true);
@@ -22,6 +22,9 @@ export class ViewFees {
 
 
   constructor(private feeService:Fee, private userService:User) {
+  }
+
+  ngOnInit() {
     this.loadFees();
     this.loadStudents();
   }

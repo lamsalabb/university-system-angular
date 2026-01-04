@@ -1,0 +1,32 @@
+.list-card + .list-card {
+  margin-top: 34px;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: end;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.85rem;
+}
+
+.form-actions {
+  grid-column: span 3;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    grid-column: span 1;
+  }
+}

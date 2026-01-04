@@ -14,6 +14,7 @@ public class EnrollmentResponse {
     int studentId;
     int courseId;
     String semester;
+    String grade;
     Enrollment.Status status;
     LocalDate enrollmentDate;
 }

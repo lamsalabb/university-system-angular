@@ -1,0 +1,38 @@
+<div class="pagination-toolbar">
+
+  <div class="page-size">
+    <label class="muted-text">Rows per page</label>
+    <select
+      class="form-input small"
+      [value]="size()"
+      (change)="changeSize($event)"
+    >
+      <option [value]="5">5</option>
+      <option [value]="10">10</option>
+      <option [value]="20">20</option>
+    </select>
+  </div>
+
+  <div class="pagination-controls">
+    <button
+      class="secondary-button pagination-btn"
+      (click)="prev()"
+      [disabled]="isFirst() || loading()"
+    >
+      ‹
+    </button>
+
+    <span class="page-info">
+      {{ page() + 1 }} / {{ totalPages() }}
+    </span>
+
+    <button
+      class="secondary-button pagination-btn"
+      (click)="next()"
+      [disabled]="isLast() || loading()"
+    >
+      ›
+    </button>
+  </div>
+
+</div>

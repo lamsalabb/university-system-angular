@@ -26,7 +26,7 @@ export class AdminDashboard {
     {
       title: 'Enrollment Management',
       description: 'Enroll students, drop courses, and view enrollments.',
-      route: '/admin/enrollments',
+      route: '/admin/view-enrollments',
       button: 'Manage Enrollments'
     },
     {

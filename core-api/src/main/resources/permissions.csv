@@ -12,6 +12,8 @@ ADMIN,GET,/api/fees
 ADMIN,POST,/api/fees
 ADMIN,PUT,/api/fees
 ADMIN,DELETE,/api/fees
+ADMIN,GET,/api/enrollments
+ADMIN,POST,/api/enrollments
 
 
 STUDENT,GET,/api/courses
