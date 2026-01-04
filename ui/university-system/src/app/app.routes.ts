@@ -12,6 +12,8 @@ import {NotFound} from './shared/not-found/not-found';
 import {ViewUsers} from './admin/users/view-users/view-users';
 import {ViewCourses} from './admin/courses/view-courses/view-courses';
 import {RegisterCourse} from './admin/courses/register-course/register-course';
+import {ViewFees} from './admin/fees/view-fees/view-fees';
+import {RegisterFee} from './admin/fees/register-fee/register-fee';
 
 
 export const routes: Routes = [
@@ -38,6 +40,9 @@ export const routes: Routes = [
       {path: 'admin/register-user', component: RegisterUser, canActivate: [roleGuard(['ADMIN'])]},
       {path: 'admin/view-courses', component: ViewCourses, canActivate: [roleGuard(['ADMIN'])]},
       {path: 'admin/register-course', component: RegisterCourse, canActivate: [roleGuard(['ADMIN'])]},
+      {path: 'admin/view-fees', component: ViewFees, canActivate: [roleGuard(['ADMIN'])]},
+      {path: 'admin/register-fee', component: RegisterFee, canActivate: [roleGuard(['ADMIN'])]},
+
 
       {
         path: 'unauthorized',

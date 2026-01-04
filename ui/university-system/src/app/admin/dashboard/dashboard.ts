@@ -32,7 +32,7 @@ export class AdminDashboard {
     {
       title: 'Fee Management',
       description: 'Track payments, unpaid balances, and create new fees.',
-      route: '/admin/fees',
+      route: '/admin/view-fees',
       button: 'Manage Fees'
     },
     {

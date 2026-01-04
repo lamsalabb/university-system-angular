@@ -28,6 +28,10 @@ public class FeeService {
         return feeRepository.findByStudentId(studentId);
     }
 
+    public List<Fee> getAllFees() {
+        return feeRepository.findAll();
+    }
+
     public Fee getFeeById(int id) {
         return feeRepository.findById(id)
                 .orElseThrow(() ->
@@ -58,33 +62,23 @@ public class FeeService {
     }
 
     @Transactional
-    public Fee markFeePaid(int feeId) {
+    public Fee toggleFee(int feeId) {
 
         Fee fee = feeRepository.findById(feeId)
                 .orElseThrow(() ->
                         new FeeNotFoundException("Fee not found with id: " + feeId)
                 );
 
-        if (!fee.isPaid()) {
-            fee.setPaid(true);
-            fee.setPaymentDate(LocalDate.now());
-        }
+        boolean paid = !fee.isPaid();
+
+        fee.setPaid(paid);
+        fee.setPaymentDate(paid ? LocalDate.now() : null);
 
         return fee;
     }
 
-    @Transactional
-    public Fee markFeeUnpaid(int feeId) {
 
-        Fee fee = feeRepository.findById(feeId)
-                .orElseThrow(() ->
-                        new FeeNotFoundException("Fee not found with id: " + feeId));
 
-        fee.setPaid(false);
-        fee.setPaymentDate(null);
-
-        return fee;
-    }
 
     public int calculateOutstandingFee(int studentId) {
         return feeRepository.findByStudentIdAndIsPaidFalse(studentId)

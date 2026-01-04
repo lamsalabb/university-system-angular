@@ -16,6 +16,11 @@ export class Fee {
     return this.http.get<any[]>(`${this.apiUrl}/student/${studentId}`);
   }
 
+  getAllFees(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}`);
+  }
+
+
   getFeeById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
@@ -24,13 +29,11 @@ export class Fee {
     return this.http.post<any>(this.apiUrl, request);
   }
 
-  payFee(id: number): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/${id}/pay`, {});
+  toggleFee(id: number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}/toggle`, {});
   }
 
-  unpayFee(id: number): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/${id}/unpay`, {});
-  }
+
 
   getFeeSummary(studentId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/student/${studentId}/summary`);

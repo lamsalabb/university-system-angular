@@ -1,0 +1,75 @@
+<main class="page-container">
+  <div class="form-page">
+    <div class="form-card">
+      <h4 class="form-title">Register New Fee</h4>
+
+      <form
+        class="form-layout"
+        [formGroup]="feeForm" (ngSubmit)="submit()">
+
+
+        <div class="form-field">
+          <label class="form-label">Student</label>
+
+          <select
+            class="form-input"
+            formControlName="studentId"
+          >
+            <option [ngValue]="null">Select Student</option>
+
+            @for (s of students(); track s.id) {
+              <option [ngValue]="s.id">
+                {{ s.firstName }} {{ s.lastName }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Amount</label>
+          <input
+            type="number"
+            class="form-input"
+            formControlName="amount"
+          >
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Type</label>
+          <select
+            class="form-input"
+            formControlName="type"
+          >
+            <option value="">Select role</option>
+            <option value="TUITION">TUITION</option>
+            <option value="LAB">LAB</option>
+            <option value="LIBRARY">LIBRARY</option>
+            <option value="OTHER">OTHER</option>
+          </select>
+        </div>
+
+
+
+          <div class="form-field">
+            <label class="form-label">Due Date</label>
+            <input
+              class="form-input"
+              type="date"
+              formControlName="dueDate"
+              placeholder=""
+            >
+          </div>
+
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="primary-button"
+            [disabled]="feeForm.invalid"
+          >Course
+            Create Fee
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

@@ -22,6 +22,17 @@ public class FeeController {
         this.feeService = feeService;
     }
 
+
+    @GetMapping
+    public ResponseEntity<List<FeeResponse>> getAllFees(){
+        List<FeeResponse> fees = feeService.getAllFees()
+                .stream()
+                .map(FeeMapper::toResponse)
+                .toList();
+
+        return ResponseEntity.ok(fees);
+    }
+
     @GetMapping("/student/{studentId}")
     public List<FeeResponse> getFeesByStudent(@PathVariable int studentId) {
         return feeService.getFeesByStudent(studentId)
@@ -45,19 +56,13 @@ public class FeeController {
                 .body(FeeMapper.toResponse(feeService.createFee(request)));
     }
 
-    @PostMapping("/{id}/pay")
-    public ResponseEntity<FeeResponse> payFee(@PathVariable int id) {
+    @PutMapping("/{id}/toggle")
+    public ResponseEntity<FeeResponse> toggleFee(@PathVariable int id) {
         return ResponseEntity.ok(
-                FeeMapper.toResponse(feeService.markFeePaid(id))
+                FeeMapper.toResponse(feeService.toggleFee(id))
         );
     }
 
-    @PostMapping("/{id}/unpay")
-    public ResponseEntity<FeeResponse> unpayFee(@PathVariable int id) {
-        return ResponseEntity.ok(
-                FeeMapper.toResponse(feeService.markFeeUnpaid(id))
-        );
-    }
 
     @GetMapping("/student/{studentId}/summary")
     public FeeSummaryResponse getFeeSummary(@PathVariable int studentId) {

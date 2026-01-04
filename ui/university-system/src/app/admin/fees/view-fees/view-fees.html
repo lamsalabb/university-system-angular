@@ -1,0 +1,65 @@
+<main class="page-container">
+
+  <div class="list-header">
+    <div>
+      <h3 class="list-title">Fee Management</h3>
+      <span class="muted-text">View & manage student fees</span>
+    </div>
+
+    <a
+      routerLink="/admin/register-fee"
+      class="primary-button small-button"
+    >
+      Create New Fee
+    </a>
+  </div>
+
+  @if (loading()) {
+    <p class="muted-text">Loading fees…</p>
+  }
+
+  @if (!loading() && fees().length === 0) {
+    <p class="muted-text">No fee records found.</p>
+  }
+
+  @if (!loading() && fees().length > 0) {
+    <div class="list-card">
+      <table class="data-table">
+        <thead>
+        <tr>
+          <th>Student</th>
+          <th>Type</th>
+          <th>Amount</th>
+          <th>Due Date</th>
+          <th>Status</th>
+        </tr>
+        </thead>
+
+        <tbody>
+          @for (f of fees(); track f.id) {
+            <tr>
+              <td>{{ studentNameById()[f.studentId] || f.studentId }}</td>
+              <td>{{ f.type }}</td>
+              <td>{{ f.amount }}</td>
+              <td>{{ f.dueDate }}</td>
+
+              <td>
+              <a
+                class="status-badge"
+                [class.success]="f.paid"
+                [class.danger]="!f.paid"
+                role="button"
+                (click)="togglePaid(f)"
+              >
+                {{ f.paid ? 'PAID' : 'UNPAID' }}
+              </a>
+            </td>
+
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+</main>

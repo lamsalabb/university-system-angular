@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Course} from '../../../services/course';
 import {User} from '../../../services/user';
@@ -12,7 +12,7 @@ import {User} from '../../../services/user';
   templateUrl: './register-course.html',
   styleUrl: './register-course.css',
 })
-export class RegisterCourse implements OnInit {
+export class RegisterCourse {
   courseForm: FormGroup;
   instructors = signal<any[]>([]);
 
@@ -26,8 +26,7 @@ export class RegisterCourse implements OnInit {
       instructorId: [null, Validators.required]
 })
   }
-  ngOnInit(): void {
-  }
+
   loadInstructors() {
     this.userService.getAllUsersByRole('INSTRUCTOR').subscribe(users => {
       this.instructors.set(users);
