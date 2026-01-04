@@ -1,15 +1,17 @@
-import {Component, computed, OnInit, signal} from '@angular/core';
+import {Component, computed, effect, OnInit, signal} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {Fee} from '../../../services/fee';
 import {User} from '../../../services/user';
 import {ReactiveFormsModule} from '@angular/forms';
+import {Pagination} from '../../../shared/pagination/pagination';
 
 @Component({
   selector: 'app-view-fees',
   imports: [
     RouterLink,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Pagination
   ],
   templateUrl: './view-fees.html',
   styleUrl: './view-fees.css',
@@ -19,9 +21,16 @@ export class ViewFees implements OnInit {
   students = signal<any[]>([]);
   loading = signal(true);
   error = signal<string | null>(null);
-
+  currentPage = signal(0);
+  pageSize = signal(10);
+  totalElements = signal(0);
 
   constructor(private feeService:Fee, private userService:User) {
+    effect(() => {
+      this.currentPage();
+      this.pageSize();
+      this.loadFees();
+    });
   }
 
   ngOnInit() {
@@ -32,9 +41,10 @@ export class ViewFees implements OnInit {
   loadFees(){
     this.loading.set(true);
 
-    this.feeService.getAllFees().subscribe({
+    this.feeService.getAllFees(this.currentPage(),this.pageSize()).subscribe({
       next: fees => {
-        this.fees.set(fees);
+        this.fees.set(fees.content);
+        this.totalElements.set(fees.totalElements);
         this.loading.set(false);
       },
       error: error => {

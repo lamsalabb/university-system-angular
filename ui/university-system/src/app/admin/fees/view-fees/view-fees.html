@@ -61,5 +61,13 @@
       </table>
     </div>
   }
+  <app-pagination
+    [page]="currentPage()"
+    [size]="pageSize()"
+    [total]="totalElements()"
+    [loading]="loading()"
+    (pageChange)="currentPage.set($event)"
+    (sizeChange)="pageSize.set($event); currentPage.set(0)"
+  ></app-pagination>
 
 </main>

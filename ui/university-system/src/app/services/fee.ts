@@ -16,10 +16,9 @@ export class Fee {
     return this.http.get<any[]>(`${this.apiUrl}/student/${studentId}`);
   }
 
-  getAllFees(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}`);
+    getAllFees(page: number, size: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}?page=${page}&size=${size}`);
   }
-
 
   getFeeById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);

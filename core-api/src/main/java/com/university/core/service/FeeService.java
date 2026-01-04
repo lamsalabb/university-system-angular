@@ -8,6 +8,8 @@ import com.university.core.exception.UserNotFoundException;
 import com.university.fee.exception.FeeNotFoundException;
 import com.university.fee.repository.FeeRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -28,8 +30,8 @@ public class FeeService {
         return feeRepository.findByStudentId(studentId);
     }
 
-    public List<Fee> getAllFees() {
-        return feeRepository.findAll();
+    public Page<Fee> getAllFees(Pageable pageable) {
+        return feeRepository.findAll(pageable);
     }
 
     public Fee getFeeById(int id) {

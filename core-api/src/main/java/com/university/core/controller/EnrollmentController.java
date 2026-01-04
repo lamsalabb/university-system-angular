@@ -34,11 +34,12 @@ public class EnrollmentController {
 //    }
 
     @GetMapping
-    public Page<EnrollmentResponse> getAllEnrollments(
+    public ResponseEntity<Page<EnrollmentResponse>> getAllEnrollments(
             @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC)
             Pageable pageable
     ) {
-        return enrollmentService.getAllEnrollments(pageable).map(EnrollmentMapper::toResponse);
+        Page<EnrollmentResponse> enrollments = enrollmentService.getAllEnrollments(pageable).map(EnrollmentMapper::toResponse);
+        return ResponseEntity.ok(enrollments);
     }
 
     @PostMapping("/enroll")

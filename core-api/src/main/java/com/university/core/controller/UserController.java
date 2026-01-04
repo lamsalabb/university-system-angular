@@ -7,6 +7,10 @@ import com.university.core.dto.request.UpdateUserRequest;
 import com.university.core.dto.response.UserResponse;
 import com.university.core.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +28,10 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
+    public ResponseEntity<Page<UserResponse>> getAllUsers(@PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
+    ) {
 
-        List<UserResponse> users = userService.findAllUsers()
-                .stream()
-                .map(UserMapper::toResponse)
-                .toList();
+        Page<UserResponse> users = userService.findAllUsers(pageable).map(UserMapper::toResponse);
 
         return ResponseEntity.ok(users);
     }

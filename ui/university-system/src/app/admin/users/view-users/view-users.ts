@@ -1,13 +1,15 @@
-import {Component, signal} from '@angular/core';
+import {Component, effect, signal} from '@angular/core';
 import {User} from '../../../services/user';
 import {RouterLink} from '@angular/router';
 import {FormsModule} from '@angular/forms';
+import {Pagination} from '../../../shared/pagination/pagination';
 
 @Component({
   selector: 'app-view-users',
   imports: [
     RouterLink,
     FormsModule,
+    Pagination,
   ],
   templateUrl: './view-users.html',
   styleUrl: './view-users.css',
@@ -17,16 +19,29 @@ export class ViewUsers {
   loading = signal(true);
   error = signal<string | null>(null);
 
+  currentPage = signal(0);
+  pageSize = signal(10);
+  totalElements = signal(0);
+
   constructor(private userService: User) {
+     effect(() => {
+      this.currentPage();
+      this.pageSize();
+      this.loadUsers();
+    });
+  }
+
+  ngOnInit() {
     this.loadUsers();
   }
 
   loadUsers() {
     this.loading.set(true);
 
-    this.userService.getAllUsers().subscribe({
+    this.userService.getAllUsers(this.currentPage(),this.pageSize()).subscribe({
       next: (users) => {
-        this.users.set(users);
+        this.users.set(users.content);
+        this.totalElements.set(users.totalElements);
         this.loading.set(false);
       },
       error: () => {
