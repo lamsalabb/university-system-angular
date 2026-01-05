@@ -82,12 +82,19 @@ loadCourses() {
 
     this.enrollmentService
       .enroll(this.enrollmentForm.value)
-      .subscribe(created => {
-        this.enrollments.set([
-          ...this.enrollments(),
-          created
-        ]);
-      });
+      .subscribe(
+        {
+          next: res => {
+            this.enrollments.set([
+              ...this.enrollments(), res
+            ]);
+          },
+          error: err => {
+            this.error.set("Failed to enroll");
+            alert(err.error.message);
+          }
+        }
+      );
   }
 
   dropEnrollment(id: number) {

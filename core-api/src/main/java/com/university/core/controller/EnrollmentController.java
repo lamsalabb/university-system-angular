@@ -34,7 +34,7 @@ public class EnrollmentController {
 //    }
 
     @GetMapping
-    public ResponseEntity<Page<EnrollmentResponse>> getAllEnrollments(
+    public ResponseEntity<?> getAllEnrollments(
             @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC)
             Pageable pageable
     ) {

@@ -20,9 +20,14 @@ courses = signal<any[]>([]);
   instructors: any[] = [];
 
   constructor(private courseService: Course, private userService:User) {
+
+  }
+
+  ngOnInit() {
     this.loadCourses();
     this.loadInstructors();
   }
+
 
   loadCourses() {
     this.loading.set(true);

@@ -23,6 +23,8 @@ export class AuthService {
   handleLoginSuccess(response: any) {
     localStorage.setItem('token', response.token);
     localStorage.setItem('role', response.role);
+    localStorage.setItem('userId', response.id);
+
 
     if (response.role == 'ADMIN') {//might need to navigate this logic somewhere else/ unsure
       this.router.navigate(['/admin/dashboard']);
@@ -37,4 +39,9 @@ export class AuthService {
     localStorage.clear();
     this.router.navigate(['/login']);
   }
+
+  get userId(): number {
+    return Number(localStorage.getItem('userId'));
+  }
+
 }

@@ -8,6 +8,7 @@ import com.university.common.repository.EnrollmentRepository;
 import com.university.common.repository.UserRepository;
 import com.university.core.dto.request.CreateEnrollmentRequest;
 import com.university.core.exception.*;
+import com.university.core.security.permissions.SelfOnly;
 import com.university.fee.exception.OutstandingFeesException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -47,10 +48,10 @@ public class EnrollmentService {
             throw new NonStudentEnrollmentException("Only students can be enrolled");
         }
 
-        int threshold = 4000;
+        int threshold = 2000;
         if (feeService.hasOutstandingFeesAboveThreshold(student.getId(), threshold)) {
             throw new OutstandingFeesException(
-                    "Enrollment blocked: Please clear outstanding fees. Exceeded: " + threshold
+                    "Enrollment blocked: Student must clear outstanding fees. Total Outstanding: " + threshold
             );
         }
 
@@ -94,8 +95,9 @@ public class EnrollmentService {
     }
 
 
-    public List<Enrollment> getEnrollmentByStudent(int studentId) {
-        return enrollmentRepository.findByStudentId(studentId);
+    @SelfOnly
+    public List<Enrollment> getEnrollmentByStudent(int id) {
+        return enrollmentRepository.findByStudentId(id);
     }
 
     public List<Enrollment> getEnrollmentByCourse(int courseId) {

@@ -38,7 +38,7 @@ public class FeeController {
 //    }
 
     @GetMapping
-    public ResponseEntity<Page<FeeResponse>> getAllFees(
+    public ResponseEntity<?> getAllFees(
             @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC)
             Pageable pageable
     ){

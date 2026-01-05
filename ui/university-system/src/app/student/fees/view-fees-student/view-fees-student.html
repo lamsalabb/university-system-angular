@@ -1,0 +1,68 @@
+<main class="page-container">
+
+  <div class="list-header">
+    <div>
+      <h3 class="list-title">My Fees</h3>
+    </div>
+
+    <div class="status-badge info" style="font-size: 20px; color: red" >
+      Outstanding: रु {{ outstanding() }}
+    </div>
+  </div>
+
+  @if (loading()) {
+    <p class="muted-text">Loading fees…</p>
+  }
+
+  @if (!loading() && fees().length === 0) {
+    <p class="muted-text">No fee records found.</p>
+  }
+
+  @if (!loading() && fees().length > 0) {
+    <div class="list-card">
+      <table class="data-table">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Type</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Due Date</th>
+          <th>Payment Date</th>
+        </tr>
+        </thead>
+
+        <tbody>
+          @for (f of fees(); track f.id) {
+            <tr>
+              <td>{{ f.id }}</td>
+
+              <td>
+                <span class="status-badge neutral">
+                  {{ f.type }}
+                </span>
+              </td>
+
+              <td>रु {{ f.amount }}</td>
+
+              <td>
+                <span
+                  class="status-badge"
+                  [class.success]="f.paid"
+                  [class.danger]="!f.paid"
+                >
+                  {{ f.paid ? 'Paid' : 'Unpaid' }}
+                </span>
+              </td>
+
+              <td>{{ f.dueDate }}</td>
+
+              <td>{{ f.paymentDate ?? '-' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+</main>

@@ -17,5 +17,10 @@ ADMIN,POST,/api/enrollments
 
 
 STUDENT,GET,/api/courses
+STUDENT,GET,/api/enrollments
+STUDENT,POST,/api/enrollments
+STUDENT,GET,/api/fees
+
+
 
 INSTRUCTOR,POST,/api/attendance

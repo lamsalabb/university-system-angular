@@ -16,6 +16,7 @@ public final class CourseMapper {
                 .credits(course.getCredits())
                 .description(course.getDescription())
                 .instructorId(course.getInstructor().getId())
+                .instructorName(course.getInstructor().getFirstName() + " " +course.getInstructor().getLastName())
                 .build();
     }
 }

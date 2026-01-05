@@ -16,7 +16,7 @@ export class StudentDashboard {
     {
       title: 'My Courses',
       description: 'View enrolled courses.',
-      route: '/student/courses',
+      route: '/student/view-courses',
       button: 'View Courses',
     },
     {
@@ -34,7 +34,7 @@ export class StudentDashboard {
     {
       title: 'Fees',
       description: 'Check outstanding balances and payment status.',
-      route: '/student/fees',
+      route: '/student/view-fees',
       button: 'View Fees',
     },
     {
