@@ -38,14 +38,20 @@ export class ViewEnrollments {
     this.loadStudents();
     this.loadCourses();
     this.loadEnrollments();
+
     this.enrollmentForm = this.fb.group({
-      studentId: ['', [Validators.required]],
-      courseId: ['', [Validators.required]],
-      semester: ['', [Validators.required]],
-    })
+      studentId: ['', Validators.required],
+      courseId: ['', Validators.required],
+      semester: ['', Validators.required],
+    });
+
+    this.enrollmentForm.patchValue({
+      semester: 'SPRING 2026'
+    });
   }
 
-loadStudents() {
+
+  loadStudents() {
     this.userService.getAllUsersByRole('STUDENT').subscribe(users => {
       this.students.set(users);
     })

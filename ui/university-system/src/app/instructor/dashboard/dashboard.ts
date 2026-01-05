@@ -40,7 +40,7 @@ export class InstructorDashboard {
     {
       title: 'Profile',
       description: 'View your account and contact information.',
-      route: '/instructor/profile',
+      route: '/instructor/view-profile',
       button: 'View Profile',
     },
   ]);

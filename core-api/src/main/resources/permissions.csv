@@ -20,7 +20,13 @@ STUDENT,GET,/api/courses
 STUDENT,GET,/api/enrollments
 STUDENT,POST,/api/enrollments
 STUDENT,GET,/api/fees
+STUDENT,GET,/api/users
+STUDENT,PUT,/api/users
+
+
 
 
 
 INSTRUCTOR,POST,/api/attendance
+INSTRUCTOR,GET,/api/users
+INSTRUCTOR,PUT,/api/users

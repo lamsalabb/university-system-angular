@@ -1,0 +1,140 @@
+<main class="page-container">
+
+  @if (loading()) {
+    <p class="muted-text">Loading profile…</p>
+  }
+
+  @if (error()) {
+    <p class="error-text">{{ error() }}</p>
+  }
+
+  @if (!loading() && !error() && student()) {
+
+    <div class="centered-container">
+
+      <div class="card">
+
+        <div class="card-body text-center">
+
+          <div class="avatar-wrapper">
+            <div class="avatar-circle primary">
+              {{ student()!.firstName.charAt(0) }}
+            </div>
+          </div>
+
+          <h4 class="title">
+            {{ student()!.firstName }} {{ student()!.lastName }}
+          </h4>
+
+          <span class="badge info">STUDENT</span>
+
+          <hr>
+
+          <div class="details">
+
+            <p class="center">
+              <strong>Email: </strong>
+              <span>{{ student()!.email }}</span>
+            </p>
+
+            <p class="center">
+              <strong>Status: </strong>
+              <span
+                class="status-badge"
+                [class.success]="student()!.active"
+                [class.muted]="!student()!.active"
+              >
+                {{ student()!.active ? 'Active' : 'Inactive' }}
+              </span>
+            </p>
+
+            <div class="center">
+
+              @if (!showChangePassword()) {
+                <button
+                  class="link-button"
+                  type="button"
+                  (click)="showChangePassword.set(true)"
+                >
+                  Change password
+                </button>
+              }
+
+            </div>
+
+            @if (showChangePassword()) {
+
+              <hr>
+
+              <form class="form-layout" (ngSubmit)="submitPasswordChange()">
+
+                <div class="form-field">
+                  <label class="form-label">Current password</label>
+                  <input
+                    type="password"
+                    class="form-input"
+                    [(ngModel)]="currentPassword"
+                    name="currentPassword"
+                    required
+                  >
+                </div>
+
+                <div class="form-field">
+                  <label class="form-label">New password</label>
+                  <input
+                    type="password"
+                    class="form-input"
+                    [(ngModel)]="newPassword"
+                    name="newPassword"
+                    required
+                  >
+                </div>
+
+                <div class="form-field">
+                  <label class="form-label">Confirm password</label>
+                  <input
+                    type="password"
+                    class="form-input"
+                    [(ngModel)]="confirmPassword"
+                    name="confirmPassword"
+                    required
+                  >
+                </div>
+
+                @if (passwordError()) {
+                  <p class="error-text center">{{ passwordError() }}</p>
+                }
+
+
+                <div class="form-actions">
+                  <button
+                    type="button"
+                    class="secondary-button"
+                    (click)="showChangePassword.set(false)"
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    type="submit"
+                    class="primary-button"
+                  >
+                    Update password
+                  </button>
+                </div>
+
+              </form>
+
+            }
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+</main>

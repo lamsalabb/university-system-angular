@@ -17,6 +17,8 @@ import {RegisterFee} from './admin/fees/register-fee/register-fee';
 import {ViewEnrollments} from './admin/enrollments/view-enrollments/view-enrollments';
 import {ViewCoursesStudent} from './student/courses/view-courses-student/view-courses-student';
 import {ViewFeesStudent} from './student/fees/view-fees-student/view-fees-student';
+import {ViewProfileStudent} from './student/profile/view-profile-student/view-profile-student';
+import {ViewProfileInstructor} from './instructor/profile/view-profile-instructor/view-profile-instructor';
 
 
 export const routes: Routes = [
@@ -49,6 +51,10 @@ export const routes: Routes = [
 
       {path: 'student/view-courses', component: ViewCoursesStudent, canActivate: [roleGuard(['STUDENT'])]},
       {path: 'student/view-fees', component: ViewFeesStudent, canActivate: [roleGuard(['STUDENT'])]},
+      {path: 'student/view-profile', component: ViewProfileStudent, canActivate: [roleGuard(['STUDENT'])]},
+
+
+      {path: 'instructor/view-profile', component: ViewProfileInstructor, canActivate: [roleGuard(['INSTRUCTOR'])]},
 
 
       {

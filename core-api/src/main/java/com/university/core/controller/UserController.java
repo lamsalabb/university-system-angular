@@ -2,6 +2,7 @@ package com.university.core.controller;
 
 import com.university.common.entity.User;
 import com.university.core.dto.mapper.UserMapper;
+import com.university.core.dto.request.ChangePasswordRequest;
 import com.university.core.dto.request.RegisterUserRequest;
 import com.university.core.dto.request.UpdateUserRequest;
 import com.university.core.dto.response.UserResponse;
@@ -85,4 +86,19 @@ public class UserController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}/password")
+    public ResponseEntity<Void> changePassword(
+            @PathVariable int id,
+            @RequestBody ChangePasswordRequest request) {
+
+        userService.changePasswordUser(
+                id,
+                request.currentPassword(),
+                request.newPassword()
+        );
+
+        return ResponseEntity.noContent().build();
+    }
+
 }

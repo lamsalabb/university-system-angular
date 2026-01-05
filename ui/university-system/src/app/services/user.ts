@@ -45,6 +45,12 @@ export class User {
     return this.http.put<any>(`${this.apiUrl}/${id}`, request);
   }
 
+  // PUT /api/users/{id}
+  changePasswordUser(id: number, request: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}/password`, request);
+  }
+
+
   // DELETE /api/users/{id}
   deleteUser(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);

@@ -80,6 +80,11 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.UNPROCESSABLE_CONTENT, e.getMessage());
     }
 
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<?> handleInvalidPassword(InvalidPasswordException e) {
+        return buildErrorResponse(HttpStatus.UNAUTHORIZED, e.getMessage());
+    }
+
 
     @ExceptionHandler(Exception.class)//fallback for any generic exceptions
     public ResponseEntity<?> handleGenericException(Exception e) {

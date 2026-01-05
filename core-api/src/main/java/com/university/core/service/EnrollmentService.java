@@ -48,7 +48,7 @@ public class EnrollmentService {
             throw new NonStudentEnrollmentException("Only students can be enrolled");
         }
 
-        int threshold = 2000;
+        int threshold = 4000;
         if (feeService.hasOutstandingFeesAboveThreshold(student.getId(), threshold)) {
             throw new OutstandingFeesException(
                     "Enrollment blocked: Student must clear outstanding fees. Total Outstanding: " + threshold

@@ -15,7 +15,7 @@ export class StudentDashboard {
   cards = signal([
     {
       title: 'My Courses',
-      description: 'View enrolled courses.',
+      description: 'View enrolled courses and grades.',
       route: '/student/view-courses',
       button: 'View Courses',
     },
@@ -25,12 +25,7 @@ export class StudentDashboard {
       route: '/student/attendance',
       button: 'View Attendance',
     },
-    {
-      title: 'Grades',
-      description: 'Review grades and academic performance.',
-      route: '/student/grades',
-      button: 'View Grades',
-    },
+
     {
       title: 'Fees',
       description: 'Check outstanding balances and payment status.',
@@ -40,7 +35,7 @@ export class StudentDashboard {
     {
       title: 'Profile',
       description: 'View your personal and contact information.',
-      route: '/student/profile',
+      route: '/student/view-profile',
       button: 'View Profile',
     },
   ]);

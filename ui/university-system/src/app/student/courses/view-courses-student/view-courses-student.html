@@ -22,6 +22,7 @@
             <th>Course Code</th>
             <th>Title</th>
             <th class="center">Credits</th>
+            <th class="center">Grade</th>
             <th class="center">Status</th>
             <th class="align-right action-col">Actions</th>
           </tr>
@@ -30,7 +31,7 @@
           <tbody>
             @if (courses().length === 0) {
               <tr>
-                <td colspan="5" class="empty-row">
+                <td colspan="6" class="empty-row">
                   No enrollments found.
                 </td>
               </tr>
@@ -41,6 +42,8 @@
                 <td>{{ c.course.code }}</td>
                 <td>{{ c.course.title }}</td>
                 <td class="center">{{ c.course.credits }}</td>
+                <td class="center">{{ c.enrollmentGrade }}</td>
+
 
                 <td class="center">
                   <span

@@ -13,7 +13,7 @@ import {AuthService} from '../../../services/auth.service';
 export class ViewCoursesStudent {
 
   enrollments = signal<any[]>([]);
-  courses = signal<{ course: any; enrollmentId: number, enrollmentStatus: string }[]>([]);
+  courses = signal<{ course: any; enrollmentId: number, enrollmentStatus: string, enrollmentGrade: string }[]>([]);
 
   loading = signal(true);
   error = signal<string | null>(null);
@@ -63,7 +63,8 @@ export class ViewCoursesStudent {
             {
               course,
               enrollmentId: enrollment.id,
-              enrollmentStatus: enrollment.status
+              enrollmentStatus: enrollment.status,
+              enrollmentGrade: enrollment.grade,
             }
           ]);
 

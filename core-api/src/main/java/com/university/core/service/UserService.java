@@ -6,10 +6,13 @@ import com.university.core.dto.request.RegisterUserRequest;
 import com.university.core.dto.request.UpdateUserRequest;
 import com.university.core.exception.EmailAlreadyExistsException;
 import com.university.core.exception.EmailNotFoundException;
+import com.university.core.exception.InvalidPasswordException;
 import com.university.core.exception.UserNotFoundException;
+import com.university.core.security.permissions.SelfOnly;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -68,6 +71,8 @@ public class UserService {
     public Page<User> findAllUsers(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
+
+    @SelfOnly
     public User findUserById(int id) {
         return userRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("User not found with id: " + id)
@@ -88,6 +93,7 @@ public class UserService {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Transactional//UPDATE
     public User updateUser(int id, UpdateUserRequest updatedUserDetails) {
 
@@ -145,6 +151,23 @@ public class UserService {
 
         return user;
     }
+
+    @SelfOnly
+    @Transactional
+    public void changePasswordUser(int id, String currentPassword, String newPassword) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
+
+        if (!passwordEncoder.matches(currentPassword, user.getPasswordHash())) {
+            throw new InvalidPasswordException("Current password is incorrect");
+        }
+
+        user.setPasswordHash(passwordEncoder.encode(newPassword));
+    }
+
+
+
 
 
 }
