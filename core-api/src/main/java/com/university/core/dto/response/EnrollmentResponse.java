@@ -11,10 +11,11 @@ import java.time.LocalDate;
 public class EnrollmentResponse {
 
     int id;
-    int studentId;
-    int courseId;
+    StudentSummaryResponse student;
+    CourseSummaryResponse course;
     String semester;
     String grade;
     Enrollment.Status status;
     LocalDate enrollmentDate;
+
 }

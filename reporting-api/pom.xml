@@ -17,9 +17,6 @@
     <name>reporting-api</name>
     <description>Reporting API</description>
 
-    <properties>
-        <java.version>17</java.version>
-    </properties>
 
     <dependencies>
 

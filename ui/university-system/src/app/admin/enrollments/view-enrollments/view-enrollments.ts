@@ -117,24 +117,6 @@ loadCourses() {
       });
   }
 
-  studentNameById = computed(() => {
-    const map: Record<number, string> = {};
-
-    this.students().forEach(s => {
-      map[s.id] = `${s.firstName} ${s.lastName}`;
-    });
-
-    return map;
-  });
-
-  courseLabelById = computed(() => {
-    const map: Record<number, string> = {};
-    this.courses().forEach(c => {
-      map[c.id] = `${c.code}-${c.title}`;
-    });
-    return map;
-  });
-
 
 
 }

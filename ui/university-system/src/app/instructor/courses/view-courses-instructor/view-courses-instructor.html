@@ -1,0 +1,44 @@
+<main class="page-container">
+
+  <div class="list-header">
+    <h3 class="list-title">My Courses</h3>
+  </div>
+
+  <div class="list-card">
+
+    <table class="data-table">
+      <thead>
+      <tr>
+        <th>Code</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th class="center">Credits</th>
+      </tr>
+      </thead>
+
+      <tbody>
+
+        @if (courses().length === 0) {
+          <tr>
+            <td colspan="3" class="empty-row">
+              No courses found.
+            </td>
+          </tr>
+        }
+
+        @for (course of courses(); track course.id) {
+          <tr>
+            <td>{{ course.code }}</td>
+            <td>{{ course.title }}</td>
+            <td>{{ course.description }}</td>
+
+            <td class="center">{{ course.credits }}</td>
+          </tr>
+        }
+
+      </tbody>
+    </table>
+
+  </div>
+
+</main>

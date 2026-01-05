@@ -16,10 +16,6 @@
     <name>Fee Library Module</name>
     <description>Fee Management Library (Calculations, Payment Tracking)</description>
 
-    <properties>
-        <java.version>17</java.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -40,6 +40,17 @@ public class CourseController {
         );
     }
 
+    @GetMapping("/instructor/{id}")
+    public ResponseEntity<List<CourseResponse>> getCourseByInstructorId(@PathVariable int id) {
+        List<CourseResponse> courses = courseService.findCoursesByInstructorId(id)
+                .stream()
+                .map(CourseMapper::toResponse)
+                .toList()
+                ;
+        return ResponseEntity.ok(courses
+        );
+    }
+
 
     @PostMapping
     public ResponseEntity<CourseResponse> createCourse(@Valid @RequestBody CreateCourseRequest courseRequest) {

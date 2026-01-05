@@ -72,5 +72,13 @@ public class EnrollmentController {
                 .toList();
     }
 
+    @GetMapping("/instructor/{id}")
+    public List<EnrollmentResponse> getEnrollmentByInstructorId(@PathVariable int id) {
+        return enrollmentService.getEnrollmentsByInstructor(id)
+                .stream()
+                .map(EnrollmentMapper::toResponse)
+                .toList();
+    }
+
 
 }

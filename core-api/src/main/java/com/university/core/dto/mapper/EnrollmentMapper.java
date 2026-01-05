@@ -1,22 +1,33 @@
 package com.university.core.dto.mapper;
 
 import com.university.common.entity.Enrollment;
+import com.university.core.dto.response.CourseSummaryResponse;
 import com.university.core.dto.response.EnrollmentResponse;
+import com.university.core.dto.response.StudentSummaryResponse;
 
-public final class EnrollmentMapper {
+public class EnrollmentMapper {
 
-    private EnrollmentMapper() {
-    }
-
-    public static EnrollmentResponse toResponse(Enrollment enrollment) {
+    public static EnrollmentResponse toResponse(Enrollment e) {
         return EnrollmentResponse.builder()
-                .id(enrollment.getId())
-                .studentId(enrollment.getStudent().getId())
-                .courseId(enrollment.getCourse().getId())
-                .semester(enrollment.getSemester())
-                .grade(enrollment.getGrade())
-                .status(enrollment.getStatus())
-                .enrollmentDate(enrollment.getEnrollmentDate())
+                .id(e.getId())
+                .semester(e.getSemester())
+                .grade(e.getGrade())
+                .status(e.getStatus())
+                .enrollmentDate(e.getEnrollmentDate())
+                .student(
+                        StudentSummaryResponse.builder()
+                                .id(e.getStudent().getId())
+                                .firstName(e.getStudent().getFirstName())
+                                .lastName(e.getStudent().getLastName())
+                                .email(e.getStudent().getEmail())
+                                .build()
+                )
+                .course(
+                        CourseSummaryResponse.builder()
+                                .id(e.getCourse().getId())
+                                .title(e.getCourse().getTitle())
+                                .build()
+                )
                 .build();
     }
 }

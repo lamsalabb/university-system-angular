@@ -56,7 +56,7 @@ export class ViewCoursesStudent {
     }
 
     for (const enrollment of enrollments) {
-      this.courseService.getCourseById(enrollment.courseId).subscribe({
+      this.courseService.getCourseById(enrollment.course.id).subscribe({
         next: course => {
           this.courses.update(courses => [
             ...courses,

@@ -16,6 +16,10 @@ export class Course {
     return this.http.get<any[]>(this.apiUrl);
   }
 
+  getCoursesByInstructorId(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/instructor/${id}`);
+  }
+
   getCourseById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }

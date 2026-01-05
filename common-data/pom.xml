@@ -16,10 +16,6 @@
     <name>common-data</name>
     <description>Common Data Module (Shared Entities, DTOs, Enums)</description>
 
-    <properties>
-        <java.version>17</java.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

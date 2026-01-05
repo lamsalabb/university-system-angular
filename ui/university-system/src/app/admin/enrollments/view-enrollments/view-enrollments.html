@@ -79,8 +79,8 @@
       <tbody>
         @for (e of enrollments(); track e.id) {
           <tr>
-            <td>{{ studentNameById()[e.studentId] || e.studentId }}</td>
-            <td>{{ courseLabelById()[e.courseId] || e.courseId }}</td>
+            <td>{{ e.student.firstName }} {{ e.student.lastName }}</td>
+            <td>{{ e.course.title }}</td>
             <td>{{ e.semester }}</td>
 
             <td>

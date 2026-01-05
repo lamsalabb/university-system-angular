@@ -1,0 +1,64 @@
+<main class="page-container">
+
+  <div class="list-header">
+    <h3 class="list-title">Students</h3>
+  </div>
+
+  <div class="list-card">
+
+    <table class="data-table">
+
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Student Name</th>
+        <th>Course Title</th>
+        <th>Semester</th>
+        <th class="center">Grade</th>
+        <th class="center">Status</th>
+        <th>Enrollment Date</th>
+      </tr>
+      </thead>
+
+      <tbody>
+
+        @if (enrollments().length === 0) {
+          <tr>
+            <td colspan="7" class="empty-row">
+              No enrollments found.
+            </td>
+          </tr>
+        }
+
+        @for (e of enrollments(); track e.id) {
+          <tr>
+            <td>{{ e.id }}</td>
+            <td>{{ e.student.firstName }} {{ e.student.lastName }}</td>
+            <td>{{ e.course.title }}</td>
+            <td>{{ e.semester }}</td>
+
+            <td class="center">
+              {{ e.grade ?? '—' }}
+            </td>
+
+            <td class="center">
+              <span
+                class="status-badge"
+                [class.success]="e.status === 'ENROLLED'"
+                [class.muted]="e.status !== 'ENROLLED'"
+              >
+                {{ e.status }}
+              </span>
+            </td>
+
+            <td>{{ e.enrollmentDate }}</td>
+          </tr>
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</main>

@@ -15,4 +15,7 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Integer>
     List<Enrollment> findByCourseId(int courseId);
 
     Optional<Enrollment> findByStudentAndCourseAndSemester(User student, Course course, String semester);//using the unique constraint search
+
+    List<Enrollment> findByCourseInstructorId(int instructorId);
+
 }

@@ -16,13 +16,13 @@ export class InstructorDashboard {
     {
       title: 'My Courses',
       description: 'View the courses you teach.',
-      route: '/instructor/courses',
+      route: '/instructor/view-courses',
       button: 'View Courses',
     },
     {
       title: 'Students',
       description: 'View enrolled students by course and semester.',
-      route: '/instructor/students',
+      route: '/instructor/view-students',
       button: 'View Students',
     },
     {

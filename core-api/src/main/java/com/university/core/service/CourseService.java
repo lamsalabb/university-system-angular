@@ -10,6 +10,7 @@ import com.university.core.exception.CourseAlreadyExistsException;
 import com.university.core.exception.CourseNotFoundException;
 import com.university.core.exception.InvalidInstructorException;
 import com.university.core.exception.UserNotFoundException;
+import com.university.core.security.permissions.SelfOnly;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -101,6 +102,11 @@ public class CourseService {
             throw new CourseNotFoundException("Cannot delete. Course not found with id: " + id);
         }
         courseRepository.deleteById(id);
+    }
+
+    @SelfOnly
+    public List<Course> findCoursesByInstructorId(int id){
+        return courseRepository.findByInstructorId(id);
     }
 
 

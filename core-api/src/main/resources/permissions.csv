@@ -30,3 +30,7 @@ STUDENT,PUT,/api/users
 INSTRUCTOR,POST,/api/attendance
 INSTRUCTOR,GET,/api/users
 INSTRUCTOR,PUT,/api/users
+INSTRUCTOR,GET,/api/courses
+INSTRUCTOR,GET,/api/enrollments
+
+

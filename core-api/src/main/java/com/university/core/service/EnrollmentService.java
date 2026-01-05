@@ -104,14 +104,17 @@ public class EnrollmentService {
         return enrollmentRepository.findByCourseId(courseId);
     }
 
-    public List<Enrollment> getAllEnrollments(){
-        return enrollmentRepository.findAll();
-    }
+//    public List<Enrollment> getAllEnrollments(){
+//        return enrollmentRepository.findAll();
+//    }
 
     public Page<Enrollment> getAllEnrollments(Pageable pageable){
         return enrollmentRepository.findAll(pageable);
     }
 
+    public List<Enrollment> getEnrollmentsByInstructor(int instructorId) {
+        return enrollmentRepository.findByCourseInstructorId(instructorId);
+    }
 
     public Enrollment getEnrollmentById(int id) {
         return enrollmentRepository.findById(id).orElseThrow(
