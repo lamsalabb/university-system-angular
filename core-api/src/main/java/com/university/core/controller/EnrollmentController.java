@@ -81,4 +81,14 @@ public class EnrollmentController {
     }
 
 
+
+        @PutMapping("/{id}/{grade}")
+        public ResponseEntity<?> updateGrade(@PathVariable Integer id, @PathVariable String grade) {
+
+                    enrollmentService.updateGrade(id,grade);
+            return ResponseEntity.noContent().build();
+
+        }
+
+
 }

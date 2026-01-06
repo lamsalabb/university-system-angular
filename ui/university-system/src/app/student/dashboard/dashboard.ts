@@ -10,7 +10,7 @@ import {RouterLink} from '@angular/router';
   styleUrl: './dashboard.css',
 })
 export class StudentDashboard {
-  studentName = signal('Student');
+  studentName = signal<string | null>(localStorage.getItem('firstName'));
 
   cards = signal([
     {
@@ -22,7 +22,7 @@ export class StudentDashboard {
     {
       title: 'Attendance',
       description: 'Track attendance records and session summaries.',
-      route: '/student/attendance',
+      route: '/student/view-attendance',
       button: 'View Attendance',
     },
 

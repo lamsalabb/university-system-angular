@@ -1,0 +1,88 @@
+<main class="page-container">
+
+  <div class="list-header">
+    <h3 class="list-title">Attendance Overview</h3>
+  </div>
+
+  <div class="list-card">
+
+    @if (summary()) {
+      <div class="summary-section">
+
+        <div class="summary-chart">
+          <canvas
+            baseChart
+            [type]="'pie'"
+            [data]="chartData()">
+          </canvas>
+        </div>
+
+        <div class="summary-stats">
+          <div>Total Sessions: {{ summary().totalSessions }}</div>
+          <div>Present: {{ summary().presentCount }}</div>
+          <div>Absent: {{ summary().absentCount }}</div>
+          <div>Excused: {{ summary().excusedCount }}</div>
+          <strong>
+            Attendance: {{ summary().presentPercent }}%
+          </strong>
+        </div>
+
+      </div>
+    }
+
+    <div class="course-buttons">
+      @for (c of courses(); track c.id) {
+        <button
+          class="secondary-button small-button"
+          [class.active]="selectedCourseId() === c.id"
+          (click)="loadSummary(c.id)"
+        >
+          {{ c.title }}
+        </button>
+      }
+    </div>
+
+    <table class="data-table">
+
+      <thead>
+      <tr>
+        <th>Course</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Remarks</th>
+      </tr>
+      </thead>
+
+      <tbody>
+        @if (attendance().length === 0) {
+          <tr>
+            <td colspan="4" class="empty-row">
+              No attendance records available.
+            </td>
+          </tr>
+        }
+
+        @for (a of attendance(); track a.id) {
+          <tr>
+            <td>{{ a.course.title }}</td>
+            <td>{{ a.sessionDate }}</td>
+            <td>
+              <span
+                class="status-badge"
+                [class.success]="a.status === 'PRESENT'"
+                [class.danger]="a.status === 'ABSENT'"
+                [class.warning]="a.status === 'EXCUSED'"
+              >
+                {{ a.status }}
+              </span>
+            </td>
+            <td>{{ a.remarks ?? '—' }}</td>
+          </tr>
+        }
+      </tbody>
+
+    </table>
+
+  </div>
+
+</main>

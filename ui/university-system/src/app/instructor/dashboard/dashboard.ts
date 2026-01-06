@@ -10,7 +10,7 @@ import {RouterLink} from '@angular/router';
   styleUrl: './dashboard.css',
 })
 export class InstructorDashboard {
-  instructorName = signal('Instructor');
+  instructorName = signal<string | null>(localStorage.getItem('firstName'));
 
   cards = signal([
     {
@@ -28,15 +28,10 @@ export class InstructorDashboard {
     {
       title: 'Attendance',
       description: 'Mark and review student attendance records.',
-      route: '/instructor/attendance',
+      route: '/instructor/view-attendance',
       button: 'View Attendance',
     },
-    {
-      title: 'Grades',
-      description: 'Assign and update student grades.',
-      route: '/instructor/grades',
-      button: 'Manage Grades',
-    },
+
     {
       title: 'Profile',
       description: 'View your account and contact information.',

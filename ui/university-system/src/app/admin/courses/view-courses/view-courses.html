@@ -39,19 +39,28 @@
               <td>{{ c.instructorId }}</td>
 
               <td class="align-right">
-                <button
-                  class="link-button"
-                  (click)="openEdit(c)"
-                >
-                  Edit
-                </button>
+                <div class="action-group">
+                  <button
+                    class="link-button"
+                    (click)="openEdit(c)"
+                  >
+                    Edit
+                  </button>
 
-                <button
-                  class="link-button danger"
-                  (click)="deleteCourse(c.id)"
-                >
-                  Delete
-                </button>
+                  <button
+                    class="link-button"
+                    (click)="openDetails(c.id)"
+                  >
+                    Details
+                  </button>
+
+                  <button
+                    class="link-button danger"
+                    (click)="deleteCourse(c.id)"
+                  >
+                    Delete
+                  </button>
+                </div>
               </td>
             </tr>
           }
@@ -63,47 +72,31 @@
   @if (editingCourse()) {
     <div class="modal-backdrop" (click)="closeEdit()">
       <div class="modal-box" (click)="$event.stopPropagation()">
-
         <h5 class="modal-title">Edit Course</h5>
 
         <div class="form-field">
           <label class="form-label">Title</label>
-          <input
-            class="form-input"
-            [(ngModel)]="editForm.title"
-          >
+          <input class="form-input" [(ngModel)]="editForm.title">
         </div>
 
         <div class="form-field">
           <label class="form-label">Code</label>
-          <input
-            class="form-input"
-            [(ngModel)]="editForm.code"
-          >
+          <input class="form-input" [(ngModel)]="editForm.code">
         </div>
 
         <div class="form-field">
           <label class="form-label">Credits</label>
-          <input
-            type="number"
-            class="form-input"
-            [(ngModel)]="editForm.credits"
-          >
+          <input type="number" class="form-input" [(ngModel)]="editForm.credits">
         </div>
 
         <div class="form-field">
           <label class="form-label">Description</label>
-          <input
-            class="form-input"
-            [(ngModel)]="editForm.description"
-          >
+          <input class="form-input" [(ngModel)]="editForm.description">
         </div>
 
         <div class="form-field">
           <label class="form-label">Instructor</label>
-          <select
-            class="form-input"
-            [(ngModel)]="editForm.instructorId">
+          <select class="form-input" [(ngModel)]="editForm.instructorId">
             @for (i of instructors; track i.id) {
               <option [value]="i.id">
                 {{ i.firstName }} {{ i.lastName }}
@@ -112,12 +105,8 @@
           </select>
         </div>
 
-
         <div class="form-actions">
-          <button
-            class="secondary-button small-button"
-            (click)="closeEdit()"
-          >
+          <button class="secondary-button small-button" (click)="closeEdit()">
             Cancel
           </button>
 
@@ -130,6 +119,29 @@
           </button>
         </div>
       </div>
+    </div>
+  }
+
+  @if (detailsCourse()) {
+    <div class="modal-backdrop" (click)="closeDetails()">
+      <div class="modal-box" (click)="$event.stopPropagation()">
+        <h5 class="modal-title">Students Enrolled</h5>
+
+        <div class="details-grid">
+
+        @for (e of studentsEnrolled(); track e.id) {
+          <div>
+            <span>{{ e.student.firstName }} {{ e.student.lastName }}</span>
+          </div>
+        }
+
+        <div class="form-actions">
+          <button class="primary-button small-button" (click)="closeDetails()">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
     </div>
   }
 </main>

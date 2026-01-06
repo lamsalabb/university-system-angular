@@ -21,6 +21,8 @@ import {ViewProfileStudent} from './student/profile/view-profile-student/view-pr
 import {ViewProfileInstructor} from './instructor/profile/view-profile-instructor/view-profile-instructor';
 import {ViewCoursesInstructor} from './instructor/courses/view-courses-instructor/view-courses-instructor';
 import {ViewStudentsInstructor} from './instructor/students/view-students-instructor/view-students-instructor';
+import {ViewAttendanceInstructor} from './instructor/attendance/view-attendance-instructor/view-attendance-instructor';
+import {ViewAttendanceStudent} from './student/attendance/view-attendance-student/view-attendance-student';
 
 
 export const routes: Routes = [
@@ -54,11 +56,14 @@ export const routes: Routes = [
       {path: 'student/view-courses', component: ViewCoursesStudent, canActivate: [roleGuard(['STUDENT'])]},
       {path: 'student/view-fees', component: ViewFeesStudent, canActivate: [roleGuard(['STUDENT'])]},
       {path: 'student/view-profile', component: ViewProfileStudent, canActivate: [roleGuard(['STUDENT'])]},
+      {path: 'student/view-attendance', component: ViewAttendanceStudent, canActivate: [roleGuard(['STUDENT'])]},
 
 
       {path: 'instructor/view-profile', component: ViewProfileInstructor, canActivate: [roleGuard(['INSTRUCTOR'])]},
       {path: 'instructor/view-courses', component: ViewCoursesInstructor, canActivate: [roleGuard(['INSTRUCTOR'])]},
       {path: 'instructor/view-students', component: ViewStudentsInstructor, canActivate: [roleGuard(['INSTRUCTOR'])]},
+      {path: 'instructor/view-attendance', component: ViewAttendanceInstructor, canActivate: [roleGuard(['INSTRUCTOR'])]},
+
 
 
       {

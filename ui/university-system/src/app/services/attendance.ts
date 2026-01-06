@@ -28,4 +28,6 @@ export class Attendance {
       `${this.apiUrl}/student/${studentId}/course/${courseId}/summary`
     );
   }
+
+
 }

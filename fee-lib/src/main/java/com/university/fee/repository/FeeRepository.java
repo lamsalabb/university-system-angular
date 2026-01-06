@@ -9,4 +9,5 @@ public interface FeeRepository extends JpaRepository<Fee, Integer> {
     List<Fee> findByStudentId(int studentId);
 
     List<Fee> findByStudentIdAndIsPaidFalse(int studentId);
+
 }

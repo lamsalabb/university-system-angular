@@ -77,29 +77,40 @@ html, body {
 }
 
 .page-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 3rem 1rem;
+  padding: 3.5rem 1.5rem;
 }
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(420px, 520px));
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 5rem;
 }
+
+
+@media (max-width: 640px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 .dashboard-card {
   background: #ffffff;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  min-height: 260px;
 }
+
 
 .dashboard-card-content {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 1.5rem;
+  padding: 2rem;
 }
 
 .warning-button {
@@ -203,7 +214,7 @@ html, body {
 .data-table th,
 .data-table td {
   padding: 0.75rem 1rem;
-  text-align: left;
+  text-align: center;
 }
 
 .data-table thead {
@@ -500,4 +511,94 @@ a {
 .details {
   text-align: left;
   margin-top: 1rem;
+}
+
+.action-group {
+  display: inline-flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.modal-box {
+  width: 100%;
+  max-width: 520px;
+}
+
+.details-grid {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.details-grid > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.details-label {
+  font-weight: 500;
+}
+.data-table tbody tr {
+  border-bottom: 1px solid;
+}
+
+.data-table tbody tr:last-child {
+  border-bottom: none;
+}
+.inline-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.small-input {
+  min-width: 70px;
+}
+
+canvas {
+  display: block;
+}
+
+.summary-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.summary-chart {
+  width: 100%;
+  max-width: 420px;
+  height: 320px;
+}
+
+.summary-stats {
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.summary-stats strong {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 1.05rem;
+}
+.course-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.course-buttons button {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.85rem;
+  width: auto;
 }

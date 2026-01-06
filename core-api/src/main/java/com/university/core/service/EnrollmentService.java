@@ -10,6 +10,7 @@ import com.university.core.dto.request.CreateEnrollmentRequest;
 import com.university.core.exception.*;
 import com.university.core.security.permissions.SelfOnly;
 import com.university.fee.exception.OutstandingFeesException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -121,6 +122,20 @@ public class EnrollmentService {
                 () -> new EnrollmentNotFoundException("Enrollment not found with id: " + id)
         );
     }
+
+    @Transactional
+    public void updateGrade(Integer enrollmentId, String grade) {
+
+        Enrollment enrollment = enrollmentRepository.findById(enrollmentId)
+                .orElseThrow(() -> new EntityNotFoundException("Enrollment not found"));
+
+        if (enrollment.getStatus().toString().equals("DROPPED")) {
+            throw new IllegalStateException("Cannot update grade for dropped enrollment");
+        }
+
+        enrollment.setGrade(grade);
+    }
+
 
 
 }

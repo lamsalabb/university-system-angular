@@ -3,295 +3,8 @@
   <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.54">
     <root id="1">
       <DefaultAuthPlugin>caching_sha2_password</DefaultAuthPlugin>
-      <DefaultCasing>exact</DefaultCasing>
       <DefaultEngine>InnoDB</DefaultEngine>
       <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
-      <Grants>|root||debian-sys-maint|localhost|ALTER|G
-|root||footballuser||ALTER|G
-|root||root|localhost|ALTER|G
-|root||universitydba||ALTER|G
-|root||debian-sys-maint|localhost|ALTER ROUTINE|G
-|root||footballuser||ALTER ROUTINE|G
-|root||root|localhost|ALTER ROUTINE|G
-|root||universitydba||ALTER ROUTINE|G
-|root||debian-sys-maint|localhost|APPLICATION_PASSWORD_ADMIN|G
-|root||footballuser||APPLICATION_PASSWORD_ADMIN|G
-|root||root|localhost|APPLICATION_PASSWORD_ADMIN|G
-|root||universitydba||APPLICATION_PASSWORD_ADMIN|G
-|root||footballuser||AUDIT_ABORT_EXEMPT|G
-|root||mysql.infoschema|localhost|AUDIT_ABORT_EXEMPT|G
-|root||mysql.session|localhost|AUDIT_ABORT_EXEMPT|G
-|root||mysql.sys|localhost|AUDIT_ABORT_EXEMPT|G
-|root||root|localhost|AUDIT_ABORT_EXEMPT|G
-|root||universitydba||AUDIT_ABORT_EXEMPT|G
-|root||debian-sys-maint|localhost|AUDIT_ADMIN|G
-|root||footballuser||AUDIT_ADMIN|G
-|root||root|localhost|AUDIT_ADMIN|G
-|root||universitydba||AUDIT_ADMIN|G
-|root||debian-sys-maint|localhost|AUTHENTICATION_POLICY_ADMIN|G
-|root||footballuser||AUTHENTICATION_POLICY_ADMIN|G
-|root||mysql.session|localhost|AUTHENTICATION_POLICY_ADMIN|G
-|root||root|localhost|AUTHENTICATION_POLICY_ADMIN|G
-|root||universitydba||AUTHENTICATION_POLICY_ADMIN|G
-|root||debian-sys-maint|localhost|BACKUP_ADMIN|G
-|root||footballuser||BACKUP_ADMIN|G
-|root||mysql.session|localhost|BACKUP_ADMIN|G
-|root||root|localhost|BACKUP_ADMIN|G
-|root||universitydba||BACKUP_ADMIN|G
-|root||debian-sys-maint|localhost|BINLOG_ADMIN|G
-|root||footballuser||BINLOG_ADMIN|G
-|root||root|localhost|BINLOG_ADMIN|G
-|root||universitydba||BINLOG_ADMIN|G
-|root||debian-sys-maint|localhost|BINLOG_ENCRYPTION_ADMIN|G
-|root||footballuser||BINLOG_ENCRYPTION_ADMIN|G
-|root||root|localhost|BINLOG_ENCRYPTION_ADMIN|G
-|root||universitydba||BINLOG_ENCRYPTION_ADMIN|G
-|root||debian-sys-maint|localhost|CLONE_ADMIN|G
-|root||footballuser||CLONE_ADMIN|G
-|root||mysql.session|localhost|CLONE_ADMIN|G
-|root||root|localhost|CLONE_ADMIN|G
-|root||universitydba||CLONE_ADMIN|G
-|root||debian-sys-maint|localhost|CONNECTION_ADMIN|G
-|root||footballuser||CONNECTION_ADMIN|G
-|root||mysql.session|localhost|CONNECTION_ADMIN|G
-|root||root|localhost|CONNECTION_ADMIN|G
-|root||universitydba||CONNECTION_ADMIN|G
-|root||debian-sys-maint|localhost|CREATE|G
-|root||footballuser||CREATE|G
-|root||root|localhost|CREATE|G
-|root||universitydba||CREATE|G
-|root||debian-sys-maint|localhost|CREATE ROLE|G
-|root||footballuser||CREATE ROLE|G
-|root||root|localhost|CREATE ROLE|G
-|root||universitydba||CREATE ROLE|G
-|root||debian-sys-maint|localhost|CREATE ROUTINE|G
-|root||footballuser||CREATE ROUTINE|G
-|root||root|localhost|CREATE ROUTINE|G
-|root||universitydba||CREATE ROUTINE|G
-|root||debian-sys-maint|localhost|CREATE TABLESPACE|G
-|root||footballuser||CREATE TABLESPACE|G
-|root||root|localhost|CREATE TABLESPACE|G
-|root||universitydba||CREATE TABLESPACE|G
-|root||debian-sys-maint|localhost|CREATE TEMPORARY TABLES|G
-|root||footballuser||CREATE TEMPORARY TABLES|G
-|root||root|localhost|CREATE TEMPORARY TABLES|G
-|root||universitydba||CREATE TEMPORARY TABLES|G
-|root||debian-sys-maint|localhost|CREATE USER|G
-|root||footballuser||CREATE USER|G
-|root||root|localhost|CREATE USER|G
-|root||universitydba||CREATE USER|G
-|root||debian-sys-maint|localhost|CREATE VIEW|G
-|root||footballuser||CREATE VIEW|G
-|root||root|localhost|CREATE VIEW|G
-|root||universitydba||CREATE VIEW|G
-|root||debian-sys-maint|localhost|DELETE|G
-|root||footballuser||DELETE|G
-|root||root|localhost|DELETE|G
-|root||universitydba||DELETE|G
-|root||debian-sys-maint|localhost|DROP|G
-|root||footballuser||DROP|G
-|root||root|localhost|DROP|G
-|root||universitydba||DROP|G
-|root||debian-sys-maint|localhost|DROP ROLE|G
-|root||footballuser||DROP ROLE|G
-|root||root|localhost|DROP ROLE|G
-|root||universitydba||DROP ROLE|G
-|root||debian-sys-maint|localhost|ENCRYPTION_KEY_ADMIN|G
-|root||footballuser||ENCRYPTION_KEY_ADMIN|G
-|root||root|localhost|ENCRYPTION_KEY_ADMIN|G
-|root||universitydba||ENCRYPTION_KEY_ADMIN|G
-|root||debian-sys-maint|localhost|EVENT|G
-|root||footballuser||EVENT|G
-|root||root|localhost|EVENT|G
-|root||universitydba||EVENT|G
-|root||debian-sys-maint|localhost|EXECUTE|G
-|root||footballuser||EXECUTE|G
-|root||root|localhost|EXECUTE|G
-|root||universitydba||EXECUTE|G
-|root||debian-sys-maint|localhost|FILE|G
-|root||footballuser||FILE|G
-|root||root|localhost|FILE|G
-|root||universitydba||FILE|G
-|root||footballuser||FIREWALL_EXEMPT|G
-|root||mysql.infoschema|localhost|FIREWALL_EXEMPT|G
-|root||mysql.session|localhost|FIREWALL_EXEMPT|G
-|root||mysql.sys|localhost|FIREWALL_EXEMPT|G
-|root||root|localhost|FIREWALL_EXEMPT|G
-|root||universitydba||FIREWALL_EXEMPT|G
-|root||debian-sys-maint|localhost|FLUSH_OPTIMIZER_COSTS|G
-|root||footballuser||FLUSH_OPTIMIZER_COSTS|G
-|root||root|localhost|FLUSH_OPTIMIZER_COSTS|G
-|root||universitydba||FLUSH_OPTIMIZER_COSTS|G
-|root||debian-sys-maint|localhost|FLUSH_STATUS|G
-|root||footballuser||FLUSH_STATUS|G
-|root||root|localhost|FLUSH_STATUS|G
-|root||universitydba||FLUSH_STATUS|G
-|root||debian-sys-maint|localhost|FLUSH_TABLES|G
-|root||footballuser||FLUSH_TABLES|G
-|root||root|localhost|FLUSH_TABLES|G
-|root||universitydba||FLUSH_TABLES|G
-|root||debian-sys-maint|localhost|FLUSH_USER_RESOURCES|G
-|root||footballuser||FLUSH_USER_RESOURCES|G
-|root||root|localhost|FLUSH_USER_RESOURCES|G
-|root||universitydba||FLUSH_USER_RESOURCES|G
-|root||debian-sys-maint|localhost|GROUP_REPLICATION_ADMIN|G
-|root||footballuser||GROUP_REPLICATION_ADMIN|G
-|root||root|localhost|GROUP_REPLICATION_ADMIN|G
-|root||universitydba||GROUP_REPLICATION_ADMIN|G
-|root||debian-sys-maint|localhost|GROUP_REPLICATION_STREAM|G
-|root||footballuser||GROUP_REPLICATION_STREAM|G
-|root||root|localhost|GROUP_REPLICATION_STREAM|G
-|root||universitydba||GROUP_REPLICATION_STREAM|G
-|root||debian-sys-maint|localhost|INDEX|G
-|root||footballuser||INDEX|G
-|root||root|localhost|INDEX|G
-|root||universitydba||INDEX|G
-|root||debian-sys-maint|localhost|INNODB_REDO_LOG_ARCHIVE|G
-|root||footballuser||INNODB_REDO_LOG_ARCHIVE|G
-|root||root|localhost|INNODB_REDO_LOG_ARCHIVE|G
-|root||universitydba||INNODB_REDO_LOG_ARCHIVE|G
-|root||debian-sys-maint|localhost|INNODB_REDO_LOG_ENABLE|G
-|root||footballuser||INNODB_REDO_LOG_ENABLE|G
-|root||root|localhost|INNODB_REDO_LOG_ENABLE|G
-|root||universitydba||INNODB_REDO_LOG_ENABLE|G
-|root||debian-sys-maint|localhost|INSERT|G
-|root||footballuser||INSERT|G
-|root||root|localhost|INSERT|G
-|root||universitydba||INSERT|G
-|root||debian-sys-maint|localhost|LOCK TABLES|G
-|root||footballuser||LOCK TABLES|G
-|root||root|localhost|LOCK TABLES|G
-|root||universitydba||LOCK TABLES|G
-|root||debian-sys-maint|localhost|PASSWORDLESS_USER_ADMIN|G
-|root||footballuser||PASSWORDLESS_USER_ADMIN|G
-|root||root|localhost|PASSWORDLESS_USER_ADMIN|G
-|root||universitydba||PASSWORDLESS_USER_ADMIN|G
-|root||debian-sys-maint|localhost|PERSIST_RO_VARIABLES_ADMIN|G
-|root||footballuser||PERSIST_RO_VARIABLES_ADMIN|G
-|root||mysql.session|localhost|PERSIST_RO_VARIABLES_ADMIN|G
-|root||root|localhost|PERSIST_RO_VARIABLES_ADMIN|G
-|root||universitydba||PERSIST_RO_VARIABLES_ADMIN|G
-|root||debian-sys-maint|localhost|PROCESS|G
-|root||footballuser||PROCESS|G
-|root||root|localhost|PROCESS|G
-|root||universitydba||PROCESS|G
-|root||debian-sys-maint|localhost|REFERENCES|G
-|root||footballuser||REFERENCES|G
-|root||root|localhost|REFERENCES|G
-|root||universitydba||REFERENCES|G
-|root||debian-sys-maint|localhost|RELOAD|G
-|root||footballuser||RELOAD|G
-|root||root|localhost|RELOAD|G
-|root||universitydba||RELOAD|G
-|root||debian-sys-maint|localhost|REPLICATION CLIENT|G
-|root||footballuser||REPLICATION CLIENT|G
-|root||root|localhost|REPLICATION CLIENT|G
-|root||universitydba||REPLICATION CLIENT|G
-|root||debian-sys-maint|localhost|REPLICATION SLAVE|G
-|root||footballuser||REPLICATION SLAVE|G
-|root||root|localhost|REPLICATION SLAVE|G
-|root||universitydba||REPLICATION SLAVE|G
-|root||debian-sys-maint|localhost|REPLICATION_APPLIER|G
-|root||footballuser||REPLICATION_APPLIER|G
-|root||root|localhost|REPLICATION_APPLIER|G
-|root||universitydba||REPLICATION_APPLIER|G
-|root||debian-sys-maint|localhost|REPLICATION_SLAVE_ADMIN|G
-|root||footballuser||REPLICATION_SLAVE_ADMIN|G
-|root||root|localhost|REPLICATION_SLAVE_ADMIN|G
-|root||universitydba||REPLICATION_SLAVE_ADMIN|G
-|root||debian-sys-maint|localhost|RESOURCE_GROUP_ADMIN|G
-|root||footballuser||RESOURCE_GROUP_ADMIN|G
-|root||root|localhost|RESOURCE_GROUP_ADMIN|G
-|root||universitydba||RESOURCE_GROUP_ADMIN|G
-|root||debian-sys-maint|localhost|RESOURCE_GROUP_USER|G
-|root||footballuser||RESOURCE_GROUP_USER|G
-|root||root|localhost|RESOURCE_GROUP_USER|G
-|root||universitydba||RESOURCE_GROUP_USER|G
-|root||debian-sys-maint|localhost|ROLE_ADMIN|G
-|root||footballuser||ROLE_ADMIN|G
-|root||root|localhost|ROLE_ADMIN|G
-|root||universitydba||ROLE_ADMIN|G
-|root||debian-sys-maint|localhost|SELECT|G
-|root||footballuser||SELECT|G
-|root||mysql.infoschema|localhost|SELECT|G
-|root||root|localhost|SELECT|G
-|root||universitydba||SELECT|G
-|root||debian-sys-maint|localhost|SENSITIVE_VARIABLES_OBSERVER|G
-|root||footballuser||SENSITIVE_VARIABLES_OBSERVER|G
-|root||root|localhost|SENSITIVE_VARIABLES_OBSERVER|G
-|root||universitydba||SENSITIVE_VARIABLES_OBSERVER|G
-|root||debian-sys-maint|localhost|SERVICE_CONNECTION_ADMIN|G
-|root||footballuser||SERVICE_CONNECTION_ADMIN|G
-|root||root|localhost|SERVICE_CONNECTION_ADMIN|G
-|root||universitydba||SERVICE_CONNECTION_ADMIN|G
-|root||debian-sys-maint|localhost|SESSION_VARIABLES_ADMIN|G
-|root||footballuser||SESSION_VARIABLES_ADMIN|G
-|root||mysql.session|localhost|SESSION_VARIABLES_ADMIN|G
-|root||root|localhost|SESSION_VARIABLES_ADMIN|G
-|root||universitydba||SESSION_VARIABLES_ADMIN|G
-|root||debian-sys-maint|localhost|SET_USER_ID|G
-|root||footballuser||SET_USER_ID|G
-|root||root|localhost|SET_USER_ID|G
-|root||universitydba||SET_USER_ID|G
-|root||debian-sys-maint|localhost|SHOW DATABASES|G
-|root||footballuser||SHOW DATABASES|G
-|root||root|localhost|SHOW DATABASES|G
-|root||universitydba||SHOW DATABASES|G
-|root||debian-sys-maint|localhost|SHOW VIEW|G
-|root||footballuser||SHOW VIEW|G
-|root||root|localhost|SHOW VIEW|G
-|root||universitydba||SHOW VIEW|G
-|root||debian-sys-maint|localhost|SHOW_ROUTINE|G
-|root||footballuser||SHOW_ROUTINE|G
-|root||root|localhost|SHOW_ROUTINE|G
-|root||universitydba||SHOW_ROUTINE|G
-|root||debian-sys-maint|localhost|SHUTDOWN|G
-|root||footballuser||SHUTDOWN|G
-|root||mysql.session|localhost|SHUTDOWN|G
-|root||root|localhost|SHUTDOWN|G
-|root||universitydba||SHUTDOWN|G
-|root||debian-sys-maint|localhost|SUPER|G
-|root||footballuser||SUPER|G
-|root||mysql.session|localhost|SUPER|G
-|root||root|localhost|SUPER|G
-|root||universitydba||SUPER|G
-|root||debian-sys-maint|localhost|SYSTEM_USER|G
-|root||footballuser||SYSTEM_USER|G
-|root||mysql.infoschema|localhost|SYSTEM_USER|G
-|root||mysql.session|localhost|SYSTEM_USER|G
-|root||mysql.sys|localhost|SYSTEM_USER|G
-|root||root|localhost|SYSTEM_USER|G
-|root||universitydba||SYSTEM_USER|G
-|root||debian-sys-maint|localhost|SYSTEM_VARIABLES_ADMIN|G
-|root||footballuser||SYSTEM_VARIABLES_ADMIN|G
-|root||mysql.session|localhost|SYSTEM_VARIABLES_ADMIN|G
-|root||root|localhost|SYSTEM_VARIABLES_ADMIN|G
-|root||universitydba||SYSTEM_VARIABLES_ADMIN|G
-|root||debian-sys-maint|localhost|TABLE_ENCRYPTION_ADMIN|G
-|root||footballuser||TABLE_ENCRYPTION_ADMIN|G
-|root||root|localhost|TABLE_ENCRYPTION_ADMIN|G
-|root||universitydba||TABLE_ENCRYPTION_ADMIN|G
-|root||debian-sys-maint|localhost|TELEMETRY_LOG_ADMIN|G
-|root||footballuser||TELEMETRY_LOG_ADMIN|G
-|root||root|localhost|TELEMETRY_LOG_ADMIN|G
-|root||universitydba||TELEMETRY_LOG_ADMIN|G
-|root||debian-sys-maint|localhost|TRIGGER|G
-|root||footballuser||TRIGGER|G
-|root||root|localhost|TRIGGER|G
-|root||universitydba||TRIGGER|G
-|root||debian-sys-maint|localhost|UPDATE|G
-|root||footballuser||UPDATE|G
-|root||root|localhost|UPDATE|G
-|root||universitydba||UPDATE|G
-|root||debian-sys-maint|localhost|XA_RECOVER_ADMIN|G
-|root||footballuser||XA_RECOVER_ADMIN|G
-|root||root|localhost|XA_RECOVER_ADMIN|G
-|root||universitydba||XA_RECOVER_ADMIN|G
-|root||debian-sys-maint|localhost|grant option|G
-|root||footballuser||grant option|G
-|root||root|localhost|grant option|G
-performance_schema|schema||mysql.session|localhost|SELECT|G
-sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <ServerVersion>8.0.44</ServerVersion>
     </root>
     <collation id="2" parent="1" name="armscii8_bin">
@@ -1265,7 +978,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
     <column id="307" parent="302" name="id">
-      <AutoIncrement>11</AutoIncrement>
+      <AutoIncrement>51</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
@@ -1310,7 +1023,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="316" parent="303" name="id">
-      <AutoIncrement>4</AutoIncrement>
+      <AutoIncrement>51</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
@@ -1367,7 +1080,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <UnderlyingIndexName>code</UnderlyingIndexName>
     </key>
     <column id="328" parent="304" name="id">
-      <AutoIncrement>8</AutoIncrement>
+      <AutoIncrement>51</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
@@ -1438,7 +1151,7 @@ semester</ColNames>
       <UnderlyingIndexName>unique_enrollment</UnderlyingIndexName>
     </key>
     <column id="342" parent="305" name="id">
-      <AutoIncrement>8</AutoIncrement>
+      <AutoIncrement>51</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
@@ -1493,7 +1206,7 @@ semester</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="353" parent="306" name="id">
-      <AutoIncrement>8</AutoIncrement>
+      <AutoIncrement>32</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>

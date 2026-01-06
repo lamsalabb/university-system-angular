@@ -15,4 +15,6 @@ public class AttendanceResponse {
     LocalDate sessionDate;
     Attendance.Status status;
     String remarks;
+    CourseSummaryResponse course;
+
 }

@@ -3,6 +3,7 @@ import {Course} from '../../../services/course';
 import {FormsModule} from '@angular/forms';
 import {User} from '../../../services/user';
 import {RouterLink} from '@angular/router';
+import {Enrollment} from '../../../services/enrollment';
 
 @Component({
   selector: 'app-view-courses',
@@ -14,12 +15,14 @@ import {RouterLink} from '@angular/router';
   styleUrl: './view-courses.css',
 })
 export class ViewCourses {
-courses = signal<any[]>([]);
+  courses = signal<any[]>([]);
+  enrollments = signal<any[]>([]);
+
   loading = signal(true);
   error = signal<string | null>(null);
   instructors: any[] = [];
 
-  constructor(private courseService: Course, private userService:User) {
+  constructor(private courseService: Course, private userService:User, private enrollmentService: Enrollment) {
 
   }
 
@@ -60,6 +63,10 @@ courses = signal<any[]>([]);
   }
 
   editingCourse = signal<any | null>(null);
+  detailsCourse = signal<any | null>(null);
+  studentsEnrolled = signal<any | null>(null);
+
+
 
   editForm = {
     title: '',
@@ -80,6 +87,23 @@ courses = signal<any[]>([]);
       description: c.description,
       instructorId: c.instructorId
     };
+  }
+
+  openDetails(c:any){
+    this.detailsCourse.set(c);
+    this.enrollmentService.getEnrollmentByCourse(c).subscribe({
+      next: enrollments => {
+        this.studentsEnrolled.set(enrollments);
+      },
+      error: err => {
+        this.error.set('Failed to load enrollments');
+        this.loading.set(false);
+      },
+    })
+  }
+
+  closeDetails() {
+    this.detailsCourse.set(null);
   }
 
 

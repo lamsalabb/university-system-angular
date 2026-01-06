@@ -35,5 +35,14 @@ export class Enrollment {
     return this.http.get<any>(`${this.apiUrl}?page=${page}&size=${size}`);
   }
 
+  updateGrade(enrollmentId: number, grade: string) {
+    return this.http.put<void>(
+      `${this.apiUrl}/${enrollmentId}/${grade}`,
+      null
+    );
+  }
+
+
+
 
 }

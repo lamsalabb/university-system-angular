@@ -24,6 +24,7 @@ export class AuthService {
     localStorage.setItem('token', response.token);
     localStorage.setItem('role', response.role);
     localStorage.setItem('userId', response.id);
+    localStorage.setItem('firstName', response.firstName);
 
 
     if (response.role == 'ADMIN') {//might need to navigate this logic somewhere else/ unsure

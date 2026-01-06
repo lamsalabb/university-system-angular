@@ -49,7 +49,8 @@
                   <span
                     class="status-badge"
                     [class.success]="c.enrollmentStatus === 'ENROLLED'"
-                    [class.muted]="c.enrollmentStatus === 'DROPPED'"
+                    [class.danger]="c.enrollmentStatus === 'DROPPED'"
+                    [class.neutral]="c.enrollmentStatus === 'COMPLETED'"
                   >
                     {{ c.enrollmentStatus }}
                   </span>
@@ -63,8 +64,6 @@
                     >
                       Drop
                     </button>
-                  } @else {
-                    <span class="status dropped">Dropped</span>
                   }
                 </td>
               </tr>
