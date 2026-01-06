@@ -51,6 +51,7 @@ public class AttendanceController {
         return ResponseEntity.ok(responses);
     }
 
+
     @GetMapping("/student/{studentId}/course/{courseId}")
     public ResponseEntity<List<AttendanceResponse>> getByStudentAndCourse(
             @PathVariable int studentId,
@@ -63,6 +64,29 @@ public class AttendanceController {
                         .toList();
 
         return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<List<AttendanceResponse>> getByCourseId(
+            @PathVariable int courseId) {
+
+        List<AttendanceResponse> responses =
+                attendanceService.getAttendanceByCourseId(courseId)
+                        .stream()
+                        .map(AttendanceMapper::toResponse)
+                        .toList();
+
+        return ResponseEntity.ok(responses);
+    }
+
+    @PutMapping("/student/{attendanceId}/attendance/{status}")
+    public ResponseEntity<Void>updateAttendance(
+            @PathVariable int attendanceId,
+            @PathVariable String status) {
+
+                attendanceService.updateStatus(attendanceId, status);
+
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/student/{studentId}/course/{courseId}/summary")

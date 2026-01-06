@@ -27,9 +27,9 @@ STUDENT,GET,/api/attendances
 
 
 
-
-
-INSTRUCTOR,POST,/api/attendance
+INSTRUCTOR,POST,/api/attendances
+INSTRUCTOR,GET,/api/attendances
+INSTRUCTOR,PUT,/api/attendances
 INSTRUCTOR,GET,/api/users
 INSTRUCTOR,PUT,/api/users
 INSTRUCTOR,GET,/api/courses

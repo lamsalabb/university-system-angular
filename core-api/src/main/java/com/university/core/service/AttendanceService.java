@@ -59,6 +59,10 @@ public class AttendanceService {
         return attendanceRepository.findByEnrollmentStudentIdAndEnrollmentCourseId(studentId, courseId);
     }
 
+    public List<Attendance> getAttendanceByCourseId(int courseId) {
+        return attendanceRepository.findByEnrollmentCourseId(courseId);
+    }
+
     public Attendance getAttendanceById(int id) {
         return attendanceRepository.findById(id).orElseThrow(
                 () -> new AttendanceNotFoundException("Attendance not found with id: " + id)
@@ -81,6 +85,15 @@ public class AttendanceService {
 
     public record AttendanceSummary(int totalSessions, long presentCount, long absentCount, long excusedCount,
                                     double presentPercent) {
+    }
+
+    @Transactional
+    public void updateStatus(int attendanceId, String status) {
+        Attendance attendance = attendanceRepository.findById(attendanceId)
+                .orElseThrow(() -> new RuntimeException("Attendance not found"));
+
+        attendance.setStatus(Attendance.Status.valueOf(status));
+        attendanceRepository.save(attendance);
     }
 
 

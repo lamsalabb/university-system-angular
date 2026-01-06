@@ -16,5 +16,5 @@ public class AttendanceResponse {
     Attendance.Status status;
     String remarks;
     CourseSummaryResponse course;
-
+    StudentSummaryResponse student;
 }

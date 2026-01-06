@@ -19,8 +19,16 @@ export class Attendance {
     return this.http.get<any[]>(`${this.apiUrl}/student/${studentId}`);
   }
 
+  getByCourse(courseId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/course/${courseId}`);
+  }
+
   getByStudentAndCourse(studentId: number, courseId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/student/${studentId}/course/${courseId}`);
+  }
+
+  updateAttendance(attendanceId: number, status: string): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/student/${attendanceId}/attendance/${status}`, null);
   }
 
   getSummary(studentId: number, courseId: number): Observable<any> {

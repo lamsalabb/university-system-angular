@@ -3,11 +3,12 @@ import { BaseChartDirective } from 'ng2-charts';
 import { Attendance } from '../../../services/attendance';
 import { AuthService } from '../../../services/auth.service';
 import {Chart, ChartData} from 'chart.js';
+import {DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'app-view-attendance-student',
   standalone: true,
-  imports: [BaseChartDirective],
+  imports: [BaseChartDirective, DecimalPipe],
   templateUrl: './view-attendance-student.html',
   styleUrl: './view-attendance-student.css',
 })

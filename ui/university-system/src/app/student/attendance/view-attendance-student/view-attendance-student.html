@@ -23,7 +23,7 @@
           <div>Absent: {{ summary().absentCount }}</div>
           <div>Excused: {{ summary().excusedCount }}</div>
           <strong>
-            Attendance: {{ summary().presentPercent }}%
+            Attendance: {{ summary().presentPercent | number:'1.0-2'}}%
           </strong>
         </div>
 

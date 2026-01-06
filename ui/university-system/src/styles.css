@@ -77,40 +77,44 @@ html, body {
 }
 
 .page-container {
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 3.5rem 1.5rem;
+  padding: 3rem 2rem;
+}
+
+@media (min-width: 1600px) {
+  .page-container {
+    max-width: 1800px;
+  }
 }
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(420px, 520px));
+  grid-template-columns: repeat(2, minmax(520px, 640px));
   gap: 2rem;
   justify-content: center;
   margin-top: 5rem;
 }
 
-
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
+    justify-content: stretch;
   }
 }
-
 
 .dashboard-card {
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  min-height: 260px;
+  min-height: 280px;
 }
-
 
 .dashboard-card-content {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 2rem;
+  padding: 2.25rem;
 }
 
 .warning-button {
@@ -183,6 +187,7 @@ html, body {
 .form-actions {
   display: flex;
   justify-content: flex-end;
+  gap: 0.75rem;
   margin-top: 2rem;
 }
 
@@ -190,7 +195,8 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
   padding-bottom: 1rem;
   margin-top: 1.5rem;
 }
@@ -201,9 +207,10 @@ html, body {
 
 .list-card {
   background: #ffffff;
-  border-radius: 6px;
+  border-radius: 10px;
   box-shadow: none;
-  overflow: hidden;
+  padding: 1.25rem;
+  overflow: visible;
 }
 
 .data-table {
@@ -213,8 +220,9 @@ html, body {
 
 .data-table th,
 .data-table td {
-  padding: 0.75rem 1rem;
-  text-align: center;
+  padding: 0.9rem 1rem;
+  text-align: left;
+  vertical-align: middle;
 }
 
 .data-table thead {
@@ -229,12 +237,17 @@ html, body {
   text-align: right;
 }
 
+.center {
+  text-align: center;
+}
+
 .status-badge {
   display: inline-block;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0.55rem;
   border-radius: 4px;
   font-size: 0.85rem;
   font-weight: 600;
+  line-height: 1.1;
 }
 
 .status-badge.neutral {
@@ -275,6 +288,12 @@ html, body {
   color: #ffffff;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
+}
+
+.secondary-button.active {
+  outline: 2px solid rgba(13, 110, 253, 0.35);
+  outline-offset: 1px;
 }
 
 .link-button {
@@ -297,14 +316,15 @@ html, body {
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 1.5rem;
 }
 
 .modal-box {
   background: #ffffff;
-  border-radius: 6px;
+  border-radius: 10px;
   padding: 1.5rem;
   width: 100%;
-  max-width: 420px;
+  max-width: 520px;
 }
 
 .modal-title {
@@ -329,6 +349,7 @@ html, body {
   align-items: center;
   justify-content: space-between;
   height: 64px;
+  padding: 0 2rem;
 }
 
 .header-logo {
@@ -372,12 +393,6 @@ html, body {
 
 .not-found-message {
   margin-bottom: 1.5rem;
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
 }
 
 a {
@@ -432,10 +447,6 @@ a {
   justify-content: center;
 }
 
-.center {
-  text-align: center;
-}
-
 .action-col {
   width: 120px;
 }
@@ -449,8 +460,6 @@ a {
 .data-table .center {
   text-align: center;
 }
-
-/* ===== Profile / Card Utilities (APPENDED) ===== */
 
 .centered-container {
   display: flex;
@@ -519,10 +528,6 @@ a {
   align-items: center;
 }
 
-.align-right {
-  text-align: right;
-}
-
 .modal-box {
   width: 100%;
   max-width: 520px;
@@ -543,22 +548,24 @@ a {
 .details-label {
   font-weight: 500;
 }
+
 .data-table tbody tr {
-  border-bottom: 1px solid;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .data-table tbody tr:last-child {
   border-bottom: none;
 }
+
 .inline-form {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .small-input {
-  min-width: 70px;
+  min-width: 90px;
 }
 
 canvas {
@@ -575,8 +582,8 @@ canvas {
 
 .summary-chart {
   width: 100%;
-  max-width: 420px;
-  height: 320px;
+  max-width: 520px;
+  height: 360px;
 }
 
 .summary-stats {
@@ -589,6 +596,7 @@ canvas {
   margin-top: 0.5rem;
   font-size: 1.05rem;
 }
+
 .course-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -598,7 +606,7 @@ canvas {
 }
 
 .course-buttons button {
-  padding: 0.35rem 0.6rem;
+  padding: 0.3rem 0.6rem;
   font-size: 0.85rem;
   width: auto;
 }

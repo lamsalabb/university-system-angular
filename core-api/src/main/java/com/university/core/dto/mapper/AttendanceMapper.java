@@ -3,6 +3,7 @@ package com.university.core.dto.mapper;
 import com.university.common.entity.Attendance;
 import com.university.core.dto.response.AttendanceResponse;
 import com.university.core.dto.response.CourseSummaryResponse;
+import com.university.core.dto.response.StudentSummaryResponse;
 
 public final class AttendanceMapper {
 
@@ -20,6 +21,13 @@ public final class AttendanceMapper {
                         CourseSummaryResponse.builder()
                                 .id(attendance.getEnrollment().getCourse().getId())
                                 .title(attendance.getEnrollment().getCourse().getTitle())
+                                .build()
+                )
+                .student(
+                        StudentSummaryResponse.builder()
+                                .id(attendance.getEnrollment().getStudent().getId())
+                                .firstName(attendance.getEnrollment().getStudent().getFirstName())
+                                .lastName(attendance.getEnrollment().getStudent().getLastName())
                                 .build()
                 )
                 .build();

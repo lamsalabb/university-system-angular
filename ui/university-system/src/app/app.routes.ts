@@ -23,6 +23,7 @@ import {ViewCoursesInstructor} from './instructor/courses/view-courses-instructo
 import {ViewStudentsInstructor} from './instructor/students/view-students-instructor/view-students-instructor';
 import {ViewAttendanceInstructor} from './instructor/attendance/view-attendance-instructor/view-attendance-instructor';
 import {ViewAttendanceStudent} from './student/attendance/view-attendance-student/view-attendance-student';
+import {MarkAttendanceInstructor} from './instructor/attendance/mark-attendance-instructor/mark-attendance-instructor';
 
 
 export const routes: Routes = [
@@ -63,7 +64,7 @@ export const routes: Routes = [
       {path: 'instructor/view-courses', component: ViewCoursesInstructor, canActivate: [roleGuard(['INSTRUCTOR'])]},
       {path: 'instructor/view-students', component: ViewStudentsInstructor, canActivate: [roleGuard(['INSTRUCTOR'])]},
       {path: 'instructor/view-attendance', component: ViewAttendanceInstructor, canActivate: [roleGuard(['INSTRUCTOR'])]},
-
+      {path: 'instructor/mark-attendance', component: MarkAttendanceInstructor, canActivate: [roleGuard(['INSTRUCTOR'])]},
 
 
       {

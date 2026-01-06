@@ -1,0 +1,140 @@
+<main class="page-container">
+
+  @if (!selectedCourseId()) {
+
+    <div class="text-center" style="margin-bottom: 3rem;">
+      <h3 class="list-title">Mark Attendance</h3>
+      <p class="muted-text">
+        Select a course to mark today’s attendance
+      </p>
+    </div>
+
+    <div class="centered-container">
+      <div class="card">
+        <div class="card-body">
+
+          <label class="form-label">Course</label>
+
+          <select
+            class="form-input"
+            #courseSelect
+            (change)="selectCourse(courseSelect.value)"
+          >
+
+          <option value="">-- Select Course --</option>
+
+            @for (c of courses(); track c.id) {
+              <option [value]="c.id">
+                {{ c.title }}
+              </option>
+            }
+          </select>
+
+        </div>
+      </div>
+    </div>
+
+  }
+
+  @if (selectedCourseId()) {
+
+    <div class="list-header">
+      <div>
+        <h3 class="list-title">Mark Attendance</h3>
+        <span class="muted-text">
+          Session Date:
+          <strong>{{ today }}</strong>
+        </span>
+      </div>
+
+      <button
+        class="secondary-button small-button"
+        (click)="resetCourse()"
+      >
+        Change Course
+      </button>
+    </div>
+
+    <div class="list-card">
+
+      <table class="data-table">
+
+        <thead>
+        <tr>
+          <th>Student</th>
+          <th>Email</th>
+          <th class="center">Present</th>
+          <th class="center">Absent</th>
+          <th class="center">Excused</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+          @if (enrollments().length === 0) {
+            <tr>
+              <td colspan="5" class="empty-row">
+                No students enrolled.
+              </td>
+            </tr>
+          }
+
+          @for (e of enrollments(); track e.id) {
+            <tr>
+
+              <td>
+                {{ e.student.firstName }}
+                {{ e.student.lastName }}
+              </td>
+
+              <td>{{ e.student.email }}</td>
+
+              <td class="center">
+                <input
+                  type="radio"
+                  [name]="'status_' + e.id"
+                  value="PRESENT"
+                  checked
+                  (change)="setStatus(e.id, 'PRESENT')"
+                >
+              </td>
+
+              <td class="center">
+                <input
+                  type="radio"
+                  [name]="'status_' + e.id"
+                  value="ABSENT"
+                  (change)="setStatus(e.id, 'ABSENT')"
+                >
+              </td>
+
+              <td class="center">
+                <input
+                  type="radio"
+                  [name]="'status_' + e.id"
+                  value="EXCUSED"
+                  (change)="setStatus(e.id, 'EXCUSED')"
+                >
+              </td>
+
+            </tr>
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <div class="align-right" style="margin-top: 2.5rem;">
+      <button
+        class="primary-button"
+        (click)="saveAttendance()"
+      >
+        Save Attendance
+      </button>
+    </div>
+
+  }
+
+</main>

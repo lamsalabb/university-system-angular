@@ -1,1 +1,123 @@
-<p>view-attendance-instructor works!</p>
+<main class="page-container">
+
+  <div class="list-header">
+    <div>
+      <h3 class="list-title">Attendance Records</h3>
+      <span class="muted-text">View & update student attendance</span>
+    </div>
+
+    <button
+      class="primary-button"
+      style="padding: 0.6rem 1.25rem; font-size: 0.95rem;"
+      (click)="goToMarkAttendance()"
+    >
+      Mark Attendance
+    </button>
+
+
+
+  </div>
+
+  <div class="list-card">
+
+    <div class="course-buttons">
+      @for (c of courses(); track c.id) {
+        <button
+          class="secondary-button small-button"
+          [class.active]="selectedCourseId() === c.id"
+          (click)="loadAttendance(c.id)"
+        >
+          {{ c.title }}
+        </button>
+      }
+    </div>
+
+    <table class="data-table">
+
+      <thead>
+      <tr>
+        <th>Student</th>
+        <th>Date</th>
+        <th class="center">Status</th>
+        <th class="center">Update Status</th>
+      </tr>
+      </thead>
+
+      <tbody>
+
+        @if (!selectedCourseId()) {
+          <tr>
+            <td colspan="4" class="empty-row">
+              Select a course to view attendance.
+            </td>
+          </tr>
+        }
+
+        @if (selectedCourseId() && attendance().length === 0) {
+          <tr>
+            <td colspan="4" class="empty-row">
+              No attendance records found for this course.
+            </td>
+          </tr>
+        }
+
+        @for (a of attendance(); track a.id) {
+          <tr>
+
+            <td>
+              {{ a.student.firstName }}
+              {{ a.student.lastName }}
+            </td>
+
+            <td>{{ a.sessionDate }}</td>
+
+            <td class="center">
+              <span
+                class="status-badge"
+                [class.success]="a.status === 'PRESENT'"
+                [class.danger]="a.status === 'ABSENT'"
+                [class.warning]="a.status === 'EXCUSED'"
+              >
+                {{ a.status }}
+              </span>
+            </td>
+
+            <td class="center">
+              <form
+                class="inline-form"
+                style="gap: 0.75rem;"
+                (ngSubmit)="updateAttendance(a.id, a.status)"
+              >
+
+                <select
+                  class="form-input"
+                  style="min-width: 110px; padding: 0.35rem 0.5rem; font-size: 0.85rem;"
+                  [(ngModel)]="a.status"
+                  name="status-{{ a.id }}"
+                >
+                  <option value="PRESENT">PRESENT</option>
+                  <option value="ABSENT">ABSENT</option>
+                  <option value="EXCUSED">EXCUSED</option>
+                </select>
+
+                <button
+                  type="submit"
+                  class="primary-button small-button"
+                  style="padding: 0.35rem 0.75rem;"
+                >
+                  Save
+                </button>
+
+              </form>
+            </td>
+
+          </tr>
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</main>
