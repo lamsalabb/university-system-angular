@@ -27,8 +27,8 @@ export class Enrollment {
     return this.http.get<any[]>(`${this.apiUrl}/course/${courseId}`);
   }
 
-  getEnrollmentByInstructorId(id: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/instructor/${id}`);
+  getEnrollmentByInstructorId(id: number,page: number, size: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/instructor/${id}?page=${page}&size=${size}`);
   }
 
   getAllEnrollments(page: number, size: number): Observable<any> {

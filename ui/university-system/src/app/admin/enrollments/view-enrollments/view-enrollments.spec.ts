@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ViewEnrollments } from './view-enrollments';
+import {ViewEnrollments} from './view-enrollments';
 
 describe('ViewEnrollments', () => {
   let component: ViewEnrollments;

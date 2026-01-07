@@ -9,106 +9,94 @@
     </a>
   </div>
 
-  @if (loading()) {
-    <p class="muted-text">Loading users…</p>
-  }
+  <div class="list-card">
+    @if (error()) {
+      <p class="error-text">{{ error() }}</p>
+    }
 
-  @if (error()) {
-    <p class="error-text">{{ error() }}</p>
-  }
+    <table class="data-table">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th class="align-right">Actions</th>
+      </tr>
+      </thead>
 
-  @if (!loading() && !error()) {
-    <div class="list-card">
-      <table class="data-table">
-        <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Status</th>
-          <th class="align-right">Actions</th>
-        </tr>
-        </thead>
+      <tbody>
+        @if (loading()) {
+          <tr>
+            <td colspan="5" class="empty-row">
+              Loading users…
+            </td>
+          </tr>
+        }
 
-        <tbody>
-          @for (u of users(); track u.id) {
-            <tr>
-              <td>{{ u.firstName }} {{ u.lastName }}</td>
-              <td>{{ u.email }}</td>
+        @if (!loading() && users().length === 0) {
+          <tr>
+            <td colspan="5" class="empty-row">
+              No users found.
+            </td>
+          </tr>
+        }
 
-              <td>
-                <span class="status-badge neutral">
-                  {{ u.role }}
-                </span>
-              </td>
+        @for (u of users(); track u.id) {
+          <tr>
+            <td>{{ u.firstName }} {{ u.lastName }}</td>
+            <td>{{ u.email }}</td>
 
-              <td>
-                <span
-                  class="status-badge"
-                  [class.success]="u.active"
-                  [class.danger]="!u.active"
-                >
-                  {{ u.active ? 'Active' : 'Inactive' }}
-                </span>
-              </td>
+            <td>
+              <span class="status-badge neutral">
+                {{ u.role }}
+              </span>
+            </td>
 
-              <td class="align-right">
-                @if (u.role !== 'ADMIN') {
-                  <button
-                    class="link-button"
-                    (click)="openEdit(u)"
-                  >
-                    Edit
-                  </button>
+            <td>
+              <span
+                class="status-badge"
+                [class.success]="u.active"
+                [class.danger]="!u.active"
+              >
+                {{ u.active ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
 
-                  <button
-                    class="link-button danger"
-                    (click)="deleteUser(u.id)"
-                  >
-                    Delete
-                  </button>
-                }
+            <td class="align-right">
+              @if (u.role !== 'ADMIN') {
+                <button class="link-button" (click)="openEdit(u)">Edit</button>
+                <button class="link-button danger" (click)="deleteUser(u.id)">Delete</button>
+              }
 
-                @if (u.role === 'ADMIN') {
-                  <span class="muted-text small-italic">Admin</span>
-                }
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  }
+              @if (u.role === 'ADMIN') {
+                <span class="muted-text small-italic">Admin</span>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 
   @if (editingUser()) {
     <div class="modal-backdrop" (click)="closeEdit()">
       <div class="modal-box" (click)="$event.stopPropagation()">
-
         <h5 class="modal-title">Edit User</h5>
 
         <div class="form-field">
           <label class="form-label">First Name</label>
-          <input
-            class="form-input"
-            [(ngModel)]="editForm.firstName"
-          >
+          <input class="form-input" [(ngModel)]="editForm.firstName">
         </div>
 
         <div class="form-field">
           <label class="form-label">Last Name</label>
-          <input
-            class="form-input"
-            [(ngModel)]="editForm.lastName"
-          >
+          <input class="form-input" [(ngModel)]="editForm.lastName">
         </div>
 
         <div class="form-field">
           <label class="form-label">Email</label>
-          <input
-            type="email"
-            class="form-input"
-            [(ngModel)]="editForm.email"
-          >
+          <input type="email" class="form-input" [(ngModel)]="editForm.email">
         </div>
 
         <div class="form-field">
@@ -123,23 +111,13 @@
 
         @if (editingUser()?.role !== 'ADMIN') {
           <label class="checkbox-field">
-            <input
-              type="checkbox"
-              [(ngModel)]="editForm.isActive"
-            >
+            <input type="checkbox" [(ngModel)]="editForm.isActive">
             Active
           </label>
         }
 
-
         <div class="form-actions">
-          <button
-            class="secondary-button small-button"
-            (click)="closeEdit()"
-          >
-            Cancel
-          </button>
-
+          <button class="secondary-button small-button" (click)="closeEdit()">Cancel</button>
           <button
             class="primary-button small-button"
             [disabled]="!canSaveUser()"
@@ -151,6 +129,7 @@
       </div>
     </div>
   }
+
   <app-pagination
     [page]="currentPage()"
     [size]="pageSize()"
@@ -159,5 +138,4 @@
     (pageChange)="currentPage.set($event)"
     (sizeChange)="pageSize.set($event); currentPage.set(0)"
   ></app-pagination>
-
 </main>

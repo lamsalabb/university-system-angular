@@ -3,6 +3,8 @@ package com.university.common.repository;
 import com.university.common.entity.Course;
 import com.university.common.entity.Enrollment;
 import com.university.common.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -16,6 +18,6 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Integer>
 
     Optional<Enrollment> findByStudentAndCourseAndSemester(User student, Course course, String semester);//using the unique constraint search
 
-    List<Enrollment> findByCourseInstructorId(int instructorId);
+    Page<Enrollment> findByCourseInstructorId(int instructorId, Pageable pageable);
 
 }

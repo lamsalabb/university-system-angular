@@ -2,10 +2,13 @@ import {Component, signal} from '@angular/core';
 import {Enrollment} from '../../../services/enrollment';
 import {Attendance} from '../../../services/attendance';
 import {Router} from '@angular/router';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-mark-attendance-instructor',
-  imports: [],
+  imports: [
+    FormsModule
+  ],
   templateUrl: './mark-attendance-instructor.html',
   styleUrl: './mark-attendance-instructor.css',
 })
@@ -15,10 +18,12 @@ export class MarkAttendanceInstructor {
   enrollments = signal<any[]>([]);
   selectedCourseId = signal<number | null>(null);
   today = new Date().toISOString().slice(0, 10);
+  statusMap: Record<number, string> = {};
 
 
 
-  constructor(private enrollmentService:Enrollment, private attendanceService:Attendance) { }
+
+  constructor(private enrollmentService:Enrollment, private attendanceService:Attendance,private router:Router) { }
 
   ngOnInit() {
     const state = history.state;
@@ -55,24 +60,32 @@ export class MarkAttendanceInstructor {
   }
 
   saveAttendance() {
-    const today = new Date().toISOString().slice(0, 10);
-
-    this.enrollments().forEach(e => {
-      this.attendanceService.markAttendance({
+    this.attendanceService.markAttendanceBatch(
+      this.enrollments().map(e => ({
         enrollmentId: e.id,
-        sessionDate: today,
-        status: e.status,
+        sessionDate: new Date().toISOString().slice(0, 10),
+        status: this.statusMap[e.id],
         remarks: null
-      }).subscribe({
+      }))
+    ).subscribe({
         next: () => {
-          alert("Attendance Submitted.");
-          this.selectedCourseId.set(-1);
-        }
-        }
+          alert("Attendance saved successfully.");
+          this.router.navigate(['/instructor/dashboard']);
+        },
+      error: err => {
+          if(err.status === 409){
+            alert(err.error.message);
+          }
+          else{
+            alert("Attendance saved failed.");
+          }
+
+      }
+      }
 
       );
-    });
   }
+
 
 
 

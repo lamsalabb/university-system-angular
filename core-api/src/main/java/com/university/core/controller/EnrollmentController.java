@@ -73,11 +73,11 @@ public class EnrollmentController {
     }
 
     @GetMapping("/instructor/{id}")
-    public List<EnrollmentResponse> getEnrollmentByInstructorId(@PathVariable int id) {
-        return enrollmentService.getEnrollmentsByInstructor(id)
-                .stream()
-                .map(EnrollmentMapper::toResponse)
-                .toList();
+    public ResponseEntity<?> getEnrollmentByInstructorId(@PathVariable int id, @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<EnrollmentResponse> enrollments = enrollmentService.getEnrollmentsByInstructor(id,pageable)
+                .map(EnrollmentMapper::toResponse);
+
+        return ResponseEntity.ok(enrollments);
     }
 
 

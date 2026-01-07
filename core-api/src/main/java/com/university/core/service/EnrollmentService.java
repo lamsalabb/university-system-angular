@@ -113,8 +113,8 @@ public class EnrollmentService {
         return enrollmentRepository.findAll(pageable);
     }
 
-    public List<Enrollment> getEnrollmentsByInstructor(int instructorId) {
-        return enrollmentRepository.findByCourseInstructorId(instructorId);
+    public Page<Enrollment> getEnrollmentsByInstructor(int instructorId, Pageable pageable) {
+        return enrollmentRepository.findByCourseInstructorId(instructorId,pageable);
     }
 
     public Enrollment getEnrollmentById(int id) {

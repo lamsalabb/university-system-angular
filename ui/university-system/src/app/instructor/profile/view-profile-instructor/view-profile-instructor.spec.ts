@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ViewProfileInstructor } from './view-profile-instructor';
+import {ViewProfileInstructor} from './view-profile-instructor';
 
 describe('ViewProfileInstructor', () => {
   let component: ViewProfileInstructor;

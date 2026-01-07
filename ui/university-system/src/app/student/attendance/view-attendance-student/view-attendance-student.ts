@@ -1,8 +1,8 @@
-import { Component, computed, signal } from '@angular/core';
-import { BaseChartDirective } from 'ng2-charts';
-import { Attendance } from '../../../services/attendance';
-import { AuthService } from '../../../services/auth.service';
-import {Chart, ChartData} from 'chart.js';
+import {Component, computed, signal} from '@angular/core';
+import {BaseChartDirective} from 'ng2-charts';
+import {Attendance} from '../../../services/attendance';
+import {AuthService} from '../../../services/auth.service';
+import {ChartData} from 'chart.js';
 import {DecimalPipe} from '@angular/common';
 
 @Component({
@@ -65,7 +65,7 @@ export class ViewAttendanceStudent {
     this.error.set(null);
 
     this.attendanceService
-      .getSummary(studentId, courseId)
+      .getSummaryByStudent(studentId, courseId)
       .subscribe({
         next: res => {
           this.summary.set(res);

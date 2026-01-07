@@ -11,7 +11,7 @@ export class Attendance {
 
   constructor(private http: HttpClient) {}
 
-  markAttendance(request: any): Observable<any> {
+  markAttendanceBatch(request: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/mark`, request);
   }
 
@@ -19,8 +19,8 @@ export class Attendance {
     return this.http.get<any[]>(`${this.apiUrl}/student/${studentId}`);
   }
 
-  getByCourse(courseId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/course/${courseId}`);
+  getByCourse(courseId: number,page:number, size:number): Observable<any> {
+    return this.http.get<any[]>(`${this.apiUrl}/course/${courseId}?page=${page}&size=${size}`);
   }
 
   getByStudentAndCourse(studentId: number, courseId: number): Observable<any[]> {
@@ -31,11 +31,17 @@ export class Attendance {
     return this.http.put<any>(`${this.apiUrl}/student/${attendanceId}/attendance/${status}`, null);
   }
 
-  getSummary(studentId: number, courseId: number): Observable<any> {
+  getSummaryByStudent(studentId: number, courseId: number): Observable<any> {
     return this.http.get<any>(
       `${this.apiUrl}/student/${studentId}/course/${courseId}/summary`
     );
   }
+  getSummaryByCourse(courseId: number): Observable<any> {
+    return this.http.get<any>(
+      `${this.apiUrl}/course/${courseId}/summary`
+    );
+  }
+
 
 
 }

@@ -1,6 +1,5 @@
 import {Component, signal} from '@angular/core';
 import {Course} from '../../../services/course';
-import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 
 @Component({

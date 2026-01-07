@@ -5,8 +5,12 @@ import com.university.attendance.repository.AttendanceRepository;
 import com.university.common.entity.Attendance;
 import com.university.common.entity.Enrollment;
 import com.university.common.repository.EnrollmentRepository;
+import com.university.core.dto.request.MarkAttendanceRequest;
+import com.university.core.exception.AttendanceAlreadyMarkedException;
 import com.university.core.exception.EnrollmentNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -25,29 +29,50 @@ public class AttendanceService {
     }
 
     @Transactional
-    public Attendance markAttendance(int enrollmentId, LocalDate sessionDate, Attendance.Status status, String remarks) {
+    public Attendance markAttendance(
+            int enrollmentId,
+            LocalDate sessionDate,
+            Attendance.Status status,
+            String remarks
+    ) {
+        Enrollment enrollment = enrollmentRepository.findById(enrollmentId)
+                .orElseThrow(() ->
+                        new EnrollmentNotFoundException(
+                                "Enrollment not found with id: " + enrollmentId
+                        )
+                );
 
-        Enrollment enrollment = enrollmentRepository.findById(enrollmentId).orElseThrow(
-                () -> new EnrollmentNotFoundException("Enrollment not found with id: " + enrollmentId)
-        );
+        if (attendanceRepository
+                .existsByEnrollmentIdAndSessionDate(enrollmentId, sessionDate)) {
+            throw new AttendanceAlreadyMarkedException("Attendance already marked for this session");
+        }
 
-        return attendanceRepository.findByEnrollmentIdAndSessionDate(enrollmentId, sessionDate).map(
-                existing -> {
-                    existing.setStatus(status);
-                    existing.setRemarks(remarks);//update a previously inserted attendance
-                    return attendanceRepository.save(existing);
-                }
-        ).orElseGet(
-                () -> {
-                    Attendance attendance = new Attendance();
-                    attendance.setEnrollment(enrollment);
-                    attendance.setSessionDate(LocalDate.now());
-                    attendance.setStatus(status);
-                    attendance.setRemarks(remarks);
-                    return attendanceRepository.save(attendance);
-                }
-        );
+        Attendance attendance = new Attendance();
+        attendance.setEnrollment(enrollment);
+        attendance.setSessionDate(sessionDate);
+        attendance.setStatus(status);
+        attendance.setRemarks(remarks);
+
+        return attendanceRepository.save(attendance);
     }
+
+    @Transactional
+    public List<Attendance> markAttendanceBatch(
+            List<MarkAttendanceRequest> requests
+    ) {
+        return requests.stream()
+                .map(r ->
+                        markAttendance(
+                                r.getEnrollmentId(),
+                                r.getSessionDate(),
+                                r.getStatus(),
+                                r.getRemarks()
+                        )
+                )
+                .toList();
+    }
+
+
 
     //student can view all their attendance records
     public List<Attendance> getAttendanceByStudent(int studentId) {
@@ -59,8 +84,9 @@ public class AttendanceService {
         return attendanceRepository.findByEnrollmentStudentIdAndEnrollmentCourseId(studentId, courseId);
     }
 
-    public List<Attendance> getAttendanceByCourseId(int courseId) {
-        return attendanceRepository.findByEnrollmentCourseId(courseId);
+    public Page<Attendance> getAttendanceByCourseId(int courseId, Pageable pageable) {
+
+        return attendanceRepository.findByEnrollmentCourseId(courseId, pageable);
     }
 
     public Attendance getAttendanceById(int id) {
@@ -72,6 +98,16 @@ public class AttendanceService {
     public AttendanceSummary getSummaryForStudentInCourse(int studentId, int courseId) {
         List<Attendance> records = attendanceRepository.findByEnrollmentStudentIdAndEnrollmentCourseId(studentId, courseId);
 
+        return getAttendanceSummary(records);
+    }
+
+    public AttendanceSummary getSummaryForCourse(int courseId) {
+        List<Attendance> records = attendanceRepository.findByEnrollmentCourseId(courseId);
+
+        return getAttendanceSummary(records);
+    }
+
+    private AttendanceService.AttendanceSummary getAttendanceSummary(List<Attendance> records) {
         int totalSessions = records.size();
         long presentCount = records.stream().filter(a -> a.getStatus() == Attendance.Status.PRESENT).count();//long for stream function count()
         long absentCount = records.stream().filter(a -> a.getStatus() == Attendance.Status.ABSENT).count();
@@ -82,7 +118,6 @@ public class AttendanceService {
         return new AttendanceSummary(totalSessions, presentCount, absentCount, excusedCount, presentPercent);
     }
 
-
     public record AttendanceSummary(int totalSessions, long presentCount, long absentCount, long excusedCount,
                                     double presentPercent) {
     }
@@ -90,7 +125,7 @@ public class AttendanceService {
     @Transactional
     public void updateStatus(int attendanceId, String status) {
         Attendance attendance = attendanceRepository.findById(attendanceId)
-                .orElseThrow(() -> new RuntimeException("Attendance not found"));
+                .orElseThrow(() -> new AttendanceNotFoundException("Attendance not found"));
 
         attendance.setStatus(Attendance.Status.valueOf(status));
         attendanceRepository.save(attendance);

@@ -1,12 +1,15 @@
 package com.university.core.controller;
 
-import com.university.common.entity.Attendance;
 import com.university.core.dto.mapper.AttendanceMapper;
 import com.university.core.dto.request.MarkAttendanceRequest;
 import com.university.core.dto.response.AttendanceResponse;
 import com.university.core.dto.response.AttendanceSummaryResponse;
 import com.university.core.service.AttendanceService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,18 +27,15 @@ public class AttendanceController {
     }
 
     @PostMapping("/mark")
-    public ResponseEntity<AttendanceResponse> markAttendance(
-            @Valid @RequestBody MarkAttendanceRequest attendanceRequest) {
+    public ResponseEntity<List<AttendanceResponse>> markAttendance(
+            @Valid @RequestBody List<MarkAttendanceRequest> attendanceRequest) {
 
-        Attendance attendance = attendanceService.markAttendance(
-                attendanceRequest.getEnrollmentId(),
-                attendanceRequest.getSessionDate(),
-                attendanceRequest.getStatus(),
-                attendanceRequest.getRemarks()
-        );
+        List<AttendanceResponse> attendance = attendanceService.markAttendanceBatch(attendanceRequest)
+                .stream().map(AttendanceMapper::toResponse).toList();
+
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(AttendanceMapper.toResponse(attendance));
+                .body(attendance);
     }
 
     @GetMapping("/student/{studentId}")
@@ -67,14 +67,12 @@ public class AttendanceController {
     }
 
     @GetMapping("/course/{courseId}")
-    public ResponseEntity<List<AttendanceResponse>> getByCourseId(
-            @PathVariable int courseId) {
+    public ResponseEntity<?> getByCourseId(
+            @PathVariable int courseId, @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
 
-        List<AttendanceResponse> responses =
-                attendanceService.getAttendanceByCourseId(courseId)
-                        .stream()
-                        .map(AttendanceMapper::toResponse)
-                        .toList();
+        Page<AttendanceResponse> responses =
+                attendanceService.getAttendanceByCourseId(courseId, pageable)
+                        .map(AttendanceMapper::toResponse);
 
         return ResponseEntity.ok(responses);
     }
@@ -90,7 +88,7 @@ public class AttendanceController {
     }
 
     @GetMapping("/student/{studentId}/course/{courseId}/summary")
-    public ResponseEntity<AttendanceSummaryResponse> getSummary(
+    public ResponseEntity<AttendanceSummaryResponse> getSummaryByStudent(
             @PathVariable int studentId,
             @PathVariable int courseId) {
 
@@ -100,6 +98,26 @@ public class AttendanceController {
         return ResponseEntity.ok(
                 new AttendanceSummaryResponse(
                         studentId,
+                        courseId,
+                        summary.totalSessions(),
+                        summary.presentCount(),
+                        summary.absentCount(),
+                        summary.excusedCount(),
+                        summary.presentPercent()
+                )
+        );
+    }
+
+    @GetMapping("/course/{courseId}/summary")
+    public ResponseEntity<AttendanceSummaryResponse> getSummaryByCourse(
+            @PathVariable int courseId) {
+
+        AttendanceService.AttendanceSummary summary =
+                attendanceService.getSummaryForCourse(courseId);
+
+        return ResponseEntity.ok(
+                new AttendanceSummaryResponse(
+                        null,
                         courseId,
                         summary.totalSessions(),
                         summary.presentCount(),

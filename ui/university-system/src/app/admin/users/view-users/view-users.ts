@@ -31,13 +31,8 @@ export class ViewUsers {
     });
   }
 
-  ngOnInit() {
-    this.loadUsers();
-  }
-
   loadUsers() {
-    this.loading.set(true);
-
+    this.loading.set(false);
     this.userService.getAllUsers(this.currentPage(),this.pageSize()).subscribe({
       next: (users) => {
         this.users.set(users.content);
@@ -45,7 +40,6 @@ export class ViewUsers {
         this.loading.set(false);
       },
       error: () => {
-        console.log(this.error);
         this.error.set('Failed to load users');
         this.loading.set(false);
       },
@@ -71,7 +65,7 @@ export class ViewUsers {
   }
 
   openEdit(u: any) {
-    this.editingUser.set(u)
+    this.editingUser.set(u);
     this.editForm = {
       firstName: u.firstName,
       lastName: u.lastName,
@@ -82,7 +76,7 @@ export class ViewUsers {
   }
 
   closeEdit() {
-    this.editingUser.set(null)
+    this.editingUser.set(null);
   }
 
   saveEdit() {
@@ -99,7 +93,7 @@ export class ViewUsers {
       })
   }
 
-  canSaveUser(): boolean {
+  canSaveUser(): boolean {//try refactor
     return !!(
       this.editForm.firstName &&
       this.editForm.lastName &&

@@ -1,7 +1,7 @@
 package com.university.core.dto.response;
 
 public record AttendanceSummaryResponse(
-        int studentId,
+        Integer studentId,
         int courseId,
         int totalSessions,
         long presentCount,

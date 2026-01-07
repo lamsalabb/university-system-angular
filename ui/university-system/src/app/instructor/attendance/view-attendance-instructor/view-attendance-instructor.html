@@ -20,6 +20,30 @@
 
   <div class="list-card">
 
+    @if (summary()) {
+      <div class="summary-section">
+
+        <div class="summary-chart">
+          <canvas
+            baseChart
+            [type]="'pie'"
+            [data]="chartData()">
+          </canvas>
+        </div>
+
+        <div class="summary-stats">
+          <div>Total Sessions: {{ summary().totalSessions }}</div>
+          <div>Present: {{ summary().presentCount }}</div>
+          <div>Absent: {{ summary().absentCount }}</div>
+          <div>Excused: {{ summary().excusedCount }}</div>
+          <strong>
+            Attendance: {{ summary().presentPercent | number:'1.0-2'}}%
+          </strong>
+        </div>
+
+      </div>
+    }
+
     <div class="course-buttons">
       @for (c of courses(); track c.id) {
         <button
@@ -112,6 +136,7 @@
             </td>
 
           </tr>
+
         }
 
       </tbody>
@@ -119,5 +144,17 @@
     </table>
 
   </div>
+
+  @if(selectedCourseId()){
+    <app-pagination
+      [page]="currentPage()"
+      [size]="pageSize()"
+      [total]="totalElements()"
+      [loading]="loading()"
+      (pageChange)="currentPage.set($event)"
+      (sizeChange)="pageSize.set($event); currentPage.set(0)"
+    ></app-pagination>
+  }
+
 
 </main>

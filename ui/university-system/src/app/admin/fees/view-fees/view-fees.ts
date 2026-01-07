@@ -1,6 +1,5 @@
 import {Component, computed, effect, OnInit, signal} from '@angular/core';
-import {Router, RouterLink} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
+import {RouterLink} from '@angular/router';
 import {Fee} from '../../../services/fee';
 import {User} from '../../../services/user';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -34,12 +33,12 @@ export class ViewFees implements OnInit {
   }
 
   ngOnInit() {
-    this.loadFees();
+    //this.loadFees();
     this.loadStudents();
   }
 
   loadFees(){
-    this.loading.set(true);
+    this.loading.set(false);
 
     this.feeService.getAllFees(this.currentPage(),this.pageSize()).subscribe({
       next: fees => {

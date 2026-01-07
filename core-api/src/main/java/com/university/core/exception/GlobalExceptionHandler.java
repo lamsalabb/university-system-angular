@@ -85,6 +85,13 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.UNAUTHORIZED, e.getMessage());
     }
 
+    @ExceptionHandler(AttendanceAlreadyMarkedException.class)
+    public ResponseEntity<?> handleAttendanceAlreadyMarked(
+            AttendanceAlreadyMarkedException e
+    ) {
+        return buildErrorResponse(HttpStatus.CONFLICT, e.getMessage());
+    }
+
 
     @ExceptionHandler(Exception.class)//fallback for any generic exceptions
     public ResponseEntity<?> handleGenericException(Exception e) {
