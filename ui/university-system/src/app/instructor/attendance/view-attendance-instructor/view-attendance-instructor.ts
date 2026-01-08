@@ -31,6 +31,8 @@ export class ViewAttendanceInstructor {
   error = signal<string | null>(null);
 
   selectedCourseId = signal<number | null>(null);
+  private lastSummaryCourseId: number | null = null;
+
 
   currentPage = signal(0);
   pageSize = signal(10);
@@ -75,9 +77,9 @@ export class ViewAttendanceInstructor {
     this.loading.set(true);
     this.error.set(null);
 
-    if(!this.flag) {
+    if (this.lastSummaryCourseId !== courseId) {//for load summary to load only after unique course selection
+      this.lastSummaryCourseId = courseId;
       this.loadSummary(courseId);
-      this.flag = true;
     }
     this.attendanceService.getByCourse(courseId,this.currentPage(),this.pageSize()).subscribe({
       next: (res) => {
@@ -152,7 +154,7 @@ export class ViewAttendanceInstructor {
             s.absentCount,
             s.excusedCount
           ],
-          backgroundColor: ['#0da85f', '#e80210', '#d19f0f']
+          backgroundColor: undefined
         }
       ]
     };

@@ -35,11 +35,6 @@ export class AdminDashboard {
       route: '/admin/view-fees',
       button: 'Manage Fees'
     },
-    {
-      title: 'Analytics & Insights',
-      description: 'Enrollment trends, grade distributions, and active student counts.',
-      route: '/admin/analytics',
-      button: 'View Analytics'
-    }
+
   ]);
 }

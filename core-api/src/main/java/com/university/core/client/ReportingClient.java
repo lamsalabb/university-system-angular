@@ -1,9 +1,9 @@
 package com.university.core.client;
 
 import com.university.reporting.contract.dto.ActiveStudentDTO;
-import com.university.reporting.contract.dto.AverageGradeDTO;
 import com.university.reporting.contract.dto.CourseEnrollmentDTO;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
@@ -19,5 +19,5 @@ public interface ReportingClient {
     List<CourseEnrollmentDTO> getCourseEnrollmentStats();
 
     @GetMapping("/api/reports/average-grades")
-    List<AverageGradeDTO> getAverageGrades();
+    ResponseEntity<byte[]> generateAverageGradePdf();
 }

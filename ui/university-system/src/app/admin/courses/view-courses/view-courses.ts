@@ -1,15 +1,19 @@
-import {Component, signal} from '@angular/core';
+import {Component, computed, signal} from '@angular/core';
 import {Course} from '../../../services/course';
 import {FormsModule} from '@angular/forms';
 import {User} from '../../../services/user';
 import {RouterLink} from '@angular/router';
 import {Enrollment} from '../../../services/enrollment';
+import {Reporting} from '../../../services/reporting';
+import {ChartData} from 'chart.js';
+import {BaseChartDirective} from 'ng2-charts';
 
 @Component({
   selector: 'app-view-courses',
   imports: [
     FormsModule,
-    RouterLink
+    RouterLink,
+    BaseChartDirective
   ],
   templateUrl: './view-courses.html',
   styleUrl: './view-courses.css',
@@ -22,7 +26,10 @@ export class ViewCourses {
   error = signal<string | null>(null);
   instructors: any[] = [];
 
-  constructor(private courseService: Course, private userService:User, private enrollmentService: Enrollment) {
+  showDistribution = signal(false);
+  distributionData = signal<any[] | null>(null);
+
+  constructor(private courseService: Course, private userService:User, private enrollmentService: Enrollment, private reportingService:Reporting) {
 
   }
 
@@ -133,4 +140,52 @@ export class ViewCourses {
     );
   }
 
+  openDistribution() {
+    this.showDistribution.set(true);
+
+    if (!this.distributionData()) {
+      this.reportingService.getCourseEnrollment().subscribe(data => {
+        this.distributionData.set(data);
+      });
+    }
+  }
+
+  closeDistribution() {
+    this.showDistribution.set(false);
+  }
+
+  distributionChartData = computed<ChartData<'pie'> | undefined>(() => {
+    const data = this.distributionData();
+    if (!data) return undefined;
+
+    return {
+      labels: data.map(d => d.courseCode),
+      datasets: [
+        {
+          data: data.map(d => d.enrollmentCount),
+          backgroundColor: undefined
+        }
+      ]
+    };
+  });
+
+
+  protected generateReportPdf() {
+    this.reportingService.getPdf().subscribe({
+      next: blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'average-grades.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+        alert("Download Successful.");
+
+      },
+      error: err => {
+        alert("Failed to download. Try again later.");
+        this.loading.set(false);
+      }
+    })
+  }
 }

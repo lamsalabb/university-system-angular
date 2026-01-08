@@ -4,6 +4,9 @@ import com.university.reporting.contract.dto.ActiveStudentDTO;
 import com.university.reporting.contract.dto.AverageGradeDTO;
 import com.university.reporting.contract.dto.CourseEnrollmentDTO;
 import com.university.reporting.service.ReportingService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +34,13 @@ public class ReportingController {
     }
 
     @GetMapping("/average-grades")
-    public List<AverageGradeDTO> averageGrades() {
-        return service.averageGrades();
+    public ResponseEntity<byte[]> averageGradesPdf() {
+
+        List<AverageGradeDTO> data = service.averageGrades();
+
+        byte[] pdf = service.generateAverageGradesPdf(data);
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=average-grades.pdf").contentType(MediaType.APPLICATION_PDF).body(pdf);
     }
+
 }

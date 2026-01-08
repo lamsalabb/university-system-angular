@@ -33,30 +33,18 @@ public interface ReportingRepository extends JpaRepository<Enrollment, Integer> 
 
     //Average grade per course
     @Query("""
-             SELECT new com.university.reporting.contract.dto.AverageGradeDTO(
-                 c.id,
-                 c.code,
-                 AVG(
-                     CASE
-                         WHEN e.grade = 'A+' THEN 4.0
-                         WHEN e.grade = 'A' THEN 3.7
-                         WHEN e.grade = 'B+' THEN 3.3
-                         WHEN e.grade = 'B'  THEN 3.0
-                         WHEN e.grade = 'B-' THEN 2.7
-                         WHEN e.grade = 'C+' THEN 2.3
-                         WHEN e.grade = 'C'  THEN 2.0
-                         WHEN e.grade = 'C-' THEN 1.7
-                         WHEN e.grade = 'D'  THEN 1.0
-                         WHEN e.grade = 'F'  THEN 0.0
-                         ELSE NULL
-                     END
-                 )
-             )
-             FROM Enrollment e
-             JOIN e.course c
-             WHERE e.grade IS NOT NULL
-            GROUP BY c.id, c.code
-            """)
+    SELECT new com.university.reporting.contract.dto.AverageGradeDTO(
+        c.id,
+        c.code,
+        e.grade,
+        COUNT(e.grade)
+    )
+    FROM Enrollment e
+    JOIN e.course c
+    WHERE e.grade IS NOT NULL
+    GROUP BY c.id, c.code, e.grade
+    ORDER BY c.code ASC, e.grade ASC
+""")
     List<AverageGradeDTO> averageGrades();
 
 

@@ -92,7 +92,7 @@ export class ViewAttendanceStudent {
             s.absentCount,
             s.excusedCount
           ],
-          backgroundColor: ['#0da85f', '#e80210', '#d19f0f']
+          backgroundColor: undefined
         }
       ]
     };
