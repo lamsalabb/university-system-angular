@@ -16,12 +16,12 @@
           <label class="form-label">Course</label>
 
           <select
-            class="form-input"
             #courseSelect
             (change)="selectCourse(courseSelect.value)"
+            class="form-input"
           >
 
-          <option value="">-- Select Course --</option>
+            <option value="">-- Select Course --</option>
 
             @for (c of courses(); track c.id) {
               <option [value]="c.id">
@@ -48,8 +48,8 @@
       </div>
 
       <button
-        class="secondary-button small-button"
         (click)="resetCourse()"
+        class="secondary-button small-button"
       >
         Change Course
       </button>
@@ -73,7 +73,7 @@
 
           @if (enrollments().length === 0) {
             <tr>
-              <td colspan="5" class="empty-row">
+              <td class="empty-row" colspan="5">
                 No students enrolled.
               </td>
             </tr>
@@ -91,27 +91,27 @@
 
               <td class="center">
                 <input
-                  type="radio"
-                  [name]="'status_' + e.id"
                   [(ngModel)]="statusMap[e.id]"
+                  [name]="'status_' + e.id"
+                  type="radio"
                   value="PRESENT"
                 >
               </td>
 
               <td class="center">
                 <input
-                  type="radio"
-                  [name]="'status_' + e.id"
                   [(ngModel)]="statusMap[e.id]"
+                  [name]="'status_' + e.id"
+                  type="radio"
                   value="ABSENT"
                 >
               </td>
 
               <td class="center">
                 <input
-                  type="radio"
-                  [name]="'status_' + e.id"
                   [(ngModel)]="statusMap[e.id]"
+                  [name]="'status_' + e.id"
+                  type="radio"
                   value="EXCUSED"
                 >
               </td>
@@ -128,8 +128,8 @@
 
     <div class="align-right" style="margin-top: 2.5rem;">
       <button
-        class="primary-button"
         (click)="saveAttendance()"
+        class="primary-button"
       >
         Save Attendance
       </button>

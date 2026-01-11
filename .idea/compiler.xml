@@ -9,11 +9,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="reporting-api" />
         <module name="core" />
-        <module name="attendance-lib" />
-        <module name="fee-lib" />
-        <module name="fee" />
         <module name="reporting-contract" />
         <module name="attendance" />
+        <module name="fee" />
       </profile>
       <profile name="Annotation profile for university-system" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -26,14 +24,14 @@
         <module name="common" />
         <module name="reporting" />
       </profile>
-      <profile name="Annotation profile for common-data" enabled="true">
+      <profile name="Annotation profile for attendance-lib" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
         </processorPath>
-        <module name="common-data" />
+        <module name="attendance-lib" />
       </profile>
       <profile name="Annotation profile for core-api" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -43,6 +41,24 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
         </processorPath>
         <module name="core-api" />
+      </profile>
+      <profile name="Annotation profile for fee-lib" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="fee-lib" />
+      </profile>
+      <profile name="Annotation profile for common-data" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="common-data" />
       </profile>
     </annotationProcessing>
   </component>

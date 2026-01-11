@@ -6,8 +6,13 @@ import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EntityScan(basePackages = "com.university.common.entity")
-@EnableJpaRepositories(basePackages = "com.university.reporting.repository")
+@EntityScan(basePackages = {"com.university.common.entity"})
+
+@EnableJpaRepositories(basePackages = {
+        "com.university.common.repository",
+        "com.university.reporting.repository",
+
+})
 public class ReportingApplication {
 
     public static void main(String[] args) {

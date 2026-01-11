@@ -40,7 +40,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String token = authHeader.substring(7);//"Bearer length, token comes right after"
 
 
-            try {
                 Claims claims = jwtUtil.validateToken(token);
                 String userId = claims.getSubject();
                 String role = claims.get("role", String.class);
@@ -61,11 +60,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     SecurityContextHolder.clearContext();
                     return;
                 }
-            } catch (Exception e) {
-                SecurityContextHolder.clearContext();
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return;
-            }
         }
 
         filterChain.doFilter(request, response);

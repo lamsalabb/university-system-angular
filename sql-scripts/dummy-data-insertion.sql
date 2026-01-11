@@ -14,11 +14,16 @@ DELETE
 FROM users;
 
 -- Reset auto-increment so IDs start again from 1 (so your hardcoded IDs work)
-ALTER TABLE users AUTO_INCREMENT = 1;
-ALTER TABLE courses AUTO_INCREMENT = 1;
-ALTER TABLE enrollments AUTO_INCREMENT = 1;
-ALTER TABLE attendances AUTO_INCREMENT = 1;
-ALTER TABLE fees AUTO_INCREMENT = 1;
+ALTER TABLE users
+    AUTO_INCREMENT = 1;
+ALTER TABLE courses
+    AUTO_INCREMENT = 1;
+ALTER TABLE enrollments
+    AUTO_INCREMENT = 1;
+ALTER TABLE attendances
+    AUTO_INCREMENT = 1;
+ALTER TABLE fees
+    AUTO_INCREMENT = 1;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -161,7 +166,8 @@ VALUES (12, 1, 'Fall 2024', NULL, 'ENROLLED', '2024-08-20'), -- Aayush in CS101
        (18, 2, 'Fall 2024', NULL, 'ENROLLED', '2024-09-02'), -- Sagar in CS201
        (19, 2, 'Fall 2024', NULL, 'ENROLLED', '2024-09-02'), -- Nisha in CS201
        (20, 2, 'Fall 2024', NULL, 'ENROLLED', '2024-09-03'), -- Roshan in CS201
-       (21, 2, 'Fall 2024', NULL, 'ENROLLED', '2024-09-03'); -- Sabina in CS201
+       (21, 2, 'Fall 2024', NULL, 'ENROLLED', '2024-09-03');
+-- Sabina in CS201
 
 -- Enrollment IDs now are 1..50 in order of insert
 

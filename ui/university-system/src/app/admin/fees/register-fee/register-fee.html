@@ -4,8 +4,8 @@
       <h4 class="form-title">Register New Fee</h4>
 
       <form
-        class="form-layout"
-        [formGroup]="feeForm" (ngSubmit)="submit()">
+        (ngSubmit)="submit()"
+        [formGroup]="feeForm" class="form-layout">
 
 
         <div class="form-field">
@@ -28,9 +28,9 @@
         <div class="form-field">
           <label class="form-label">Amount</label>
           <input
-            type="number"
             class="form-input"
             formControlName="amount"
+            type="number"
           >
         </div>
 
@@ -49,22 +49,21 @@
         </div>
 
 
-
-          <div class="form-field">
-            <label class="form-label">Due Date</label>
-            <input
-              class="form-input"
-              type="date"
-              formControlName="dueDate"
-              placeholder=""
-            >
-          </div>
+        <div class="form-field">
+          <label class="form-label">Due Date</label>
+          <input
+            class="form-input"
+            formControlName="dueDate"
+            placeholder=""
+            type="date"
+          >
+        </div>
 
         <div class="form-actions">
           <button
-            type="submit"
-            class="primary-button"
             [disabled]="feeForm.invalid"
+            class="primary-button"
+            type="submit"
           >
             Create Fee
           </button>

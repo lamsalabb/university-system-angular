@@ -11,9 +11,9 @@
 
         <div class="summary-chart">
           <canvas
-            baseChart
+            [data]="chartData()"
             [type]="'pie'"
-            [data]="chartData()">
+            baseChart>
           </canvas>
         </div>
 
@@ -23,7 +23,7 @@
           <div>Absent: {{ summary().absentCount }}</div>
           <div>Excused: {{ summary().excusedCount }}</div>
           <strong>
-            Attendance: {{ summary().presentPercent | number:'1.0-2'}}%
+            Attendance: {{ summary().presentPercent | number:'1.0-2' }}%
           </strong>
         </div>
 
@@ -33,9 +33,9 @@
     <div class="course-buttons">
       @for (c of courses(); track c.id) {
         <button
-          class="secondary-button small-button"
-          [class.active]="selectedCourseId() === c.id"
           (click)="loadSummary(c.id)"
+          [class.active]="selectedCourseId() === c.id"
+          class="secondary-button small-button"
         >
           {{ c.title }}
         </button>
@@ -56,7 +56,7 @@
       <tbody>
         @if (attendance().length === 0) {
           <tr>
-            <td colspan="4" class="empty-row">
+            <td class="empty-row" colspan="4">
               No attendance records available.
             </td>
           </tr>
@@ -68,10 +68,10 @@
             <td>{{ a.sessionDate }}</td>
             <td>
               <span
-                class="status-badge"
-                [class.success]="a.status === 'PRESENT'"
                 [class.danger]="a.status === 'ABSENT'"
+                [class.success]="a.status === 'PRESENT'"
                 [class.warning]="a.status === 'EXCUSED'"
+                class="status-badge"
               >
                 {{ a.status }}
               </span>

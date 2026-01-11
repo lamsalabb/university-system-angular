@@ -4,22 +4,20 @@ import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-view-fees-student',
-    imports: [
-
-    ],
+  imports: [],
   templateUrl: './view-fees-student.html',
   styleUrl: './view-fees-student.css',
 })
 export class ViewFeesStudent {
 
-  id : number;
+  id: number;
 
   fees = signal<any[]>([]);
   outstanding = signal(0);
   loading = signal(true);
   error = signal<string | null>(null);
 
-  constructor(private feeService:Fee, private authService: AuthService) {
+  constructor(private feeService: Fee, private authService: AuthService) {
     this.id = this.authService.userId;
 
   }
@@ -38,21 +36,19 @@ export class ViewFeesStudent {
   }
 
 
-  loadFees(){
+  loadFees() {
 
     this.feeService.getFeesByStudent(this.id).subscribe({
-      next: fees=>{
-          this.fees.set(fees);
-          this.loading.set(false);
+      next: fees => {
+        this.fees.set(fees);
+        this.loading.set(false);
       },
-      error: err=>{
+      error: err => {
         this.error.set('Failed to load enrollments');
         this.loading.set(false);
       }
     })
   }
-
-
 
 
 }

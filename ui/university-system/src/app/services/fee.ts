@@ -10,13 +10,14 @@ export class Fee {
 
   private readonly apiUrl = `${environment.url}/api/fees`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getFeesByStudent(studentId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/student/${studentId}`);
   }
 
-    getAllFees(page: number, size: number): Observable<any> {
+  getAllFees(page: number, size: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}?page=${page}&size=${size}`);
   }
 
@@ -31,7 +32,6 @@ export class Fee {
   toggleFee(id: number): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}/toggle`, {});
   }
-
 
 
   getFeeSummary(studentId: number): Observable<any> {

@@ -29,7 +29,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(//to let spring know i have custom authentication
-            AuthenticationConfiguration configuration
+                                                       AuthenticationConfiguration configuration
     ) throws Exception {
         return configuration.getAuthenticationManager();
     }
@@ -45,6 +45,8 @@ public class SecurityConfig {
                         configurer -> configurer
 
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                //.requestMatchers("/swagger-ui.html").permitAll()
+
                                 .requestMatchers("/api/auth/**").permitAll()
 
                                 .anyRequest().authenticated()

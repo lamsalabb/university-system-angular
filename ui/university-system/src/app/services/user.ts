@@ -18,14 +18,14 @@ export class User {
   //   return this.http.get<any[]>(this.apiUrl);
   // }
   // GET /api/users
-  getAllUsers(page:number, size:number): Observable<any> {
+  getAllUsers(page: number, size: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}?page=${page}&size=${size}`);
   }
 
   // GET /api/users
   getAllUsersByRole(role: any): Observable<any[]> {
     return this.http.get<any[]>(
-      `${this.apiUrl}/by-role`, { params: { role } }
+      `${this.apiUrl}/by-role`, {params: {role}}
     )
   }
 

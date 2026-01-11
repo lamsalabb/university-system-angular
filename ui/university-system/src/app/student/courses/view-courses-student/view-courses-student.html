@@ -31,7 +31,7 @@
           <tbody>
             @if (courses().length === 0) {
               <tr>
-                <td colspan="6" class="empty-row">
+                <td class="empty-row" colspan="6">
                   No enrollments found.
                 </td>
               </tr>
@@ -47,10 +47,10 @@
 
                 <td class="center">
                   <span
-                    class="status-badge"
-                    [class.success]="c.enrollmentStatus === 'ENROLLED'"
                     [class.danger]="c.enrollmentStatus === 'DROPPED'"
                     [class.neutral]="c.enrollmentStatus === 'COMPLETED'"
+                    [class.success]="c.enrollmentStatus === 'ENROLLED'"
+                    class="status-badge"
                   >
                     {{ c.enrollmentStatus }}
                   </span>
@@ -59,8 +59,8 @@
                 <td class="align-right action-col">
                   @if (c.enrollmentStatus === 'ENROLLED') {
                     <button
-                      class="link-button danger"
                       (click)="dropEnrollment(c.enrollmentId)"
+                      class="link-button danger"
                     >
                       Drop
                     </button>

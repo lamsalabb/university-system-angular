@@ -10,7 +10,7 @@ describe('ViewProfileInstructor', () => {
     await TestBed.configureTestingModule({
       imports: [ViewProfileInstructor]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ViewProfileInstructor);
     component = fixture.componentInstance;

@@ -5,8 +5,8 @@
 
     <div>
       <a
-        routerLink="/admin/register-course"
         class="primary-button small-button"
+        routerLink="/admin/register-course"
       >
         Create Course
       </a>
@@ -25,8 +25,6 @@
         Download Grade Report
       </a>
     </div>
-
-
 
 
   </div>
@@ -63,22 +61,22 @@
               <td class="align-right">
                 <div class="action-group">
                   <button
-                    class="link-button"
                     (click)="openEdit(c)"
+                    class="link-button"
                   >
                     Edit
                   </button>
 
                   <button
-                    class="link-button"
                     (click)="openDetails(c.id)"
+                    class="link-button"
                   >
                     Details
                   </button>
 
                   <button
-                    class="link-button danger"
                     (click)="deleteCourse(c.id)"
+                    class="link-button danger"
                   >
                     Delete
                   </button>
@@ -92,33 +90,33 @@
   }
 
   @if (editingCourse()) {
-    <div class="modal-backdrop" (click)="closeEdit()">
-      <div class="modal-box" (click)="$event.stopPropagation()">
+    <div (click)="closeEdit()" class="modal-backdrop">
+      <div (click)="$event.stopPropagation()" class="modal-box">
         <h5 class="modal-title">Edit Course</h5>
 
         <div class="form-field">
           <label class="form-label">Title</label>
-          <input class="form-input" [(ngModel)]="editForm.title">
+          <input [(ngModel)]="editForm.title" class="form-input">
         </div>
 
         <div class="form-field">
           <label class="form-label">Code</label>
-          <input class="form-input" [(ngModel)]="editForm.code">
+          <input [(ngModel)]="editForm.code" class="form-input">
         </div>
 
         <div class="form-field">
           <label class="form-label">Credits</label>
-          <input type="number" class="form-input" [(ngModel)]="editForm.credits">
+          <input [(ngModel)]="editForm.credits" class="form-input" type="number">
         </div>
 
         <div class="form-field">
           <label class="form-label">Description</label>
-          <input class="form-input" [(ngModel)]="editForm.description">
+          <input [(ngModel)]="editForm.description" class="form-input">
         </div>
 
         <div class="form-field">
           <label class="form-label">Instructor</label>
-          <select class="form-input" [(ngModel)]="editForm.instructorId">
+          <select [(ngModel)]="editForm.instructorId" class="form-input">
             @for (i of instructors; track i.id) {
               <option [value]="i.id">
                 {{ i.firstName }} {{ i.lastName }}
@@ -128,14 +126,14 @@
         </div>
 
         <div class="form-actions">
-          <button class="secondary-button small-button" (click)="closeEdit()">
+          <button (click)="closeEdit()" class="secondary-button small-button">
             Cancel
           </button>
 
           <button
-            class="primary-button small-button"
-            [disabled]="!canSaveCourse()"
             (click)="saveEdit()"
+            [disabled]="!canSaveCourse()"
+            class="primary-button small-button"
           >
             Save
           </button>
@@ -145,31 +143,31 @@
   }
 
   @if (detailsCourse()) {
-    <div class="modal-backdrop" (click)="closeDetails()">
-      <div class="modal-box" (click)="$event.stopPropagation()">
+    <div (click)="closeDetails()" class="modal-backdrop">
+      <div (click)="$event.stopPropagation()" class="modal-box">
         <h5 class="modal-title">Students Enrolled</h5>
 
         <div class="details-grid">
 
-        @for (e of studentsEnrolled(); track e.id) {
-          <div>
-            <span>{{ e.student.firstName }} {{ e.student.lastName }}</span>
-          </div>
-        }
+          @for (e of studentsEnrolled(); track e.id) {
+            <div>
+              <span>{{ e.student.firstName }} {{ e.student.lastName }}</span>
+            </div>
+          }
 
-        <div class="form-actions">
-          <button class="primary-button small-button" (click)="closeDetails()">
-            Close
-          </button>
+          <div class="form-actions">
+            <button (click)="closeDetails()" class="primary-button small-button">
+              Close
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   }
 
   @if (showDistribution()) {
-    <div class="modal-backdrop" (click)="closeDistribution()">
-      <div class="modal-box large" (click)="$event.stopPropagation()">
+    <div (click)="closeDistribution()" class="modal-backdrop">
+      <div (click)="$event.stopPropagation()" class="modal-box large">
 
         <h5 class="modal-title">Course Enrollment Distribution</h5>
 
@@ -180,22 +178,22 @@
         @if (distributionChartData()) {
           <div style="height: 320px;">
             <canvas
-              baseChart
-              [type]="'pie'"
               [data]="distributionChartData()"
               [options]="{
               responsive: true,
               maintainAspectRatio: false,
               plugins: { legend: { position: 'bottom' } }
             }"
+              [type]="'pie'"
+              baseChart
             ></canvas>
           </div>
         }
 
         <div class="form-actions">
           <button
-            class="secondary-button small-button"
             (click)="closeDistribution()"
+            class="secondary-button small-button"
           >
             Close
           </button>

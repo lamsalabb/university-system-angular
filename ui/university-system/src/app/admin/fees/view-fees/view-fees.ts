@@ -23,8 +23,17 @@ export class ViewFees implements OnInit {
   currentPage = signal(0);
   pageSize = signal(10);
   totalElements = signal(0);
+  studentNameById = computed(() => {
+    const map: Record<number, string> = {};
 
-  constructor(private feeService:Fee, private userService:User) {
+    this.students().forEach(s => {
+      map[s.id] = `${s.firstName} ${s.lastName}`;
+    });
+
+    return map;
+  });
+
+  constructor(private feeService: Fee, private userService: User) {
     effect(() => {
       this.currentPage();
       this.pageSize();
@@ -37,10 +46,10 @@ export class ViewFees implements OnInit {
     this.loadStudents();
   }
 
-  loadFees(){
+  loadFees() {
     this.loading.set(false);
 
-    this.feeService.getAllFees(this.currentPage(),this.pageSize()).subscribe({
+    this.feeService.getAllFees(this.currentPage(), this.pageSize()).subscribe({
       next: fees => {
         this.fees.set(fees.content);
         this.totalElements.set(fees.totalElements);
@@ -53,7 +62,7 @@ export class ViewFees implements OnInit {
     })
   }
 
-  loadStudents(){
+  loadStudents() {
     this.userService.getAllUsersByRole('STUDENT')
       .subscribe(users => {
         this.students.set(users);
@@ -68,17 +77,6 @@ export class ViewFees implements OnInit {
       this.fees.set([...this.fees()]);//to fix the render, signals auto refresh
     });
   }
-
-
-  studentNameById = computed(() => {
-    const map: Record<number, string> = {};
-
-    this.students().forEach(s => {
-      map[s.id] = `${s.firstName} ${s.lastName}`;
-    });
-
-    return map;
-  });
 
 
 }

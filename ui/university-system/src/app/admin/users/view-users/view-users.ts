@@ -22,9 +22,17 @@ export class ViewUsers {
   currentPage = signal(0);
   pageSize = signal(10);
   totalElements = signal(0);
+  editingUser = signal<any | null>(null)
+  editForm = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    isActive: true
+  }
 
   constructor(private userService: User) {
-     effect(() => {
+    effect(() => {
       this.currentPage();
       this.pageSize();
       this.loadUsers();
@@ -33,7 +41,7 @@ export class ViewUsers {
 
   loadUsers() {
     this.loading.set(false);
-    this.userService.getAllUsers(this.currentPage(),this.pageSize()).subscribe({
+    this.userService.getAllUsers(this.currentPage(), this.pageSize()).subscribe({
       next: (users) => {
         this.users.set(users.content);
         this.totalElements.set(users.totalElements);
@@ -54,16 +62,6 @@ export class ViewUsers {
     });
   }
 
-  editingUser = signal<any | null>(null)
-
-  editForm = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    isActive: true
-  }
-
   openEdit(u: any) {
     this.editingUser.set(u);
     this.editForm = {
@@ -80,7 +78,7 @@ export class ViewUsers {
   }
 
   saveEdit() {
-    const payload: any = { ...this.editForm }
+    const payload: any = {...this.editForm}
 
     if (!payload.password) delete payload.password
 
@@ -100,7 +98,6 @@ export class ViewUsers {
       this.editForm.email
     );
   }
-
 
 
 }

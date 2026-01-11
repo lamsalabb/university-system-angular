@@ -15,7 +15,7 @@ export class RegisterFee {
   feeForm: FormGroup;
   students = signal<any[]>([]);
 
-  constructor(private fb: FormBuilder, private feeService:Fee, private userService:User) {
+  constructor(private fb: FormBuilder, private feeService: Fee, private userService: User) {
     this.loadStudents();
     this.feeForm = this.fb.group({
       studentId: [null, Validators.required],
@@ -25,23 +25,24 @@ export class RegisterFee {
     })
 
   }
-  loadStudents(){
+
+  loadStudents() {
     this.userService.getAllUsersByRole('STUDENT')
       .subscribe(users => {
         this.students.set(users);
       });
   }
 
-  submit(){
-    if(this.feeForm.invalid){
+  submit() {
+    if (this.feeForm.invalid) {
       return;
     }
 
     this.feeService.createFee(this.feeForm.value).subscribe({
-      next: ()=>{
+      next: () => {
         alert("Fee created successfully!");
       },
-      error: ()=>{
+      error: () => {
         alert("Failed to register.");
       }
     })

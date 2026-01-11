@@ -40,9 +40,9 @@
             <p class="center">
               <strong>Status: </strong>
               <span
-                class="status-badge"
-                [class.success]="instructor()!.active"
                 [class.muted]="!instructor()!.active"
+                [class.success]="instructor()!.active"
+                class="status-badge"
               >
                 {{ instructor()!.active ? 'Active' : 'Inactive' }}
               </span>
@@ -52,9 +52,9 @@
 
               @if (!showChangePassword()) {
                 <button
+                  (click)="showChangePassword.set(true)"
                   class="link-button"
                   type="button"
-                  (click)="showChangePassword.set(true)"
                 >
                   Change password
                 </button>
@@ -66,38 +66,38 @@
 
               <hr>
 
-              <form class="form-layout" (ngSubmit)="submitPasswordChange()">
+              <form (ngSubmit)="submitPasswordChange()" class="form-layout">
 
                 <div class="form-field">
                   <label class="form-label">Current password</label>
                   <input
-                    type="password"
-                    class="form-input"
                     [(ngModel)]="currentPassword"
+                    class="form-input"
                     name="currentPassword"
                     required
+                    type="password"
                   >
                 </div>
 
                 <div class="form-field">
                   <label class="form-label">New password</label>
                   <input
-                    type="password"
-                    class="form-input"
                     [(ngModel)]="newPassword"
+                    class="form-input"
                     name="newPassword"
                     required
+                    type="password"
                   >
                 </div>
 
                 <div class="form-field">
                   <label class="form-label">Confirm password</label>
                   <input
-                    type="password"
-                    class="form-input"
                     [(ngModel)]="confirmPassword"
+                    class="form-input"
                     name="confirmPassword"
                     required
+                    type="password"
                   >
                 </div>
 
@@ -108,16 +108,16 @@
 
                 <div class="form-actions">
                   <button
-                    type="button"
-                    class="secondary-button"
                     (click)="showChangePassword.set(false)"
+                    class="secondary-button"
+                    type="button"
                   >
                     Cancel
                   </button>
 
                   <button
-                    type="submit"
                     class="primary-button"
+                    type="submit"
                   >
                     Update password
                   </button>

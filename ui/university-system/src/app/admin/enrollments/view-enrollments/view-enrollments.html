@@ -10,9 +10,9 @@
     <h4 class="list-title">Enroll Student</h4>
 
     <form
-      class="form-layout form-grid"
-      [formGroup]="enrollmentForm"
       (ngSubmit)="enroll()"
+      [formGroup]="enrollmentForm"
+      class="form-layout form-grid"
     >
       <div class="form-field">
         <label class="form-label">Student</label>
@@ -50,9 +50,9 @@
 
       <div class="form-actions">
         <button
-          type="submit"
-          class="primary-button"
           [disabled]="enrollmentForm.invalid"
+          class="primary-button"
+          type="submit"
         >
           Enroll Student
         </button>
@@ -85,10 +85,10 @@
 
             <td>
               <span
-                class="status-badge"
-                [class.success]="e.status === 'ENROLLED'"
                 [class.danger]="e.status === 'DROPPED'"
                 [class.neutral]="e.status === 'COMPLETED'"
+                [class.success]="e.status === 'ENROLLED'"
+                class="status-badge"
               >
                 {{ e.status }}
               </span>
@@ -99,8 +99,8 @@
             <td>
               @if (e.status === 'ENROLLED') {
                 <button
-                  class="link-button danger"
                   (click)="dropEnrollment(e.id)"
+                  class="link-button danger"
                 >
                   Drop
                 </button>
@@ -113,14 +113,13 @@
 
   </div>
   <app-pagination
+    (pageChange)="currentPage.set($event)"
+    (sizeChange)="pageSize.set($event); currentPage.set(0)"
+    [loading]="loading()"
     [page]="currentPage()"
     [size]="pageSize()"
     [total]="totalElements()"
-    [loading]="loading()"
-    (pageChange)="currentPage.set($event)"
-    (sizeChange)="pageSize.set($event); currentPage.set(0)"
   ></app-pagination>
-
 
 
 </main>

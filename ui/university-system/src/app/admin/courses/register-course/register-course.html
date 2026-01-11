@@ -4,23 +4,23 @@
       <h4 class="form-title">Register New Course</h4>
 
       <form
-        class="form-layout"
-        [formGroup]="courseForm" (ngSubmit)="submit()">
+        (ngSubmit)="submit()"
+        [formGroup]="courseForm" class="form-layout">
         <div class="form-field">
           <label class="form-label">Title</label>
           <input
-            type="text"
             class="form-input"
             formControlName="title"
+            type="text"
           >
         </div>
 
         <div class="form-field">
           <label class="form-label">Description</label>
           <input
-            type="text"
             class="form-input"
             formControlName="description"
+            type="text"
           >
         </div>
 
@@ -56,18 +56,18 @@
             <label class="form-label">Credits</label>
             <input
               class="form-input"
-              type="number"
               formControlName="credits"
               placeholder="3"
+              type="number"
             >
           </div>
         </div>
 
         <div class="form-actions">
           <button
-            type="submit"
-            class="primary-button"
             [disabled]="courseForm.invalid"
+            class="primary-button"
+            type="submit"
           >
             Create Course
           </button>

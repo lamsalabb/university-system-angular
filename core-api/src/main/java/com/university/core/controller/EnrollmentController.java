@@ -1,8 +1,8 @@
 package com.university.core.controller;
 
-import com.university.core.dto.mapper.EnrollmentMapper;
-import com.university.core.dto.request.CreateEnrollmentRequest;
-import com.university.core.dto.response.EnrollmentResponse;
+import com.university.common.dto.mapper.EnrollmentMapper;
+import com.university.common.dto.request.CreateEnrollmentRequest;
+import com.university.common.dto.response.EnrollmentResponse;
 import com.university.core.service.EnrollmentService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -74,21 +74,20 @@ public class EnrollmentController {
 
     @GetMapping("/instructor/{id}")
     public ResponseEntity<?> getEnrollmentByInstructorId(@PathVariable int id, @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<EnrollmentResponse> enrollments = enrollmentService.getEnrollmentsByInstructor(id,pageable)
+        Page<EnrollmentResponse> enrollments = enrollmentService.getEnrollmentsByInstructor(id, pageable)
                 .map(EnrollmentMapper::toResponse);
 
         return ResponseEntity.ok(enrollments);
     }
 
 
+    @PutMapping("/{id}/{grade}")
+    public ResponseEntity<?> updateGrade(@PathVariable Integer id, @PathVariable String grade) {
 
-        @PutMapping("/{id}/{grade}")
-        public ResponseEntity<?> updateGrade(@PathVariable Integer id, @PathVariable String grade) {
+        enrollmentService.updateGrade(id, grade);
+        return ResponseEntity.noContent().build();
 
-                    enrollmentService.updateGrade(id,grade);
-            return ResponseEntity.noContent().build();
-
-        }
+    }
 
 
 }

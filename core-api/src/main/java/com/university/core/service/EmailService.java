@@ -20,10 +20,10 @@ public class EmailService {
         message.setSubject("Your University Account Credentials");
         message.setText("""
                 Your account has been created by the administrator.
-
+                
                 Login Email: %s
                 Password: %s
-
+                
                 Please log in and change your password from your profile.
                 """.formatted(to, password)
         );

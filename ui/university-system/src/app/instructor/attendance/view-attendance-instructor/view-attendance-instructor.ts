@@ -31,15 +31,30 @@ export class ViewAttendanceInstructor {
   error = signal<string | null>(null);
 
   selectedCourseId = signal<number | null>(null);
-  private lastSummaryCourseId: number | null = null;
-
-
   currentPage = signal(0);
   pageSize = signal(10);
   totalElements = signal(0);
+  chartData = computed<ChartData<'pie'> | undefined>(() => {
+    const s = this.summary();
+    if (!s) return undefined;//if response is empty
 
+    return {
+      labels: ['Present', 'Absent', 'Excused'],
+      datasets: [
+        {
+          data: [
+            s.presentCount,
+            s.absentCount,
+            s.excusedCount
+          ],
+          backgroundColor: undefined
+        }
+      ]
+    };
+  });
+  private lastSummaryCourseId: number | null = null;
 
-  constructor(private attendanceService:Attendance, private authService: AuthService, private courseService:Course,private router:Router) {
+  constructor(private attendanceService: Attendance, private authService: AuthService, private courseService: Course, private router: Router) {
     effect(() => {
       const courseId = this.selectedCourseId();
       this.currentPage();
@@ -51,9 +66,8 @@ export class ViewAttendanceInstructor {
     });
   }
 
-
   ngOnInit() {
-  this.loadCourses();
+    this.loadCourses();
   }
 
   loadCourses() {
@@ -81,7 +95,7 @@ export class ViewAttendanceInstructor {
       this.lastSummaryCourseId = courseId;
       this.loadSummary(courseId);
     }
-    this.attendanceService.getByCourse(courseId,this.currentPage(),this.pageSize()).subscribe({
+    this.attendanceService.getByCourse(courseId, this.currentPage(), this.pageSize()).subscribe({
       next: (res) => {
         this.attendance.set(res.content);
         this.totalElements.set(res.totalElements);
@@ -96,15 +110,15 @@ export class ViewAttendanceInstructor {
 
   updateAttendance(id: number, status: string) {
     this.attendanceService.updateAttendance(id, status).subscribe({
-      next: (result) => {
-        alert("Updated attendance successfully!");
-      },
-      error: (error) => {
-        this.error.set(error.message);
-        this.loading.set(false);
-        alert("Could not update attendance.");
+        next: (result) => {
+          alert("Updated attendance successfully!");
+        },
+        error: (error) => {
+          this.error.set(error.message);
+          this.loading.set(false);
+          alert("Could not update attendance.");
 
-      }
+        }
       }
     );
   }
@@ -139,24 +153,4 @@ export class ViewAttendanceInstructor {
         }
       });
   }
-
-
-  chartData = computed<ChartData<'pie'> | undefined>(() => {
-    const s = this.summary();
-    if (!s) return undefined;//if response is empty
-
-    return {
-      labels: ['Present', 'Absent', 'Excused'],
-      datasets: [
-        {
-          data: [
-            s.presentCount,
-            s.absentCount,
-            s.excusedCount
-          ],
-          backgroundColor: undefined
-        }
-      ]
-    };
-  });
 }

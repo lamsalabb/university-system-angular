@@ -1,8 +1,8 @@
 package com.university.core.controller;
 
-import com.university.core.dto.mapper.UserMapper;
+import com.university.common.dto.mapper.UserMapper;
 import com.university.core.dto.request.LoginRequest;
-import com.university.core.dto.response.UserResponse;
+import com.university.common.dto.response.UserResponse;
 import com.university.core.security.util.JwtUtil;
 import com.university.core.service.UserService;
 import jakarta.validation.Valid;
@@ -32,15 +32,15 @@ public class AuthController {
     public ResponseEntity<?> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
         UserResponse user = UserMapper.toResponse(userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword()));
 
-        String token = jwtUtil.generateToken(user.getId(), user.getRole().name());
+        String token = jwtUtil.generateToken(user.id(), user.role().name());
 
         return ResponseEntity.ok(
                 Map.of(
                         "token", token,
-                        "id", user.getId(),
-                        "firstName", user.getFirstName(),
-                        "email", user.getEmail(),
-                        "role", user.getRole().name(),
+                        "id", user.id(),
+                        "firstName", user.firstName(),
+                        "email", user.email(),
+                        "role", user.role().name(),
                         "message", "Login successful"
                 )
         );

@@ -13,7 +13,7 @@ export class ViewCoursesInstructor {
   loading = signal(true);
   error = signal<string | null>(null);
 
-  constructor(private courseService:Course, private authService: AuthService) {
+  constructor(private courseService: Course, private authService: AuthService) {
   }
 
   ngOnInit() {

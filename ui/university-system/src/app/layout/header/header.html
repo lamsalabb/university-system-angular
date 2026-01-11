@@ -1,11 +1,11 @@
 <nav class="app-header">
   <div class="page-container header-content">
-    <img ngSrc="assets/images/uni-logo.ico" [routerLink]="link()" alt="Logo" height="48" width="48"
-      class="header-logo"
+    <img [routerLink]="link()" alt="Logo" class="header-logo" height="48" ngSrc="assets/images/uni-logo.ico"
+         width="48"
     />
 
-    <button type="button" class="link-button header-action"
-      (click)="logout()"
+    <button (click)="logout()" class="link-button header-action"
+            type="button"
     >
       Logout
     </button>

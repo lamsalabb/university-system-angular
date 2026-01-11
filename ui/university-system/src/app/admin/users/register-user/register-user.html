@@ -4,25 +4,25 @@
       <h4 class="form-title">Register New User</h4>
 
       <form
-        class="form-layout"
-        [formGroup]="userForm" (ngSubmit)="submit()">
+        (ngSubmit)="submit()"
+        [formGroup]="userForm" class="form-layout">
         <div class="form-field">
           <label class="form-label">Email</label>
           <input
-            type="email"
             class="form-input"
             formControlName="email"
             placeholder="user@uni.edu"
+            type="email"
           >
         </div>
 
         <div class="form-field">
           <label class="form-label">Temporary Password</label>
           <input
-            type="password"
             class="form-input"
             formControlName="password"
             placeholder="********"
+            type="password"
           >
         </div>
 
@@ -61,9 +61,9 @@
 
         <div class="form-actions">
           <button
-            type="submit"
-            class="primary-button"
             [disabled]="userForm.invalid"
+            class="primary-button"
+            type="submit"
           >
             Create User
           </button>

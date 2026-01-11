@@ -25,7 +25,6 @@ export class ViewProfileStudent {
   passwordError = signal<string | null>(null);
 
 
-
   constructor(private userService: User, private authService: AuthService) {
   }
 

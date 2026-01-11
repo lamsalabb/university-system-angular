@@ -7,13 +7,12 @@
     </div>
 
     <button
+      (click)="goToMarkAttendance()"
       class="primary-button"
       style="padding: 0.6rem 1.25rem; font-size: 0.95rem;"
-      (click)="goToMarkAttendance()"
     >
       Mark Attendance
     </button>
-
 
 
   </div>
@@ -25,9 +24,9 @@
 
         <div class="summary-chart">
           <canvas
-            baseChart
+            [data]="chartData()"
             [type]="'pie'"
-            [data]="chartData()">
+            baseChart>
           </canvas>
         </div>
 
@@ -37,7 +36,7 @@
           <div>Absent: {{ summary().absentCount }}</div>
           <div>Excused: {{ summary().excusedCount }}</div>
           <strong>
-            Attendance: {{ summary().presentPercent | number:'1.0-2'}}%
+            Attendance: {{ summary().presentPercent | number:'1.0-2' }}%
           </strong>
         </div>
 
@@ -47,9 +46,9 @@
     <div class="course-buttons">
       @for (c of courses(); track c.id) {
         <button
-          class="secondary-button small-button"
-          [class.active]="selectedCourseId() === c.id"
           (click)="loadAttendance(c.id)"
+          [class.active]="selectedCourseId() === c.id"
+          class="secondary-button small-button"
         >
           {{ c.title }}
         </button>
@@ -71,7 +70,7 @@
 
         @if (!selectedCourseId()) {
           <tr>
-            <td colspan="4" class="empty-row">
+            <td class="empty-row" colspan="4">
               Select a course to view attendance.
             </td>
           </tr>
@@ -79,7 +78,7 @@
 
         @if (selectedCourseId() && attendance().length === 0) {
           <tr>
-            <td colspan="4" class="empty-row">
+            <td class="empty-row" colspan="4">
               No attendance records found for this course.
             </td>
           </tr>
@@ -97,10 +96,10 @@
 
             <td class="center">
               <span
-                class="status-badge"
-                [class.success]="a.status === 'PRESENT'"
                 [class.danger]="a.status === 'ABSENT'"
+                [class.success]="a.status === 'PRESENT'"
                 [class.warning]="a.status === 'EXCUSED'"
+                class="status-badge"
               >
                 {{ a.status }}
               </span>
@@ -108,16 +107,16 @@
 
             <td class="center">
               <form
+                (ngSubmit)="updateAttendance(a.id, a.status)"
                 class="inline-form"
                 style="gap: 0.75rem;"
-                (ngSubmit)="updateAttendance(a.id, a.status)"
               >
 
                 <select
-                  class="form-input"
-                  style="min-width: 110px; padding: 0.35rem 0.5rem; font-size: 0.85rem;"
                   [(ngModel)]="a.status"
+                  class="form-input"
                   name="status-{{ a.id }}"
+                  style="min-width: 110px; padding: 0.35rem 0.5rem; font-size: 0.85rem;"
                 >
                   <option value="PRESENT">PRESENT</option>
                   <option value="ABSENT">ABSENT</option>
@@ -125,9 +124,9 @@
                 </select>
 
                 <button
-                  type="submit"
                   class="primary-button small-button"
                   style="padding: 0.35rem 0.75rem;"
+                  type="submit"
                 >
                   Save
                 </button>
@@ -145,14 +144,14 @@
 
   </div>
 
-  @if(selectedCourseId()){
+  @if (selectedCourseId()) {
     <app-pagination
+      (pageChange)="currentPage.set($event)"
+      (sizeChange)="pageSize.set($event); currentPage.set(0)"
+      [loading]="loading()"
       [page]="currentPage()"
       [size]="pageSize()"
       [total]="totalElements()"
-      [loading]="loading()"
-      (pageChange)="currentPage.set($event)"
-      (sizeChange)="pageSize.set($event); currentPage.set(0)"
     ></app-pagination>
   }
 

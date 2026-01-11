@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
@@ -9,7 +9,7 @@
     <parent>
         <groupId>com.university</groupId>
         <artifactId>university-system-angular</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.2-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -25,7 +25,17 @@
             <artifactId>common-data</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.university</groupId>
+            <artifactId>attendance-lib</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
+        <dependency>
+            <groupId>com.university</groupId>
+            <artifactId>fee-lib</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -65,7 +75,6 @@
             <artifactId>openpdf</artifactId>
             <version>1.3.30</version>
         </dependency>
-
 
 
     </dependencies>

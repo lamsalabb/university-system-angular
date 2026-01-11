@@ -2,8 +2,8 @@
   <div class="list-header">
     <h3 class="list-title">User Management</h3>
     <a
-      routerLink="/admin/register-user"
       class="primary-button small-button"
+      routerLink="/admin/register-user"
     >
       Register User
     </a>
@@ -28,7 +28,7 @@
       <tbody>
         @if (loading()) {
           <tr>
-            <td colspan="5" class="empty-row">
+            <td class="empty-row" colspan="5">
               Loading users…
             </td>
           </tr>
@@ -36,7 +36,7 @@
 
         @if (!loading() && users().length === 0) {
           <tr>
-            <td colspan="5" class="empty-row">
+            <td class="empty-row" colspan="5">
               No users found.
             </td>
           </tr>
@@ -55,9 +55,9 @@
 
             <td>
               <span
-                class="status-badge"
-                [class.success]="u.active"
                 [class.danger]="!u.active"
+                [class.success]="u.active"
+                class="status-badge"
               >
                 {{ u.active ? 'Active' : 'Inactive' }}
               </span>
@@ -65,8 +65,8 @@
 
             <td class="align-right">
               @if (u.role !== 'ADMIN') {
-                <button class="link-button" (click)="openEdit(u)">Edit</button>
-                <button class="link-button danger" (click)="deleteUser(u.id)">Delete</button>
+                <button (click)="openEdit(u)" class="link-button">Edit</button>
+                <button (click)="deleteUser(u.id)" class="link-button danger">Delete</button>
               }
 
               @if (u.role === 'ADMIN') {
@@ -80,48 +80,48 @@
   </div>
 
   @if (editingUser()) {
-    <div class="modal-backdrop" (click)="closeEdit()">
-      <div class="modal-box" (click)="$event.stopPropagation()">
+    <div (click)="closeEdit()" class="modal-backdrop">
+      <div (click)="$event.stopPropagation()" class="modal-box">
         <h5 class="modal-title">Edit User</h5>
 
         <div class="form-field">
           <label class="form-label">First Name</label>
-          <input class="form-input" [(ngModel)]="editForm.firstName">
+          <input [(ngModel)]="editForm.firstName" class="form-input">
         </div>
 
         <div class="form-field">
           <label class="form-label">Last Name</label>
-          <input class="form-input" [(ngModel)]="editForm.lastName">
+          <input [(ngModel)]="editForm.lastName" class="form-input">
         </div>
 
         <div class="form-field">
           <label class="form-label">Email</label>
-          <input type="email" class="form-input" [(ngModel)]="editForm.email">
+          <input [(ngModel)]="editForm.email" class="form-input" type="email">
         </div>
 
         <div class="form-field">
           <label class="form-label">New Password</label>
           <input
-            type="password"
+            [(ngModel)]="editForm.password"
             class="form-input"
             placeholder="Optional"
-            [(ngModel)]="editForm.password"
+            type="password"
           >
         </div>
 
         @if (editingUser()?.role !== 'ADMIN') {
           <label class="checkbox-field">
-            <input type="checkbox" [(ngModel)]="editForm.isActive">
+            <input [(ngModel)]="editForm.isActive" type="checkbox">
             Active
           </label>
         }
 
         <div class="form-actions">
-          <button class="secondary-button small-button" (click)="closeEdit()">Cancel</button>
+          <button (click)="closeEdit()" class="secondary-button small-button">Cancel</button>
           <button
-            class="primary-button small-button"
-            [disabled]="!canSaveUser()"
             (click)="saveEdit()"
+            [disabled]="!canSaveUser()"
+            class="primary-button small-button"
           >
             Save
           </button>
@@ -131,11 +131,11 @@
   }
 
   <app-pagination
+    (pageChange)="currentPage.set($event)"
+    (sizeChange)="pageSize.set($event); currentPage.set(0)"
+    [loading]="loading()"
     [page]="currentPage()"
     [size]="pageSize()"
     [total]="totalElements()"
-    [loading]="loading()"
-    (pageChange)="currentPage.set($event)"
-    (sizeChange)="pageSize.set($event); currentPage.set(0)"
   ></app-pagination>
 </main>

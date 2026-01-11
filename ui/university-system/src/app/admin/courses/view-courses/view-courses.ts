@@ -28,8 +28,32 @@ export class ViewCourses {
 
   showDistribution = signal(false);
   distributionData = signal<any[] | null>(null);
+  editingCourse = signal<any | null>(null);
+  detailsCourse = signal<any | null>(null);
+  studentsEnrolled = signal<any | null>(null);
+  editForm = {
+    title: '',
+    code: '',
+    credits: 0,
+    description: '',
+    instructorId: 0
+  };
+  distributionChartData = computed<ChartData<'pie'> | undefined>(() => {
+    const data = this.distributionData();
+    if (!data) return undefined;
 
-  constructor(private courseService: Course, private userService:User, private enrollmentService: Enrollment, private reportingService:Reporting) {
+    return {
+      labels: data.map(d => d.courseCode),
+      datasets: [
+        {
+          data: data.map(d => d.enrollmentCount),
+          backgroundColor: undefined
+        }
+      ]
+    };
+  });
+
+  constructor(private courseService: Course, private userService: User, private enrollmentService: Enrollment, private reportingService: Reporting) {
 
   }
 
@@ -37,7 +61,6 @@ export class ViewCourses {
     this.loadCourses();
     this.loadInstructors();
   }
-
 
   loadCourses() {
     this.loading.set(true);
@@ -69,21 +92,6 @@ export class ViewCourses {
     });
   }
 
-  editingCourse = signal<any | null>(null);
-  detailsCourse = signal<any | null>(null);
-  studentsEnrolled = signal<any | null>(null);
-
-
-
-  editForm = {
-    title: '',
-    code: '',
-    credits: 0,
-    description: '',
-    instructorId: 0
-  };
-
-
   openEdit(c: any) {
     this.editingCourse.set(c);
 
@@ -96,7 +104,7 @@ export class ViewCourses {
     };
   }
 
-  openDetails(c:any){
+  openDetails(c: any) {
     this.detailsCourse.set(c);
     this.enrollmentService.getEnrollmentByCourse(c).subscribe({
       next: enrollments => {
@@ -113,13 +121,12 @@ export class ViewCourses {
     this.detailsCourse.set(null);
   }
 
-
   closeEdit() {
     this.editingCourse.set(null);
   }
 
   saveEdit() {
-    const payload = { ...this.editForm };//copying form data into another object
+    const payload = {...this.editForm};//copying form data into another object
 
     this.courseService
       .updateCourse(this.editingCourse()!.id, payload)
@@ -153,22 +160,6 @@ export class ViewCourses {
   closeDistribution() {
     this.showDistribution.set(false);
   }
-
-  distributionChartData = computed<ChartData<'pie'> | undefined>(() => {
-    const data = this.distributionData();
-    if (!data) return undefined;
-
-    return {
-      labels: data.map(d => d.courseCode),
-      datasets: [
-        {
-          data: data.map(d => d.enrollmentCount),
-          backgroundColor: undefined
-        }
-      ]
-    };
-  });
-
 
   protected generateReportPdf() {
     this.reportingService.getPdf().subscribe({

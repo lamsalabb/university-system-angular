@@ -16,7 +16,7 @@ export class RegisterCourse {
   courseForm: FormGroup;
   instructors = signal<any[]>([]);
 
-  constructor(private fb: FormBuilder, private courseService:Course, private userService:User) {
+  constructor(private fb: FormBuilder, private courseService: Course, private userService: User) {
     this.loadInstructors();
     this.courseForm = this.fb.group({
       title: ['', Validators.required],
@@ -24,7 +24,7 @@ export class RegisterCourse {
       code: ['', Validators.required],
       credits: ['', Validators.required],
       instructorId: [null, Validators.required]
-})
+    })
   }
 
   loadInstructors() {
@@ -33,16 +33,16 @@ export class RegisterCourse {
     });
   }
 
-  submit(){
-    if(this.courseForm.invalid){
+  submit() {
+    if (this.courseForm.invalid) {
       return;
     }
 
     this.courseService.createCourse(this.courseForm.value).subscribe({
-      next: ()=>{
+      next: () => {
         alert("Course created successfully!");
       },
-      error: ()=>{
+      error: () => {
         alert("Failed to register.");
       }
     })

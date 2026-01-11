@@ -1,9 +1,9 @@
 package com.university.core.controller;
 
-import com.university.core.dto.mapper.CourseMapper;
-import com.university.core.dto.request.CreateCourseRequest;
-import com.university.core.dto.request.UpdateCourseRequest;
-import com.university.core.dto.response.CourseResponse;
+import com.university.common.dto.mapper.CourseMapper;
+import com.university.common.dto.request.CreateCourseRequest;
+import com.university.common.dto.request.UpdateCourseRequest;
+import com.university.common.dto.response.CourseResponse;
 import com.university.core.service.CourseService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -45,8 +45,7 @@ public class CourseController {
         List<CourseResponse> courses = courseService.findCoursesByInstructorId(id)
                 .stream()
                 .map(CourseMapper::toResponse)
-                .toList()
-                ;
+                .toList();
         return ResponseEntity.ok(courses
         );
     }

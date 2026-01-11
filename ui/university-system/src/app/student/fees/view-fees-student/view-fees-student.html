@@ -5,7 +5,7 @@
       <h3 class="list-title">My Fees</h3>
     </div>
 
-    <div class="status-badge info" style="font-size: 20px; color: red" >
+    <div class="status-badge info" style="font-size: 20px; color: red">
       Outstanding: रु {{ outstanding() }}
     </div>
   </div>
@@ -47,9 +47,9 @@
 
               <td>
                 <span
-                  class="status-badge"
-                  [class.success]="f.paid"
                   [class.danger]="!f.paid"
+                  [class.success]="f.paid"
+                  class="status-badge"
                 >
                   {{ f.paid ? 'Paid' : 'Unpaid' }}
                 </span>

@@ -23,21 +23,22 @@ export class ViewStudentsInstructor {
   pageSize = signal(10);
   totalElements = signal(0);
 
-  constructor(private enrollmentService:Enrollment, private authService:AuthService) {
+  constructor(private enrollmentService: Enrollment, private authService: AuthService) {
     effect(() => {
       this.currentPage();
       this.pageSize();
       this.loadEnrollments();
     });
   }
+
   ngOnInit() {
     this.loadEnrollments();
   }
 
-  loadEnrollments(){
+  loadEnrollments() {
     this.loading.set(true);
     const id = this.authService.userId;
-    this.enrollmentService.getEnrollmentByInstructorId(id,this.currentPage(),this.pageSize()).subscribe({
+    this.enrollmentService.getEnrollmentByInstructorId(id, this.currentPage(), this.pageSize()).subscribe({
       next: (data) => {
         this.enrollments.set(data.content);
         this.totalElements.set(data.totalElements);

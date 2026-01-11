@@ -10,7 +10,7 @@ describe('MarkAttendanceInstructor', () => {
     await TestBed.configureTestingModule({
       imports: [MarkAttendanceInstructor]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(MarkAttendanceInstructor);
     component = fixture.componentInstance;

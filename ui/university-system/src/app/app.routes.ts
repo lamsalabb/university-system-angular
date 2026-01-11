@@ -63,8 +63,16 @@ export const routes: Routes = [
       {path: 'instructor/view-profile', component: ViewProfileInstructor, canActivate: [roleGuard(['INSTRUCTOR'])]},
       {path: 'instructor/view-courses', component: ViewCoursesInstructor, canActivate: [roleGuard(['INSTRUCTOR'])]},
       {path: 'instructor/view-students', component: ViewStudentsInstructor, canActivate: [roleGuard(['INSTRUCTOR'])]},
-      {path: 'instructor/view-attendance', component: ViewAttendanceInstructor, canActivate: [roleGuard(['INSTRUCTOR'])]},
-      {path: 'instructor/mark-attendance', component: MarkAttendanceInstructor, canActivate: [roleGuard(['INSTRUCTOR'])]},
+      {
+        path: 'instructor/view-attendance',
+        component: ViewAttendanceInstructor,
+        canActivate: [roleGuard(['INSTRUCTOR'])]
+      },
+      {
+        path: 'instructor/mark-attendance',
+        component: MarkAttendanceInstructor,
+        canActivate: [roleGuard(['INSTRUCTOR'])]
+      },
 
 
       {

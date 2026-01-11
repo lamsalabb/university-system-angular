@@ -10,7 +10,8 @@ export class Course {
 
   private readonly apiUrl = `${environment.url}/api/courses`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getAllCourses(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);

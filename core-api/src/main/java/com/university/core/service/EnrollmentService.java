@@ -1,15 +1,16 @@
 package com.university.core.service;
 
+import com.university.common.annotation.SelfOnly;
+import com.university.common.dto.request.CreateEnrollmentRequest;
 import com.university.common.entity.Course;
 import com.university.common.entity.Enrollment;
 import com.university.common.entity.User;
+import com.university.common.exception.*;
 import com.university.common.repository.CourseRepository;
 import com.university.common.repository.EnrollmentRepository;
 import com.university.common.repository.UserRepository;
-import com.university.core.dto.request.CreateEnrollmentRequest;
-import com.university.core.exception.*;
-import com.university.core.security.permissions.SelfOnly;
 import com.university.fee.exception.OutstandingFeesException;
+import com.university.fee.service.FeeService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -105,16 +106,13 @@ public class EnrollmentService {
         return enrollmentRepository.findByCourseId(courseId);
     }
 
-//    public List<Enrollment> getAllEnrollments(){
-//        return enrollmentRepository.findAll();
-//    }
 
-    public Page<Enrollment> getAllEnrollments(Pageable pageable){
+    public Page<Enrollment> getAllEnrollments(Pageable pageable) {
         return enrollmentRepository.findAll(pageable);
     }
 
     public Page<Enrollment> getEnrollmentsByInstructor(int instructorId, Pageable pageable) {
-        return enrollmentRepository.findByCourseInstructorId(instructorId,pageable);
+        return enrollmentRepository.findByCourseInstructorId(instructorId, pageable);
     }
 
     public Enrollment getEnrollmentById(int id) {
@@ -135,7 +133,6 @@ public class EnrollmentService {
 
         enrollment.setGrade(grade);
     }
-
 
 
 }

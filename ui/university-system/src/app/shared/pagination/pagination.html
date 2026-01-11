@@ -3,9 +3,9 @@
   <div class="page-size">
     <label class="muted-text">Rows per page</label>
     <select
-      class="form-input small"
-      [value]="size()"
       (change)="changeSize($event)"
+      [value]="size()"
+      class="form-input small"
     >
       <option [value]="5">5</option>
       <option [value]="10">10</option>
@@ -15,9 +15,9 @@
 
   <div class="pagination-controls">
     <button
-      class="secondary-button pagination-btn"
       (click)="prev()"
       [disabled]="isFirst() || loading()"
+      class="secondary-button pagination-btn"
     >
       ‹
     </button>
@@ -27,9 +27,9 @@
     </span>
 
     <button
-      class="secondary-button pagination-btn"
       (click)="next()"
       [disabled]="isLast() || loading()"
+      class="secondary-button pagination-btn"
     >
       ›
     </button>

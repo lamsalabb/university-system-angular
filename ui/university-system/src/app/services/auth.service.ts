@@ -16,6 +16,10 @@ export class AuthService {
   ) {
   }
 
+  get userId(): number {
+    return Number(localStorage.getItem('userId'));
+  }
+
   login(credentials: any) {
     return this.http.post<any>(`${this.url}/api/auth/login`, credentials);
   }
@@ -39,10 +43,6 @@ export class AuthService {
   logout() {
     localStorage.clear();
     this.router.navigate(['/login']);
-  }
-
-  get userId(): number {
-    return Number(localStorage.getItem('userId'));
   }
 
 }

@@ -1,6 +1,7 @@
 package com.university.core.exception;
 
 import com.university.attendance.exception.AttendanceNotFoundException;
+import com.university.common.exception.*;
 import com.university.fee.exception.FeeNotFoundException;
 import com.university.fee.exception.OutstandingFeesException;
 import org.springframework.http.HttpStatus;
@@ -55,8 +56,8 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.CONFLICT, e.getMessage());
     }
 
-    @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<?> handleUserAlreadyExists(UserAlreadyExistsException e) {
+    @ExceptionHandler(com.university.common.exception.UserAlreadyExistsException.class)
+    public ResponseEntity<?> handleUserAlreadyExists(com.university.common.exception.UserAlreadyExistsException e) {
         return buildErrorResponse(HttpStatus.CONFLICT, e.getMessage());
     }
 
@@ -85,13 +86,15 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.UNAUTHORIZED, e.getMessage());
     }
 
-    @ExceptionHandler(AttendanceAlreadyMarkedException.class)
-    public ResponseEntity<?> handleAttendanceAlreadyMarked(
-            AttendanceAlreadyMarkedException e
-    ) {
+    @ExceptionHandler(com.university.attendance.exception.AttendanceAlreadyMarkedException.class)
+    public ResponseEntity<?> handleAttendanceAlreadyMarked(com.university.attendance.exception.AttendanceAlreadyMarkedException e) {
         return buildErrorResponse(HttpStatus.CONFLICT, e.getMessage());
     }
 
+    @ExceptionHandler(InvalidUserException.class)
+    public ResponseEntity<?> handleInvalidUser(InvalidUserException e) {
+        return buildErrorResponse(HttpStatus.UNAUTHORIZED, e.getMessage());
+    }
 
     @ExceptionHandler(Exception.class)//fallback for any generic exceptions
     public ResponseEntity<?> handleGenericException(Exception e) {

@@ -4,13 +4,13 @@ import com.university.common.entity.Course;
 import com.university.common.entity.User;
 import com.university.common.repository.CourseRepository;
 import com.university.common.repository.UserRepository;
-import com.university.core.dto.request.CreateCourseRequest;
-import com.university.core.dto.request.UpdateCourseRequest;
-import com.university.core.exception.CourseAlreadyExistsException;
-import com.university.core.exception.CourseNotFoundException;
-import com.university.core.exception.InvalidInstructorException;
-import com.university.core.exception.UserNotFoundException;
-import com.university.core.security.permissions.SelfOnly;
+import com.university.common.dto.request.CreateCourseRequest;
+import com.university.common.dto.request.UpdateCourseRequest;
+import com.university.common.exception.CourseAlreadyExistsException;
+import com.university.common.exception.CourseNotFoundException;
+import com.university.common.exception.InvalidInstructorException;
+import com.university.common.exception.UserNotFoundException;
+import com.university.common.annotation.SelfOnly;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -61,8 +61,6 @@ public class CourseService {
     }
 
 
-
-
     @Transactional // UPDATE
     public Course updateCourse(int id, UpdateCourseRequest request) {
 
@@ -105,7 +103,7 @@ public class CourseService {
     }
 
     @SelfOnly
-    public List<Course> findCoursesByInstructorId(int id){
+    public List<Course> findCoursesByInstructorId(int id) {
         return courseRepository.findByInstructorId(id);
     }
 

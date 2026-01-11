@@ -25,7 +25,7 @@
 
         @if (enrollments().length === 0) {
           <tr>
-            <td colspan="8" class="empty-row">
+            <td class="empty-row" colspan="8">
               No enrollments found.
             </td>
           </tr>
@@ -44,9 +44,9 @@
 
             <td class="center">
               <span
-                class="status-badge"
-                [class.success]="e.status === 'ENROLLED'"
                 [class.muted]="e.status !== 'ENROLLED'"
+                [class.success]="e.status === 'ENROLLED'"
+                class="status-badge"
               >
                 {{ e.status }}
               </span>
@@ -56,14 +56,14 @@
 
             <td class="center">
               <form
-                class="inline-form"
                 (ngSubmit)="updateGrade(e.id, e.grade)"
+                class="inline-form"
               >
                 <select
-                  class="form-input small-input"
                   [(ngModel)]="e.grade"
-                  name="grade-{{ e.id }}"
                   [disabled]="e.status === 'DROPPED'"
+                  class="form-input small-input"
+                  name="grade-{{ e.id }}"
                 >
                   <option value="">--</option>
 
@@ -75,9 +75,9 @@
                 </select>
 
                 <button
-                  type="submit"
-                  class="primary-button small-button"
                   [disabled]="e.status === 'DROPPED'"
+                  class="primary-button small-button"
+                  type="submit"
                 >
                   Save
                 </button>
@@ -93,12 +93,12 @@
   </div>
 
   <app-pagination
+    (pageChange)="currentPage.set($event)"
+    (sizeChange)="pageSize.set($event); currentPage.set(0)"
+    [loading]="loading()"
     [page]="currentPage()"
     [size]="pageSize()"
     [total]="totalElements()"
-    [loading]="loading()"
-    (pageChange)="currentPage.set($event)"
-    (sizeChange)="pageSize.set($event); currentPage.set(0)"
   ></app-pagination>
 
 </main>

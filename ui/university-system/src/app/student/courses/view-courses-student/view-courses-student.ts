@@ -5,8 +5,7 @@ import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-view-courses-student',
-  imports: [
-  ],
+  imports: [],
   templateUrl: './view-courses-student.html',
   styleUrl: './view-courses-student.css',
 })
@@ -18,7 +17,7 @@ export class ViewCoursesStudent {
   loading = signal(true);
   error = signal<string | null>(null);
 
-  constructor(private enrollmentService:Enrollment, private courseService:Course, private authService: AuthService) {
+  constructor(private enrollmentService: Enrollment, private courseService: Course, private authService: AuthService) {
 
   }
 
@@ -91,14 +90,13 @@ export class ViewCoursesStudent {
         this.courses.update(courses =>
           courses.map(c =>
             c.enrollmentId === id
-              ? { ...c, enrollmentStatus: 'DROPPED' }
+              ? {...c, enrollmentStatus: 'DROPPED'}
               : c
           )
         );
       }
     });
   }
-
 
 
 }

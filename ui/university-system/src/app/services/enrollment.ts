@@ -9,7 +9,8 @@ import {HttpClient} from '@angular/common/http';
 export class Enrollment {
   private readonly apiUrl = `${environment.url}/api/enrollments`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   enroll(request: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/enroll`, request);
@@ -27,7 +28,7 @@ export class Enrollment {
     return this.http.get<any[]>(`${this.apiUrl}/course/${courseId}`);
   }
 
-  getEnrollmentByInstructorId(id: number,page: number, size: number): Observable<any> {
+  getEnrollmentByInstructorId(id: number, page: number, size: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/instructor/${id}?page=${page}&size=${size}`);
   }
 
@@ -41,8 +42,6 @@ export class Enrollment {
       null
     );
   }
-
-
 
 
 }

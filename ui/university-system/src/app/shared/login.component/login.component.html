@@ -2,36 +2,36 @@
   <div class="auth-card">
     <h4 class="auth-title">Login</h4>
 
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <form (ngSubmit)="login()" [formGroup]="loginForm">
       <div class="form-field">
         <input
-          type="email"
           class="form-input"
-          placeholder="Email"
           formControlName="email"
+          placeholder="Email"
+          type="email"
         />
       </div>
 
       <div class="form-field">
         <input
-          type="password"
           class="form-input"
-          placeholder="Password"
           formControlName="password"
+          placeholder="Password"
+          type="password"
         />
       </div>
 
       <button
-        type="submit"
-        class="primary-button full-width"
         [disabled]="loading() || loginForm.invalid"
+        class="primary-button full-width"
+        type="submit"
       >
         {{ loading() ? 'Logging in...' : 'Login' }}
       </button>
 
       <div
-        class="form-error"
         *ngIf="errorMessage()"
+        class="form-error"
       >
         {{ errorMessage() }}
       </div>

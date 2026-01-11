@@ -22,8 +22,27 @@ export class ViewAttendanceStudent {
 
   loading = signal(true);
   error = signal<string | null>(null);
+  chartData = computed<ChartData<'pie'> | undefined>(() => {
+    const s = this.summary();
+    if (!s) return undefined;//if response is empty
 
-  constructor(private attendanceService: Attendance, private authService: AuthService) {}
+    return {
+      labels: ['Present', 'Absent', 'Excused'],
+      datasets: [
+        {
+          data: [
+            s.presentCount,
+            s.absentCount,
+            s.excusedCount
+          ],
+          backgroundColor: undefined
+        }
+      ]
+    };
+  });
+
+  constructor(private attendanceService: Attendance, private authService: AuthService) {
+  }
 
   ngOnInit() {
     this.loadAttendance();
@@ -44,7 +63,7 @@ export class ViewAttendanceStudent {
         res.forEach(a => {
           this.courses.update(list => {
             if (list.some(c => c.id === a.course.id)) return list;
-            return [...list, { id: a.course.id, title: a.course.title }];
+            return [...list, {id: a.course.id, title: a.course.title}];
           });
         });
 
@@ -77,24 +96,4 @@ export class ViewAttendanceStudent {
         }
       });
   }
-
-
-  chartData = computed<ChartData<'pie'> | undefined>(() => {
-    const s = this.summary();
-    if (!s) return undefined;//if response is empty
-
-    return {
-      labels: ['Present', 'Absent', 'Excused'],
-      datasets: [
-        {
-          data: [
-            s.presentCount,
-            s.absentCount,
-            s.excusedCount
-          ],
-          backgroundColor: undefined
-        }
-      ]
-    };
-  });
 }

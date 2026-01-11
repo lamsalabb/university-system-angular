@@ -1,4 +1,6 @@
+
 package com.university.reporting.controller;
+
 
 import com.university.reporting.contract.dto.ActiveStudentDTO;
 import com.university.reporting.contract.dto.AverageGradeDTO;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/reports")

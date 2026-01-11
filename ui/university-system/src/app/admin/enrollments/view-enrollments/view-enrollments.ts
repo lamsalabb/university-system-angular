@@ -25,7 +25,7 @@ export class ViewEnrollments {
   pageSize = signal(10);
   totalElements = signal(0);
 
-  constructor(private fb: FormBuilder, private enrollmentService:Enrollment, private userService:User, private courseService:Course) {
+  constructor(private fb: FormBuilder, private enrollmentService: Enrollment, private userService: User, private courseService: Course) {
     effect(() => {
       this.currentPage();
       this.pageSize();
@@ -55,13 +55,13 @@ export class ViewEnrollments {
     this.userService.getAllUsersByRole('STUDENT').subscribe(users => {
       this.students.set(users);
     })
-}
+  }
 
-loadCourses() {
+  loadCourses() {
     this.courseService.getAllCourses().subscribe(courses => {
       this.courses.set(courses);
     })
-}
+  }
 
   loadEnrollments() {
     this.loading.set(true);
@@ -80,7 +80,6 @@ loadCourses() {
         }
       });
   }
-
 
 
   enroll() {
@@ -111,12 +110,11 @@ loadCourses() {
       .subscribe(() => {
         this.enrollments.set(
           this.enrollments().map(e =>
-            e.id === id ? { ...e, status: 'DROPPED' } : e
+            e.id === id ? {...e, status: 'DROPPED'} : e
           )
         );
       });
   }
-
 
 
 }

@@ -21,9 +21,8 @@ export class MarkAttendanceInstructor {
   statusMap: Record<number, string> = {};
 
 
-
-
-  constructor(private enrollmentService:Enrollment, private attendanceService:Attendance,private router:Router) { }
+  constructor(private enrollmentService: Enrollment, private attendanceService: Attendance, private router: Router) {
+  }
 
   ngOnInit() {
     const state = history.state;
@@ -37,12 +36,15 @@ export class MarkAttendanceInstructor {
     this.enrollmentService
       .getEnrollmentByCourse(courseId)
       .subscribe(res => {
-        this.enrollments.set(
-          res.map(e => ({ ...e, status: 'PRESENT' }))
-        );
+        this.enrollments.set(res);
+
+        res.forEach(e => {
+          this.statusMap[e.id] = 'PRESENT';
+        });
       });
   }
-  selectCourse(courseId: string){
+
+  selectCourse(courseId: string) {
     const id = Number(courseId);
     if (!id) return;
 
@@ -55,9 +57,6 @@ export class MarkAttendanceInstructor {
     this.enrollments.set([]);
   }
 
-  setStatus(enrollmentId: number, status: string){
-
-  }
 
   saveAttendance() {
     this.attendanceService.markAttendanceBatch(
@@ -72,22 +71,17 @@ export class MarkAttendanceInstructor {
           alert("Attendance saved successfully.");
           this.router.navigate(['/instructor/dashboard']);
         },
-      error: err => {
-          if(err.status === 409){
+        error: err => {
+          if (err.status === 409) {
             alert(err.error.message);
-          }
-          else{
+          } else {
             alert("Attendance saved failed.");
           }
 
+        }
       }
-      }
-
-      );
+    );
   }
-
-
-
 
 
 }

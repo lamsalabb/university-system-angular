@@ -6,6 +6,7 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -20,7 +21,7 @@ public class PermissionLoader {
     private final Map<String, Set<String>> permissionMap = new HashMap<>();
 
     @PostConstruct
-    public void loadMap() {
+    public void loadMap() throws FileNotFoundException {
         ClassPathResource resource = new ClassPathResource("permissions.csv");
 
         try (Reader reader = new InputStreamReader(resource.getInputStream())) {
@@ -46,7 +47,7 @@ public class PermissionLoader {
 
 
         } catch (IOException e) {
-            throw new IllegalStateException("permissions.csv not found or unreadable", e);
+            throw new FileNotFoundException("permissions.csv not found or unreadable");
         }
     }
 

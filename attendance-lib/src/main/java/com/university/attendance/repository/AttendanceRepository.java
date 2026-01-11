@@ -1,16 +1,14 @@
 package com.university.attendance.repository;
 
-import com.university.common.entity.Attendance;
+import com.university.attendance.entity.Attendance;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 public interface AttendanceRepository extends JpaRepository<Attendance, Integer> {
-    List<Attendance> findByEnrollmentId(int enrollmentId);
 
     List<Attendance> findByEnrollmentStudentId(int studentId);
 
@@ -20,9 +18,6 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
 
 
     List<Attendance> findByEnrollmentStudentIdAndEnrollmentCourseId(int studentId, int courseId);
-
-
-    Optional<Attendance> findByEnrollmentIdAndSessionDate(int enrollmentId, LocalDate sessionDate);
 
     boolean existsByEnrollmentIdAndSessionDate(int enrollmentId, LocalDate sessionDate);
 

@@ -15,7 +15,7 @@ export class RegisterUser {
   userForm: FormGroup;
 
 
-  constructor(private fb: FormBuilder,   private userService:User) {
+  constructor(private fb: FormBuilder, private userService: User) {
     this.userForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],

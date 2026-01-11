@@ -10,7 +10,7 @@ describe('Pagination', () => {
     await TestBed.configureTestingModule({
       imports: [Pagination]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(Pagination);
     component = fixture.componentInstance;

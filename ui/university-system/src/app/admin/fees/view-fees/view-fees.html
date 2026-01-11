@@ -7,8 +7,8 @@
     </div>
 
     <a
-      routerLink="/admin/register-fee"
       class="primary-button small-button"
+      routerLink="/admin/register-fee"
     >
       Create New Fee
     </a>
@@ -44,16 +44,16 @@
               <td>{{ f.dueDate }}</td>
 
               <td>
-              <a
-                class="status-badge"
-                [class.success]="f.paid"
-                [class.danger]="!f.paid"
-                role="button"
-                (click)="togglePaid(f)"
-              >
-                {{ f.paid ? 'PAID' : 'UNPAID' }}
-              </a>
-            </td>
+                <a
+                  (click)="togglePaid(f)"
+                  [class.danger]="!f.paid"
+                  [class.success]="f.paid"
+                  class="status-badge"
+                  role="button"
+                >
+                  {{ f.paid ? 'PAID' : 'UNPAID' }}
+                </a>
+              </td>
 
             </tr>
           }
@@ -62,12 +62,12 @@
     </div>
   }
   <app-pagination
+    (pageChange)="currentPage.set($event)"
+    (sizeChange)="pageSize.set($event); currentPage.set(0)"
+    [loading]="loading()"
     [page]="currentPage()"
     [size]="pageSize()"
     [total]="totalElements()"
-    [loading]="loading()"
-    (pageChange)="currentPage.set($event)"
-    (sizeChange)="pageSize.set($event); currentPage.set(0)"
   ></app-pagination>
 
 </main>

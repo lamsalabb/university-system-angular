@@ -10,7 +10,7 @@ describe('ViewCourses', () => {
     await TestBed.configureTestingModule({
       imports: [ViewCourses]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ViewCourses);
     component = fixture.componentInstance;
