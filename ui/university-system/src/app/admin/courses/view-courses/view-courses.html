@@ -45,6 +45,7 @@
           <th>Title</th>
           <th>Code</th>
           <th>Credits</th>
+          <th>Cost</th>
           <th>Instructor</th>
           <th class="align-right">Actions</th>
         </tr>
@@ -56,6 +57,7 @@
               <td>{{ c.title }}</td>
               <td>{{ c.code }}</td>
               <td>{{ c.credits }}</td>
+              <td>{{ c.cost }}</td>
               <td>{{ c.instructorName }}</td>
 
               <td class="align-right">
@@ -107,6 +109,11 @@
         <div class="form-field">
           <label class="form-label">Credits</label>
           <input [(ngModel)]="editForm.credits" class="form-input" type="number">
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Cost</label>
+          <input [(ngModel)]="editForm.cost" class="form-input" type="number">
         </div>
 
         <div class="form-field">

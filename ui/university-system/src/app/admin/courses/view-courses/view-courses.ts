@@ -37,6 +37,7 @@ export class ViewCourses {
     code: '',
     credits: 0,
     description: '',
+    cost:'',
     instructorId: 0
   };
   distributionChartData = computed<ChartData<'pie'> | undefined>(() => {
@@ -100,6 +101,7 @@ export class ViewCourses {
       title: c.title,
       code: c.code,
       credits: c.credits,
+      cost: c.cost,
       description: c.description,
       instructorId: c.instructorId
     };
@@ -131,11 +133,21 @@ export class ViewCourses {
 
     this.courseService
       .updateCourse(this.editingCourse()!.id, payload)
-      .subscribe(updated => {
-        this.courses.update(list =>
-          list.map(c => c.id === updated.id ? updated : c)
-        );
-        this.closeEdit();
+      .subscribe(
+        {
+          next: updated =>{
+              this.courses.update(list =>
+                list.map(c => c.id === updated.id ? updated : c)
+              );
+              this.closeEdit();
+
+              this.snackbar.show("Updated Course Successfully!","success");
+          },
+          error: err => {
+            this.snackbar.show("Failed to update Course.","error");
+
+          }
+
       });
   }
 
@@ -144,6 +156,7 @@ export class ViewCourses {
       this.editForm.title &&
       this.editForm.code &&
       this.editForm.credits &&
+      this.editForm.cost &&
       this.editForm.instructorId
     );
   }
