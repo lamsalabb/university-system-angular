@@ -7,6 +7,7 @@ import {Enrollment} from '../../../services/enrollment';
 import {Reporting} from '../../../services/reporting';
 import {ChartData} from 'chart.js';
 import {BaseChartDirective} from 'ng2-charts';
+import {SnackbarService} from '../../../shared/toast/snackbar-service';
 
 @Component({
   selector: 'app-view-courses',
@@ -53,7 +54,7 @@ export class ViewCourses {
     };
   });
 
-  constructor(private courseService: Course, private userService: User, private enrollmentService: Enrollment, private reportingService: Reporting) {
+  constructor(private courseService: Course, private userService: User, private enrollmentService: Enrollment, private reportingService: Reporting, private snackbar: SnackbarService) {
 
   }
 
@@ -170,11 +171,10 @@ export class ViewCourses {
         a.download = 'average-grades.pdf';
         a.click();
         window.URL.revokeObjectURL(url);
-        alert("Download Successful.");
-
+        this.snackbar.show("Download Successful!", "success");
       },
       error: err => {
-        alert("Failed to download. Try again later.");
+        this.snackbar.show("Failed to download. Try again later.", "error");
         this.loading.set(false);
       }
     })

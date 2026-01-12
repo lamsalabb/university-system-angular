@@ -3,6 +3,7 @@ import {Enrollment} from '../../../services/enrollment';
 import {AuthService} from '../../../services/auth.service';
 import {FormsModule} from '@angular/forms';
 import {Pagination} from '../../../shared/pagination/pagination';
+import {SnackbarService} from '../../../shared/toast/snackbar-service';
 
 @Component({
   selector: 'app-view-students-instructor',
@@ -23,7 +24,7 @@ export class ViewStudentsInstructor {
   pageSize = signal(10);
   totalElements = signal(0);
 
-  constructor(private enrollmentService: Enrollment, private authService: AuthService) {
+  constructor(private enrollmentService: Enrollment, private authService: AuthService, private snackbar: SnackbarService) {
     effect(() => {
       this.currentPage();
       this.pageSize();
@@ -58,7 +59,7 @@ export class ViewStudentsInstructor {
       .subscribe(
         {
           next: data => {
-            alert("Updated Grade.");
+            this.snackbar.show('Grade saved successfully!', 'success');
             this.loading.set(false);
           },
           error: error => {

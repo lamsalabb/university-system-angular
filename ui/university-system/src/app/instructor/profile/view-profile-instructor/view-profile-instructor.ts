@@ -2,6 +2,7 @@ import {Component, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {User} from '../../../services/user';
 import {AuthService} from '../../../services/auth.service';
+import {SnackbarService} from '../../../shared/toast/snackbar-service';
 
 @Component({
   selector: 'app-view-profile-instructor',
@@ -25,7 +26,7 @@ export class ViewProfileInstructor {
   passwordError = signal<string | null>(null);
 
 
-  constructor(private userService: User, private authService: AuthService) {
+  constructor(private userService: User, private authService: AuthService, private snackBar: SnackbarService) {
   }
 
   ngOnInit() {
@@ -65,7 +66,7 @@ export class ViewProfileInstructor {
         this.currentPassword = '';
         this.newPassword = '';
         this.confirmPassword = '';
-        alert("Password changed successfully!");
+        this.snackBar.show("Password changed successfully!", "success");
       },
       error: err => {
         if (err.status === 401) {

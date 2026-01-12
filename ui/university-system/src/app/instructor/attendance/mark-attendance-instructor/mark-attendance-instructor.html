@@ -113,8 +113,22 @@
                   [name]="'status_' + e.id"
                   type="radio"
                   value="EXCUSED"
-                >
+                />
               </td>
+
+              <td>
+                @if (statusMap[e.id] === 'EXCUSED') {
+                  <input
+                    class="form-input"
+                    type="text"
+                    placeholder="Reason / remarks"
+                    [(ngModel)]="remarksMap[e.id]"
+                    [name]="'remarks_' + e.id"
+                  />
+                }
+              </td>
+
+
 
 
             </tr>

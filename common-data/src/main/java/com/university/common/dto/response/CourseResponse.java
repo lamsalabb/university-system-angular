@@ -13,5 +13,6 @@ public class CourseResponse {
     int credits;
     String description;
     int instructorId;
+    int cost;
     String instructorName;
 }

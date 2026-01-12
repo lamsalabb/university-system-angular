@@ -1,11 +1,24 @@
 <main class="page-container">
   <div class="form-page">
     <div class="form-card">
+
+      @if (loading()) {
+        <div class="loader-overlay">
+          <mat-progress-spinner
+            color="primary"
+            diameter="60"
+            mode="indeterminate">
+          </mat-progress-spinner>
+        </div>
+      }
+
       <h4 class="form-title">Register New Course</h4>
 
       <form
         (ngSubmit)="submit()"
-        [formGroup]="courseForm" class="form-layout">
+        [formGroup]="courseForm"
+        class="form-layout">
+
         <div class="form-field">
           <label class="form-label">Title</label>
           <input
@@ -13,6 +26,9 @@
             formControlName="title"
             type="text"
           >
+          @if ((courseForm.get('title')?.touched || submitted()) && courseForm.get('title')?.invalid) {
+            <small class="error-text">Title is required</small>
+          }
         </div>
 
         <div class="form-field">
@@ -22,25 +38,28 @@
             formControlName="description"
             type="text"
           >
+          @if ((courseForm.get('description')?.touched || submitted()) && courseForm.get('description')?.invalid) {
+            <small class="error-text">Description is required</small>
+          }
         </div>
 
         <div class="form-field">
           <label class="form-label">Instructor</label>
-
           <select
             class="form-input"
             formControlName="instructorId"
           >
             <option [ngValue]="null">Select instructor</option>
-
             @for (i of instructors(); track i.id) {
               <option [ngValue]="i.id">
                 {{ i.firstName }} {{ i.lastName }}
               </option>
             }
           </select>
+          @if ((courseForm.get('instructorId')?.touched || submitted()) && courseForm.get('instructorId')?.invalid) {
+            <small class="error-text">Instructor is required</small>
+          }
         </div>
-
 
         <div class="form-row">
           <div class="form-field">
@@ -50,7 +69,11 @@
               formControlName="code"
               placeholder="CS50"
             >
+            @if ((courseForm.get('code')?.touched || submitted()) && courseForm.get('code')?.invalid) {
+              <small class="error-text">Course code is required</small>
+            }
           </div>
+
 
           <div class="form-field">
             <label class="form-label">Credits</label>
@@ -60,12 +83,28 @@
               placeholder="3"
               type="number"
             >
+            @if ((courseForm.get('credits')?.touched || submitted()) && courseForm.get('credits')?.invalid) {
+              <small class="error-text">Credits are required</small>
+            }
+          </div>
+
+          <div class="form-field">
+            <label class="form-label">Cost</label>
+            <input
+              class="form-input"
+              formControlName="cost"
+              placeholder="5000"
+            >
+            @if ((courseForm.get('cost')?.touched || submitted()) && courseForm.get('cost')?.invalid) {
+              <small class="error-text">Cost is required</small>
+            }
           </div>
         </div>
 
+
+
         <div class="form-actions">
           <button
-            [disabled]="courseForm.invalid"
             class="primary-button"
             type="submit"
           >
@@ -76,3 +115,5 @@
     </div>
   </div>
 </main>
+
+

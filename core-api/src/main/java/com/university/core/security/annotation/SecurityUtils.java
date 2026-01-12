@@ -1,4 +1,4 @@
-package com.university.common.annotation;
+package com.university.core.security.annotation;
 
 import com.university.common.exception.InvalidUserException;
 import org.springframework.security.core.Authentication;

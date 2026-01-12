@@ -4,6 +4,7 @@ import {Enrollment} from '../../../services/enrollment';
 import {User} from '../../../services/user';
 import {Course} from '../../../services/course';
 import {Pagination} from '../../../shared/pagination/pagination';
+import {SnackbarService} from '../../../shared/toast/snackbar-service';
 
 @Component({
   selector: 'app-view-enrollments',
@@ -25,7 +26,7 @@ export class ViewEnrollments {
   pageSize = signal(10);
   totalElements = signal(0);
 
-  constructor(private fb: FormBuilder, private enrollmentService: Enrollment, private userService: User, private courseService: Course) {
+  constructor(private fb: FormBuilder, private enrollmentService: Enrollment, private userService: User, private courseService: Course, private snackBar: SnackbarService) {
     effect(() => {
       this.currentPage();
       this.pageSize();
@@ -93,10 +94,11 @@ export class ViewEnrollments {
             this.enrollments.set([
               ...this.enrollments(), res
             ]);
+            this.snackBar.show("Successfully enrolled.", "success");
           },
           error: err => {
             this.error.set("Failed to enroll");
-            alert(err.error.message);
+            this.snackBar.show(err.error.message, "error");
           }
         }
       );
@@ -113,6 +115,7 @@ export class ViewEnrollments {
             e.id === id ? {...e, status: 'DROPPED'} : e
           )
         );
+        this.snackBar.show("Successfully dropped.", "info");
       });
   }
 

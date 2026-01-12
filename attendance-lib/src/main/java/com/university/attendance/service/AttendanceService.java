@@ -1,13 +1,13 @@
 package com.university.attendance.service;
 
+import com.university.attendance.dto.request.MarkAttendanceRequest;
+import com.university.attendance.entity.Attendance;
+import com.university.attendance.exception.AttendanceAlreadyMarkedException;
 import com.university.attendance.exception.AttendanceNotFoundException;
 import com.university.attendance.repository.AttendanceRepository;
-import com.university.attendance.entity.Attendance;
 import com.university.common.entity.Enrollment;
-import com.university.common.repository.EnrollmentRepository;
-import com.university.attendance.dto.request.MarkAttendanceRequest;
-import com.university.attendance.exception.AttendanceAlreadyMarkedException;
 import com.university.common.exception.EnrollmentNotFoundException;
+import com.university.common.repository.EnrollmentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

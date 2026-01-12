@@ -1,14 +1,14 @@
 package com.university.core.service;
 
-import com.university.common.entity.User;
-import com.university.common.repository.UserRepository;
 import com.university.common.dto.request.RegisterUserRequest;
 import com.university.common.dto.request.UpdateUserRequest;
+import com.university.common.entity.User;
 import com.university.common.exception.EmailAlreadyExistsException;
 import com.university.common.exception.EmailNotFoundException;
 import com.university.common.exception.InvalidPasswordException;
 import com.university.common.exception.UserNotFoundException;
-import com.university.common.annotation.SelfOnly;
+import com.university.common.repository.UserRepository;
+import com.university.core.security.annotation.SelfOnly;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -61,7 +61,6 @@ public class UserService {
 
         return savedUser;
     }
-
 
 
     public Page<User> findAllUsers(Pageable pageable) {

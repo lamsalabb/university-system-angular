@@ -1,9 +1,9 @@
 package com.university.core.service;
 
-import com.university.common.entity.User;
-import com.university.common.repository.UserRepository;
 import com.university.common.dto.request.RegisterUserRequest;
+import com.university.common.entity.User;
 import com.university.common.exception.EmailAlreadyExistsException;
+import com.university.common.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

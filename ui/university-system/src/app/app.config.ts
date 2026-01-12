@@ -6,6 +6,7 @@ import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {jwtInterceptor} from './core/interceptors/jwt-interceptor';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {provideCharts, withDefaultRegisterables} from 'ng2-charts';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,7 +14,8 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     importProvidersFrom(NgbModule),
-    provideCharts(withDefaultRegisterables())
+    provideCharts(withDefaultRegisterables()),
+    importProvidersFrom(MatSnackBarModule)
 
   ]
 };

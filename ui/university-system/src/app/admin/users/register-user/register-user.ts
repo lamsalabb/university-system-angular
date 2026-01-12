@@ -1,11 +1,14 @@
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {User} from '../../../services/user';
+import {SnackbarService} from '../../../shared/toast/snackbar-service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-register-user',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './register-user.html',
   styleUrl: './register-user.css',
@@ -13,31 +16,41 @@ import {User} from '../../../services/user';
 export class RegisterUser {
 
   userForm: FormGroup;
+  loading = signal(false);
+  submitted = signal(false);
 
-
-  constructor(private fb: FormBuilder, private userService: User) {
+  constructor(
+    private fb: FormBuilder,
+    private userService: User,
+    private snackBar: SnackbarService
+  ) {
     this.userForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       role: ['STUDENT', Validators.required],
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
     });
   }
 
   submit() {
-    if (this.userForm.invalid) {
-      return;
-    }
+    this.submitted.set(true);
+
+    if (this.userForm.invalid) return;
+
+    this.loading.set(true);
 
     this.userService.createUser(this.userForm.value)
       .subscribe({
-        next: (res) => {
-          alert("User registered successfully!");
+        next: () => {
+          this.loading.set(false);
+          this.snackBar.show("User registered successfully!", "success");
           this.userForm.reset({role: 'STUDENT'});
+          this.submitted.set(false);
         },
-        error: (err) => {
-          alert("Failed to register.");
+        error: () => {
+          this.loading.set(false);
+          this.snackBar.show("Failed to register.", "error");
         }
       });
   }

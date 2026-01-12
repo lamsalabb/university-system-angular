@@ -1,6 +1,5 @@
 package com.university.core.service;
 
-import com.university.common.annotation.SelfOnly;
 import com.university.common.dto.request.CreateEnrollmentRequest;
 import com.university.common.entity.Course;
 import com.university.common.entity.Enrollment;
@@ -9,7 +8,10 @@ import com.university.common.exception.*;
 import com.university.common.repository.CourseRepository;
 import com.university.common.repository.EnrollmentRepository;
 import com.university.common.repository.UserRepository;
+import com.university.core.security.annotation.SelfOnly;
+import com.university.fee.entity.Fee;
 import com.university.fee.exception.OutstandingFeesException;
+import com.university.fee.repository.FeeRepository;
 import com.university.fee.service.FeeService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -26,12 +28,14 @@ public class EnrollmentService {
     private final EnrollmentRepository enrollmentRepository;
     private final UserRepository userRepository;
     private final CourseRepository courseRepository;
+    private final FeeRepository feeRepository;
     private final FeeService feeService;
 
-    public EnrollmentService(EnrollmentRepository enrollmentRepository, UserRepository userRepository, CourseRepository courseRepository, FeeService feeService) {
+    public EnrollmentService(EnrollmentRepository enrollmentRepository, UserRepository userRepository, CourseRepository courseRepository, FeeRepository feeRepository, FeeService feeService) {
         this.enrollmentRepository = enrollmentRepository;
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
+        this.feeRepository = feeRepository;
         this.feeService = feeService;
     }
 
@@ -80,7 +84,20 @@ public class EnrollmentService {
                 .enrollmentDate(LocalDate.now())
                 .build();
 
-        return enrollmentRepository.save(enrollment);
+        Enrollment savedEnrollment = enrollmentRepository.save(enrollment);
+
+        Fee fee = Fee.builder()
+                .student(student)
+                .amount(course.getCost())
+                .type(Fee.Type.TUITION)
+                .isPaid(false)
+                .dueDate(LocalDate.now().plusMonths(3))
+                .build();
+
+        feeRepository.save(fee);
+
+        return savedEnrollment;
+
     }
 
 

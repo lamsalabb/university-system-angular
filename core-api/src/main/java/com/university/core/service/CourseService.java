@@ -1,16 +1,16 @@
 package com.university.core.service;
 
-import com.university.common.entity.Course;
-import com.university.common.entity.User;
-import com.university.common.repository.CourseRepository;
-import com.university.common.repository.UserRepository;
 import com.university.common.dto.request.CreateCourseRequest;
 import com.university.common.dto.request.UpdateCourseRequest;
+import com.university.common.entity.Course;
+import com.university.common.entity.User;
 import com.university.common.exception.CourseAlreadyExistsException;
 import com.university.common.exception.CourseNotFoundException;
 import com.university.common.exception.InvalidInstructorException;
 import com.university.common.exception.UserNotFoundException;
-import com.university.common.annotation.SelfOnly;
+import com.university.common.repository.CourseRepository;
+import com.university.common.repository.UserRepository;
+import com.university.core.security.annotation.SelfOnly;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +46,9 @@ public class CourseService {
 
         Course course = Course.builder()
                 .title(courseRequest.getTitle())
-                .code(courseRequest.getCode()).credits(courseRequest.getCredits()).instructor(instructor).description(courseRequest.getDescription()).build();
+                .code(courseRequest.getCode()).credits(courseRequest.getCredits()).instructor(instructor).
+                cost(courseRequest.getCost())
+                .description(courseRequest.getDescription()).build();
         return courseRepository.save(course);
     }
 
@@ -88,6 +90,7 @@ public class CourseService {
         existingCourse.setCode(request.getCode());
         existingCourse.setCredits(request.getCredits());
         existingCourse.setDescription(request.getDescription());
+        existingCourse.setCost(request.getCost());
         existingCourse.setInstructor(instructor);
 
         return existingCourse;

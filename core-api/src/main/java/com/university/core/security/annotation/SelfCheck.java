@@ -1,4 +1,4 @@
-package com.university.common.annotation;
+package com.university.core.security.annotation;
 
 import org.springframework.stereotype.Component;
 

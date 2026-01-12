@@ -1,9 +1,9 @@
 package com.university.common.dto.mapper;
 
-import com.university.common.entity.Enrollment;
 import com.university.common.dto.response.CourseSummaryResponse;
 import com.university.common.dto.response.EnrollmentResponse;
 import com.university.common.dto.response.StudentSummaryResponse;
+import com.university.common.entity.Enrollment;
 
 public class EnrollmentMapper {
 

@@ -26,6 +26,9 @@ public class Course {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @Column(name = "cost", nullable = false)
+    private Integer cost;
+
     @Column(name = "credits", nullable = false)
     private Integer credits;
 

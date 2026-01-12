@@ -1,8 +1,8 @@
 package com.university.core.controller;
 
 import com.university.common.dto.mapper.UserMapper;
-import com.university.core.dto.request.LoginRequest;
 import com.university.common.dto.response.UserResponse;
+import com.university.core.dto.request.LoginRequest;
 import com.university.core.security.util.JwtUtil;
 import com.university.core.service.UserService;
 import jakarta.validation.Valid;

@@ -5,63 +5,73 @@
 
       <form
         (ngSubmit)="submit()"
-        [formGroup]="feeForm" class="form-layout">
-
-
+        [formGroup]="feeForm"
+        class="form-layout"
+      >
         <div class="form-field">
           <label class="form-label">Student</label>
-
           <select
             class="form-input"
             formControlName="studentId"
           >
             <option [ngValue]="null">Select Student</option>
-
             @for (s of students(); track s.id) {
               <option [ngValue]="s.id">
                 {{ s.firstName }} {{ s.lastName }}
               </option>
             }
           </select>
+          @if ((feeForm.get('studentId')?.touched || submitted()) && feeForm.get('studentId')?.invalid) {
+            <small class="error-text">Student is required</small>
+          }
         </div>
 
+        <!-- Amount -->
         <div class="form-field">
           <label class="form-label">Amount</label>
           <input
             class="form-input"
             formControlName="amount"
+            placeholder="Enter amount"
             type="number"
           >
+          @if ((feeForm.get('amount')?.touched || submitted()) && feeForm.get('amount')?.hasError('required')) {
+            <small class="error-text">Amount is required</small>
+          }
         </div>
 
+        <!-- Type -->
         <div class="form-field">
           <label class="form-label">Type</label>
           <select
             class="form-input"
             formControlName="type"
           >
-            <option value="">Select role</option>
-            <option value="TUITION">TUITION</option>
+            <option value="">Select Type</option>
             <option value="LAB">LAB</option>
             <option value="LIBRARY">LIBRARY</option>
             <option value="OTHER">OTHER</option>
           </select>
+          @if ((feeForm.get('type')?.touched || submitted()) && feeForm.get('type')?.invalid) {
+            <small class="error-text">Type is required</small>
+          }
         </div>
 
-
+        <!-- Due Date -->
         <div class="form-field">
           <label class="form-label">Due Date</label>
           <input
             class="form-input"
             formControlName="dueDate"
-            placeholder=""
             type="date"
           >
+          @if ((feeForm.get('dueDate')?.touched || submitted()) && feeForm.get('dueDate')?.invalid) {
+            <small class="error-text">Due date is required</small>
+          }
         </div>
 
         <div class="form-actions">
           <button
-            [disabled]="feeForm.invalid"
             class="primary-button"
             type="submit"
           >
@@ -72,3 +82,7 @@
     </div>
   </div>
 </main>
+
+<style>
+
+</style>

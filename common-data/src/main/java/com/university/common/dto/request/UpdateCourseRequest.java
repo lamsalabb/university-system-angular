@@ -19,5 +19,8 @@ public class UpdateCourseRequest {
     private String description;
 
     @NotNull
+    private Integer cost;
+
+    @NotNull
     private Integer instructorId;
 }

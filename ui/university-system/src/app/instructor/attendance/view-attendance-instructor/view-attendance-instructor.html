@@ -62,6 +62,7 @@
         <th>Student</th>
         <th>Date</th>
         <th class="center">Status</th>
+        <th class="center">Remarks</th>
         <th class="center">Update Status</th>
       </tr>
       </thead>
@@ -78,7 +79,7 @@
 
         @if (selectedCourseId() && attendance().length === 0) {
           <tr>
-            <td class="empty-row" colspan="4">
+            <td class="empty-row" colspan="5">
               No attendance records found for this course.
             </td>
           </tr>
@@ -104,6 +105,8 @@
                 {{ a.status }}
               </span>
             </td>
+
+            <td class="center">{{ a.remarks }}</td>
 
             <td class="center">
               <form

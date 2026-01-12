@@ -1,10 +1,10 @@
 package com.university.fee.service;
 
-import com.university.fee.entity.Fee;
 import com.university.common.entity.User;
+import com.university.common.exception.UserNotFoundException;
 import com.university.common.repository.UserRepository;
 import com.university.fee.dto.request.CreateFeeRequest;
-import com.university.common.exception.UserNotFoundException;
+import com.university.fee.entity.Fee;
 import com.university.fee.exception.FeeNotFoundException;
 import com.university.fee.repository.FeeRepository;
 import jakarta.transaction.Transactional;

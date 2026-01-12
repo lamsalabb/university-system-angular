@@ -27,13 +27,15 @@ CREATE TABLE courses
     code          VARCHAR(15) NOT NULL UNIQUE,
     title         VARCHAR(50) NOT NULL,
     credits       INT         NOT NULL,
+    cost          INT         NOT NULL DEFAULT 0,
     instructor_id INT,
     description   VARCHAR(50),
 
     CONSTRAINT fk_course_instructor
         FOREIGN KEY (instructor_id) REFERENCES users (id)
-            ON DELETE SET NULL -- so the course remains even if teacher is deleted
+            ON DELETE SET NULL
 );
+
 
 CREATE TABLE enrollments
 (

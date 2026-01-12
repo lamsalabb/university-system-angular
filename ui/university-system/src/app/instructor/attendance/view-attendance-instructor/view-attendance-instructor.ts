@@ -8,6 +8,7 @@ import {ChartData} from 'chart.js';
 import {BaseChartDirective} from 'ng2-charts';
 import {DecimalPipe} from '@angular/common';
 import {Pagination} from '../../../shared/pagination/pagination';
+import {SnackbarService} from '../../../shared/toast/snackbar-service';
 
 @Component({
   selector: 'app-view-attendance-instructor',
@@ -54,7 +55,7 @@ export class ViewAttendanceInstructor {
   });
   private lastSummaryCourseId: number | null = null;
 
-  constructor(private attendanceService: Attendance, private authService: AuthService, private courseService: Course, private router: Router) {
+  constructor(private attendanceService: Attendance, private authService: AuthService, private courseService: Course, private router: Router, private snackBar: SnackbarService) {
     effect(() => {
       const courseId = this.selectedCourseId();
       this.currentPage();
@@ -111,12 +112,12 @@ export class ViewAttendanceInstructor {
   updateAttendance(id: number, status: string) {
     this.attendanceService.updateAttendance(id, status).subscribe({
         next: (result) => {
-          alert("Updated attendance successfully!");
+          this.snackBar.show("Updated attendance successfully!", "success");
         },
         error: (error) => {
           this.error.set(error.message);
           this.loading.set(false);
-          alert("Could not update attendance.");
+          this.snackBar.show("Could not update attendance.", "error");
 
         }
       }

@@ -41,6 +41,7 @@ public class Fee {
     @Column(name = "payment_date")
     private LocalDate paymentDate;
 
+
     public enum Type {
         TUITION, LAB, LIBRARY, OTHER
     }

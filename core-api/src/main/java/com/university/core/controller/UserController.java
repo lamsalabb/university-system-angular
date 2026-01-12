@@ -1,11 +1,11 @@
 package com.university.core.controller;
 
-import com.university.common.entity.User;
 import com.university.common.dto.mapper.UserMapper;
 import com.university.common.dto.request.ChangePasswordRequest;
 import com.university.common.dto.request.RegisterUserRequest;
 import com.university.common.dto.request.UpdateUserRequest;
 import com.university.common.dto.response.UserResponse;
+import com.university.common.entity.User;
 import com.university.core.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;

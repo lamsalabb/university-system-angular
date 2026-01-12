@@ -1,50 +1,42 @@
-import {Component, signal} from '@angular/core';
-import {Enrollment} from '../../../services/enrollment';
-import {Attendance} from '../../../services/attendance';
-import {Router} from '@angular/router';
-import {FormsModule} from '@angular/forms';
+import { Component, signal, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { Enrollment } from '../../../services/enrollment';
+import { Attendance } from '../../../services/attendance';
+import { SnackbarService } from '../../../shared/toast/snackbar-service';
 
 @Component({
   selector: 'app-mark-attendance-instructor',
-  imports: [
-    FormsModule
-  ],
+  imports: [FormsModule],
   templateUrl: './mark-attendance-instructor.html',
   styleUrl: './mark-attendance-instructor.css',
 })
-export class MarkAttendanceInstructor {
-
+export class MarkAttendanceInstructor implements OnInit {
   courses = signal<{ id: number; title: string }[]>([]);
   enrollments = signal<any[]>([]);
   selectedCourseId = signal<number | null>(null);
+
   today = new Date().toISOString().slice(0, 10);
+
   statusMap: Record<number, string> = {};
+  remarksMap: Record<number, string> = {};
 
+  constructor(
+    private enrollmentService: Enrollment,
+    private attendanceService: Attendance,
+    private router: Router,
+    private snackBar: SnackbarService
+  ) {}
 
-  constructor(private enrollmentService: Enrollment, private attendanceService: Attendance, private router: Router) {
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
     const state = history.state;
-
     if (state?.courses) {
       this.courses.set(state.courses);
     }
   }
 
-  loadEnrollments(courseId: number) {
-    this.enrollmentService
-      .getEnrollmentByCourse(courseId)
-      .subscribe(res => {
-        this.enrollments.set(res);
-
-        res.forEach(e => {
-          this.statusMap[e.id] = 'PRESENT';
-        });
-      });
-  }
-
-  selectCourse(courseId: string) {
+  selectCourse(courseId: string): void {
     const id = Number(courseId);
     if (!id) return;
 
@@ -52,36 +44,53 @@ export class MarkAttendanceInstructor {
     this.loadEnrollments(id);
   }
 
-  resetCourse() {
+  loadEnrollments(courseId: number): void {
+    this.enrollmentService.getEnrollmentByCourse(courseId).subscribe(res => {
+      this.enrollments.set(res);
+
+      res.forEach((e: any) => {
+        // default status + default remarks
+        this.statusMap[e.id] = 'PRESENT';
+        this.remarksMap[e.id] = '';
+      });
+    });
+  }
+
+  resetCourse(): void {
     this.selectedCourseId.set(null);
     this.enrollments.set([]);
+    this.statusMap = {};
+    this.remarksMap = {};
   }
 
+  saveAttendance(): void {
+    const sessionDate = new Date().toISOString().slice(0, 10);
 
-  saveAttendance() {
-    this.attendanceService.markAttendanceBatch(
-      this.enrollments().map(e => ({
+    const payload = this.enrollments().map((e: any) => {
+      const status = this.statusMap[e.id] ?? 'PRESENT';
+      const remarks =
+        status === 'EXCUSED' ? (this.remarksMap[e.id]?.trim() || null) : null;
+
+      return {
         enrollmentId: e.id,
-        sessionDate: new Date().toISOString().slice(0, 10),
-        status: this.statusMap[e.id],
-        remarks: null
-      }))
-    ).subscribe({
-        next: () => {
-          alert("Attendance saved successfully.");
-          this.router.navigate(['/instructor/dashboard']);
-        },
-        error: err => {
-          if (err.status === 409) {
-            alert(err.error.message);
-          } else {
-            alert("Attendance saved failed.");
-          }
+        sessionDate,
+        status,
+        remarks,
+      };
+    });
 
+    this.attendanceService.markAttendanceBatch(payload).subscribe({
+      next: () => {
+        this.snackBar.show('Attendance saved successfully.', 'success');
+        this.router.navigate(['/instructor/dashboard']);
+      },
+      error: err => {
+        if (err?.status === 409) {
+          this.snackBar.show(err.error?.message ?? 'Conflict', 'error');
+        } else {
+          this.snackBar.show('Attendance saved failed.', 'error');
         }
-      }
-    );
+      },
+    });
   }
-
-
 }

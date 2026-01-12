@@ -40,26 +40,26 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String token = authHeader.substring(7);//"Bearer length, token comes right after"
 
 
-                Claims claims = jwtUtil.validateToken(token);
-                String userId = claims.getSubject();
-                String role = claims.get("role", String.class);
+            Claims claims = jwtUtil.validateToken(token);
+            String userId = claims.getSubject();
+            String role = claims.get("role", String.class);
 
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                        userId,
-                        null,
-                        List.of(new SimpleGrantedAuthority("ROLE_" + role))
-                );
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                    userId,
+                    null,
+                    List.of(new SimpleGrantedAuthority("ROLE_" + role))
+            );
 
-                SecurityContextHolder.getContext().setAuthentication(auth);
+            SecurityContextHolder.getContext().setAuthentication(auth);
 
-                String method = request.getMethod();
-                String path = request.getRequestURI();
+            String method = request.getMethod();
+            String path = request.getRequestURI();
 
-                if (!permissionLoader.isAllowed(role, method, path)) {
-                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                    SecurityContextHolder.clearContext();
-                    return;
-                }
+            if (!permissionLoader.isAllowed(role, method, path)) {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                SecurityContextHolder.clearContext();
+                return;
+            }
         }
 
         filterChain.doFilter(request, response);
